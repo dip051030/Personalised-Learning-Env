@@ -1,2 +1,14 @@
-from langgraph.graph import StateGraph, START, END
+from prompts.prompts import chain
+import json
 
+user_data =  {
+    'username': 'dyane_master',
+    'age': 22,
+    'grade': 12.5,
+    'id': 1,
+    'is_active': True
+}
+
+result = chain.invoke({"user_data": json.dumps(user_data, indent=2)})
+
+print(result)
