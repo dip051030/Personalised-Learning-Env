@@ -1,5 +1,6 @@
 from enum import Enum
 from typing import Optional, Union, List, Dict
+from altair import Field
 from pydantic import BaseModel
 
 
@@ -8,10 +9,10 @@ class UserInfo(BaseModel):
     age: Union[int, float]
     grade: Optional[Union[int, float]] = None
 
-
 class User(UserInfo):
     id: int
-    is_active: bool = True  # Default value
+    is_active: bool = True
+    user_info: Optional[UserInfo] = None
 
     class Config:
         from_attributes = True
@@ -27,7 +28,7 @@ class ResourceTopic(str, Enum):
 
 class LearningResource(BaseModel):
     id: int
-    topic: ResourceTopic  # Using Enum for fixed options
+    topic: ResourceTopic
     subtopic: str
 
     class Config:
