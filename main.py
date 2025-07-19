@@ -13,5 +13,5 @@ user_data =  {
 }
 
 
-output = graph_run().invoke(user_data)
-print(output.content)
+output = graph_run(user_data)
+print(output)

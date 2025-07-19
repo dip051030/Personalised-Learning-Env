@@ -1,5 +1,4 @@
-from langgraph.constants import START
-from langgraph.graph import StateGraph
+from langgraph.graph import StateGraph, START, END
 from pydantic_core import ValidationError
 
 from schemas import LearningState
@@ -16,7 +15,7 @@ def user_info_node(state: LearningState) -> LearningState:
         try:
             response: AIMessage = chain.invoke({
                 "action": "summarise_user",
-                "existing_data": state.user.model_dump()
+                "existing_data": json.dumps(state.user.model_dump())
             })
 
             user_data = json.loads(response.content)
@@ -82,7 +81,9 @@ builder.add_node("content_generation", content_generation)
 builder.set_entry_point('user_info')
 builder.add_edge("user_info", "learning_resource")
 builder.add_edge("learning_resource", "content_generation")
-builder.add_edge('content_generation', 'end')
+builder.add_edge('content_generation', END)
+
+graph = builder.compile()
 
 def graph_run(user_data: dict):
-    return builder.compile().invoke(user_data)
+    return graph.invoke(user_data)
