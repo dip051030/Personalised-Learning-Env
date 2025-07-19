@@ -43,7 +43,7 @@ class UserProgress(BaseModel):
 
 class LearningState(BaseModel):
     # Your existing models
-    user: User
+    user: User = None
     current_resource: Optional[LearningResource] = None
     progress: List[UserProgress] = []
 

@@ -1,5 +1,6 @@
 from prompts.prompts import chain
 import json
+from nodes import graph_run
 
 user_data =  {
     'username': 'dyane_master',
@@ -11,6 +12,6 @@ user_data =  {
     'subtopic': 'algebra',
 }
 
-result = chain.invoke({"user_data": json.dumps(user_data, indent=2)})
 
-print(result.content)
+output = graph_run().invoke(user_data)
+print(output.content)
