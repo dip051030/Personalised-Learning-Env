@@ -2,7 +2,7 @@ from langgraph.graph import StateGraph, START, END
 from pydantic_core import ValidationError
 
 from schemas import LearningState
-from prompts.prompts import chain
+from prompts.prompts import chain, summary, prompt_user, prompt_resource
 from langchain_core.messages import AIMessage
 import  json
 
@@ -11,9 +11,9 @@ def user_info_node(state: LearningState) -> LearningState:
     """
     Process user data and return a summary.
     """
-    if state.user and (state.user.model_dump() or state.user.user_info.model_dump()):
+    if state.user or (state.user.model_dump() or state.user.user_info.model_dump()):
         try:
-            response: AIMessage = chain.invoke({
+            response: AIMessage = prompt_user.invoke({
                 "action": "summarise_user",
                 "existing_data": json.dumps(state.user.model_dump())
             })
@@ -34,7 +34,7 @@ def learning_resource_node(state: LearningState) -> LearningState:
     """
     if state.current_resource:
         try:
-            response: AIMessage = chain.invoke({
+            response: AIMessage = prompt_resource.invoke({
                 "action": "summarise_resource",
                 "existing_data": state.current_resource.model_dump()
             })
@@ -86,4 +86,4 @@ builder.add_edge('content_generation', END)
 graph = builder.compile()
 
 def graph_run(user_data: dict):
-    return graph.invoke(user_data)
+    return graph.invoke(LearningState.model_validate(user_data))

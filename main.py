@@ -12,8 +12,11 @@ user_data = {
         "topic": "math",
         "subtopic": "algebra"
     },
-    "current_resource": {},  # add resource info if required
-    "history": []            # or other fields as needed by your schema
+    "current_resource": {
+        "topic": "math",
+        "subtopic": "algebra"
+    },
+    "history": []
 }
 
 
