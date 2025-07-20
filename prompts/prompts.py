@@ -15,10 +15,10 @@ class UserSummaryTemplate(PromptTemplate):
             input_variables=["action", "existing_data"]
         )
 
-    def format_prompt(self, action: str, existing_data: dict) -> str:
+    def format_prompt(self, action: str, existing_data: dict):
         return self.format(
             action=action,
-            existing_data=json.dumps(existing_data, indent=2)
+            existing_data=existing_data
         )
 
 
@@ -29,15 +29,15 @@ class LearningResourceTemplate(PromptTemplate):
             template=(
                 "Your role is {action}. Based on this learning resource:\n"
                 "{existing_data}\n\n"
-                "Write a 3-sentence summary about the resource."
+                'Return it as a JSON object with the following keys: "topic", "subtopic", "summary".'
             ),
             input_variables=["action", "existing_data"]
         )
 
-    def format_prompt(self, action: str, resource_data: dict) -> str:
+    def format_prompt(self, action: str, existing_data: dict):
         return self.format(
             action=action,
-            existing_data=json.dumps(resource_data, indent=2)
+            existing_data=existing_data
         )
 
 prompt_user = UserSummaryTemplate()

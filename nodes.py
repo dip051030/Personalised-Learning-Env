@@ -8,23 +8,17 @@ import  json
 
 
 def user_info_node(state: LearningState) -> LearningState:
-    """
-    Process user data and return a summary.
-    """
-    if state.user or (state.user.model_dump() or state.user.user_info.model_dump()):
+    if state.user is not None:
         try:
             response: AIMessage = prompt_user.invoke({
                 "action": "summarise_user",
-                "existing_data": json.dumps(state.user.model_dump())
+                "existing_data": state.user.model_dump()
             })
-
             user_data = json.loads(response.content)
             state.user = state.user.model_validate(user_data)
-
         except (json.JSONDecodeError, ValidationError) as e:
             print(f"Error processing user data: {e}")
             state.user = None
-
     return state
 
 
@@ -32,7 +26,7 @@ def learning_resource_node(state: LearningState) -> LearningState:
     """
     Process learning resource data.
     """
-    if state.current_resource:
+    if state.current_resource is not None:
         try:
             response: AIMessage = prompt_resource.invoke({
                 "action": "summarise_resource",

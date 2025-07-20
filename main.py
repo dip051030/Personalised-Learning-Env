@@ -19,6 +19,8 @@ user_data = {
     "history": []
 }
 
+state = LearningState.model_validate(user_data)
+
 
 output = graph_run(user_data)
 print(output)
