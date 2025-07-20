@@ -1,22 +1,25 @@
 from langgraph.graph import StateGraph, START, END
 from pydantic_core import ValidationError
-
+from prompts.prompts import user_summary, learning_resource
 from schemas import LearningState
-from prompts.prompts import chain, summary, prompt_user, prompt_resource
 from langchain_core.messages import AIMessage
 import  json
 
 
 def user_info_node(state: LearningState) -> LearningState:
     if state.user is not None:
+
+        response: AIMessage = user_summary.invoke({
+            "action": "summarise_user",
+            "existing_data": state.user.model_dump()
+        })
+
         try:
-            response: AIMessage = prompt_user.invoke({
-                "action": "summarise_user",
-                "existing_data": state.user.model_dump()
-            })
-            user_data = json.loads(response.content)
+
+            user_data = json.loads(response.content if hasattr(response, "content") else response)
             state.user = state.user.model_validate(user_data)
         except (json.JSONDecodeError, ValidationError) as e:
+            print(response.content)
             print(f"Error processing user data: {e}")
             state.user = None
     return state
@@ -28,13 +31,13 @@ def learning_resource_node(state: LearningState) -> LearningState:
     """
     if state.current_resource is not None:
         try:
-            response: AIMessage = prompt_resource.invoke({
+            response: AIMessage = learning_resource.invoke({
                 "action": "summarise_resource",
                 "existing_data": state.user.model_dump(),
                 "current_resources_data": state.current_resource.model_dump()
             })
 
-            resource_data = json.loads(response.content)
+            resource_data = json.loads(response.content if hasattr(response, "content") else response)
             state.current_resource = state.current_resource.model_validate(resource_data)
 
         except (json.JSONDecodeError, ValidationError) as e:
@@ -56,7 +59,7 @@ def content_generation(state: LearningState) -> str:
                 "resource_data": state.current_resource.model_dump()
             })
 
-            content_data = json.loads(response.content)
+            content_data = json.loads(response.content if hasattr(response, "content") else response)
             state.history.append({
                 "user": state.user.model_dump(),
                 "resource": state.current_resource.model_dump(),
