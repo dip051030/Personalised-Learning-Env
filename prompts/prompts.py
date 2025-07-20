@@ -1,6 +1,11 @@
 from langchain_core.prompts import PromptTemplate
 import json
+
+from pydantic import BaseModel
+
 from models.llm_models import MODEL
+from schemas import UserInfo
+
 
 # ---------------------------------------------------------------------------------
 # 🧠 UserSummaryTemplate: Prompt to turn raw user data into natural-language JSON
@@ -66,6 +71,7 @@ class LearningResourceTemplate(PromptTemplate):
             template=(
                 """Your role is {action}. Based on this structured learning resource data:
 {existing_data}
+{current_resources_data}
 
 Your task:
 - For every field present (e.g., `topic`, `subtopic`), summarize it in natural language.
@@ -75,7 +81,7 @@ Your task:
 Return the result as a JSON object. Do not include explanations outside the JSON.
 """
             ),
-            input_variables=["action", "existing_data"]
+            input_variables=["action", "existing_data", 'current_resources_data']
         )
 
     def format_prompt(self, action: str, existing_data: dict) -> str:
@@ -84,7 +90,8 @@ Return the result as a JSON object. Do not include explanations outside the JSON
         """
         return self.format(
             action=action,
-            existing_data=json.dumps(existing_data, indent=2)
+            existing_data=json.dumps(existing_data, indent=2),
+            current_resources_data=json.dumps(existing_data.get('current_resources_data', {}), indent=2)
         )
 
 # -----------------------------------------------------------------------------------------
@@ -92,8 +99,12 @@ Return the result as a JSON object. Do not include explanations outside the JSON
 # These can be used directly in LangGraph or LangChain agents
 # -----------------------------------------------------------------------------------------
 
+from langchain_core.prompts import PromptTemplate
+import json
+
+
 prompt_user = UserSummaryTemplate()
 prompt_resource = LearningResourceTemplate()
 
-user_summary = prompt_user | MODEL
-learning_resource = prompt_resource | MODEL
+user_summary = (prompt_user | MODEL)
+learning_resource = (prompt_resource | MODEL)

@@ -17,8 +17,8 @@ def user_info_node(state: LearningState) -> LearningState:
 
             user_data = json.loads(response.content if hasattr(response, "content") else response)
             state.user = state.user.model_validate(user_data)
-        except (json.JSONDecodeError, ValidationError) as e:
-            print(json.loads(response.content))
+
+        except Exception as e:
             print(f"Error processing user data: {e}")
             state.user = None
     return state
@@ -37,9 +37,13 @@ def learning_resource_node(state: LearningState) -> LearningState:
             })
 
             resource_data = json.loads(response.content if hasattr(response, "content") else response)
+            print(response)
+            print(resource_data)
             state.current_resource = state.current_resource.model_validate(resource_data)
 
-        except (json.JSONDecodeError, ValidationError) as e:
+        except Exception as e:
+            print(state.current_resource.model_dump())
+            print(resource_data)
             print(f"Error processing learning resource data: {e}")
             state.current_resource = None
 
