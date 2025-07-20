@@ -11,13 +11,13 @@ def user_info_node(state: LearningState) -> LearningState:
     if state.user is not None:
 
         try:
-            response: AIMessage = user_summary.invoke({
+            response= user_summary.invoke({
                 "action": "summarise_user",
                 "existing_data": state.user.model_dump()
             })
 
 
-            user_data = json.loads(response.content) if isinstance(response.content, str) else response.content
+            user_data = json.loads(response.content if hasattr(response, 'content') else response)
             state.user = state.user.model_validate(user_data)
             print(state.user)
         except Exception as e:
@@ -32,7 +32,7 @@ def learning_resource_node(state: LearningState) -> LearningState:
     """
     if state.current_resource is not None:
         try:
-            response: AIMessage = learning_resource.invoke({
+            response= learning_resource.invoke({
                 "action": "summarise_resource",
                 "existing_data": state.user.model_dump(),
                 "current_resources_data": state.current_resource.model_dump()
