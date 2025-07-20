@@ -3,8 +3,8 @@ import json
 
 from pydantic import BaseModel
 
-from models.llm_models import MODEL
-from schemas import UserInfo
+from models.llm_models import get_llm_model
+from schemas import UserInfo, LearningResource
 
 
 # ---------------------------------------------------------------------------------
@@ -106,5 +106,5 @@ import json
 prompt_user = UserSummaryTemplate()
 prompt_resource = LearningResourceTemplate()
 
-user_summary = (prompt_user | MODEL)
-learning_resource = (prompt_resource | MODEL)
+user_summary = (prompt_user | get_llm_model(UserInfo))
+learning_resource = (prompt_resource | get_llm_model(LearningResource))

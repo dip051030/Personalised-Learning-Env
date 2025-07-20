@@ -50,7 +50,7 @@ class UserProgress(BaseModel):
 
 class LearningState(BaseModel):
     # Your existing models
-    user: User = None
+    user: Optional[User] = None
     current_resource: Optional[LearningResource] = None
     progress: List[UserProgress] = []
 
@@ -58,13 +58,3 @@ class LearningState(BaseModel):
     next_action: str = "select_resource"
     history: List[Dict] = []  # For LLM interaction logs
 
-
-class LearningState(BaseModel):
-    # Your existing models
-    user: User = None
-    current_resource: Optional[LearningResource] = None
-    progress: List[UserProgress] = []
-
-    # Workflow control
-    next_action: str = "select_resource"
-    history: List[Dict] = []  # For LLM interaction logs

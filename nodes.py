@@ -1,4 +1,5 @@
 from langgraph.graph import StateGraph, START, END
+from mpmath import isint
 from pydantic_core import ValidationError
 from prompts.prompts import user_summary, learning_resource
 from schemas import LearningState
@@ -15,9 +16,10 @@ def user_info_node(state: LearningState) -> LearningState:
                 "existing_data": state.user.model_dump()
             })
 
-            user_data = json.loads(response.content if hasattr(response, "content") else response)
-            state.user = state.user.model_validate(user_data)
 
+            user_data = json.loads(response.content) if isinstance(response.content, str) else response.content
+            state.user = state.user.model_validate(user_data)
+            print(state.user)
         except Exception as e:
             print(f"Error processing user data: {e}")
             state.user = None
@@ -43,7 +45,7 @@ def learning_resource_node(state: LearningState) -> LearningState:
 
         except Exception as e:
             print(state.current_resource.model_dump())
-            print(resource_data)
+            # print(resource_data)
             print(f"Error processing learning resource data: {e}")
             state.current_resource = None
 
