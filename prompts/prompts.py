@@ -10,7 +10,7 @@ class UserSummaryTemplate(PromptTemplate):
             template=(
                 "Your role is {action}. Based on this user data:\n"
                 "{existing_data}\n\n"
-                "Write a 3-sentence summary about the user."
+                'Return it as a JSON string.'
             ),
             input_variables=["action", "existing_data"]
         )
@@ -29,7 +29,7 @@ class LearningResourceTemplate(PromptTemplate):
             template=(
                 "Your role is {action}. Based on this learning resource:\n"
                 "{existing_data}\n\n"
-                'Return it as a JSON object with the following keys: "topic", "subtopic", "summary".'
+                'Return it as a JSON string.'
             ),
             input_variables=["action", "existing_data"]
         )

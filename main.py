@@ -2,6 +2,7 @@ from prompts.prompts import chain
 import json
 from nodes import graph_run
 
+
 user_data = {
     "user": {
         "username": "dyane_master",
@@ -18,9 +19,6 @@ user_data = {
     },
     "history": []
 }
-
-state = LearningState.model_validate(user_data)
-
 
 output = graph_run(user_data)
 print(output)

@@ -30,7 +30,8 @@ def learning_resource_node(state: LearningState) -> LearningState:
         try:
             response: AIMessage = prompt_resource.invoke({
                 "action": "summarise_resource",
-                "existing_data": state.current_resource.model_dump()
+                "existing_data": state.user.model_dump(),
+                "current_resources_data": state.current_resource.model_dump()
             })
 
             resource_data = json.loads(response.content)
