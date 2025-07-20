@@ -6,13 +6,13 @@ from pydantic import BaseModel
 
 class UserInfo(BaseModel):
     username: str
-    age: Union[int, float]
-    grade: Optional[Union[int, float]] = None
+    age: Union[int, float, str]
+    grade: Optional[Union[int, float, str]] = None
 
 class User(UserInfo):
-    id: int
+    id: Union[str, int]
     is_active: bool = True
-    user_info: Optional[UserInfo] = None
+    # user_info: Optional[UserInfo] = None
 
     class Config:
         from_attributes = True

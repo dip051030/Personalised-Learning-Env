@@ -9,17 +9,16 @@ import  json
 def user_info_node(state: LearningState) -> LearningState:
     if state.user is not None:
 
-        response: AIMessage = user_summary.invoke({
-            "action": "summarise_user",
-            "existing_data": state.user.model_dump()
-        })
-
         try:
+            response: AIMessage = user_summary.invoke({
+                "action": "summarise_user",
+                "existing_data": state.user.model_dump()
+            })
 
             user_data = json.loads(response.content if hasattr(response, "content") else response)
             state.user = state.user.model_validate(user_data)
         except (json.JSONDecodeError, ValidationError) as e:
-            print(response.content)
+            print(json.loads(response.content))
             print(f"Error processing user data: {e}")
             state.user = None
     return state
