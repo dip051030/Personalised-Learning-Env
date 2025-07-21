@@ -11,13 +11,8 @@ class UserInfo(BaseModel):
         default=None,
         description="The user's grade level, optionally provided. Can be a number (like 12.5) or descriptive string."
     )
-
-
-class User(UserInfo):
     id: Union[str, int]
     is_active: bool = True
-
-    # user_info: Optional[UserInfo] = None
 
     class Config:
         from_attributes = True
@@ -29,6 +24,7 @@ class ResourceTopic(str, Enum):
     SCIENCE = "science"
     ENGLISH = "english"
     CHEMISTRY = 'chemistry'
+    PHYSICS = 'physics'
 
 
 class LearningResource(BaseModel):
@@ -41,7 +37,7 @@ class LearningResource(BaseModel):
 
 class UserProgress(BaseModel):
     id: int
-    resource_topic: ResourceTopic
+    resource_topic: LearningResource
     completed: bool = False
 
     class Config:
@@ -50,7 +46,7 @@ class UserProgress(BaseModel):
 
 class LearningState(BaseModel):
     # Your existing models
-    user: Optional[User] = None
+    user: UserInfo
     current_resource: Optional[LearningResource] = None
     progress: List[UserProgress] = []
 

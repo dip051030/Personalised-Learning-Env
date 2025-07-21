@@ -8,14 +8,23 @@ user_data = {
         "age": 22,
         "grade": 12.5,
         "id": 1,
-        "is_active": True,
-        "topic": "math",
-        "subtopic": "algebra"
+        "is_active": True
     },
     "current_resource": {
-        "topic": "math",
+        "topic": "math",  # Must match ResourceTopic enum
         "subtopic": "algebra"
     },
+    "progress": [
+        {
+            "id": 101,
+            "resource_topic": {
+                "topic": "math",
+                "subtopic": "algebra"
+            },
+            "completed": False
+        }
+    ],
+    "next_action": "select_resource",
     "history": []
 }
 

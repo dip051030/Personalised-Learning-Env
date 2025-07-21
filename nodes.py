@@ -9,19 +9,16 @@ import  json
 
 def user_info_node(state: LearningState) -> LearningState:
     if state.user is not None:
-
         try:
-            response= user_summary.invoke({
+            response = user_summary.invoke({
                 "action": "summarise_user",
                 "existing_data": state.user.model_dump()
             })
 
             user_data = response.content if hasattr(response, 'content') else response
-            state.user = state.user.model_validate(user_data)
-            # print(state.user)
+            state.user = state.user.model_validate(user_data if isinstance(user_data, dict) else user_data.model_dump())
+            print(state.user)
         except Exception as e:
-            print('State User:', state.user.model_dump())
-            print('State User:', state.user.model_dump())
             print(f"Error processing user data: {e}")
     return state
 
