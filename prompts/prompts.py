@@ -4,7 +4,7 @@ import json
 from pydantic import BaseModel
 
 from models.llm_models import get_llm_model
-from schemas import UserInfo, LearningResource
+from schemas import UserInfo, LearningResource, LearningState
 
 
 # ---------------------------------------------------------------------------------
@@ -99,38 +99,42 @@ Return the result as a JSON object. Do not include explanations outside the JSON
 from langchain_core.prompts import PromptTemplate
 import json
 
+from langchain_core.prompts import PromptTemplate
+import json
+
 class ContentGenerationTemplate(PromptTemplate):
     """
-    Prompt for generating personalized learning content based on:
-    - The user's background, interests, and academic level
-    - The topic and subtopic of the current learning resource
+    Prompt to generate personalized educational content based on:
+    - User profile (grade, interests, activity)
+    - Learning resource (topic and subtopic)
 
-    The LLM is expected to produce content that is adaptive to user needs.
+    The model must return only the generated content as markdown.
     """
 
     def __init__(self):
         super().__init__(
             template=(
-                """Your role is {action}. You are an educational content generator.
+                """You are an educational content generator.
 
-You are given:
-1. User Data:
+Task: {action}
+
+User Profile:
 {user_data}
 
-2. Learning Resource:
+Learning Resource:
 {resource_data}
 
-Your task:
-- Create clear, accurate, and age-appropriate educational content for the user.
-- Relate the topic and subtopic to the user's background and interests.
-- Ensure the explanation is relevant to the user's current level (e.g., grade).
-- Focus on being helpful, structured, and goal-driven.
+Instructions:
+- Write an educational explanation based on the topic and subtopic.
+- Tailor it to the user's grade level and interests.
+- Use simple, clear language suitable for the user's academic level.
+- The output must be a structured markdown explanation.
+- Do not return JSON or restate the input.
 
-Return your output as a plain text explanation — no JSON required.
+Example format:
+## Topic Title
 
-Example:
-"Since the user is in Grade 12 and interested in algebra, here's a lesson on solving linear equations: ..."
-
+Explanation starts here...
 """
             ),
             input_variables=["action", "user_data", "resource_data"]
@@ -144,6 +148,7 @@ Example:
         )
 
 
+
 # -----------------------------------------------------------------------------------------
 # 🔗 Build chain objects by piping prompt → model
 # These can be used directly in LangGraph or LangChain agents
@@ -154,6 +159,8 @@ Example:
 
 prompt_user = UserSummaryTemplate()
 prompt_resource = LearningResourceTemplate()
+prompt_content_generation = ContentGenerationTemplate()
 
 user_summary = (prompt_user | get_llm_model(UserInfo))
 learning_resource = (prompt_resource | get_llm_model(LearningResource))
+user_content_generation = (prompt_content_generation | get_llm_model(LearningState))

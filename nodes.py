@@ -1,9 +1,9 @@
 from langgraph.graph import StateGraph, START, END
-from mpmath import isint
 from pydantic_core import ValidationError
-from prompts.prompts import user_summary, learning_resource
+from sympy.stats import Expectation
+
+from prompts.prompts import user_summary, learning_resource, user_content_generation
 from schemas import LearningState
-from langchain_core.messages import AIMessage
 import  json
 
 
@@ -51,20 +51,23 @@ def content_generation(state: LearningState) -> str:
     """
     if state.user and state.current_resource:
         try:
-            response= chain.invoke({
+            response= user_content_generation.invoke({
                 "action": "generate_content",
                 "user_data": state.user.model_dump(),
                 "resource_data": state.current_resource.model_dump()
             })
 
-            content_data = json.loads(response.content if hasattr(response, "content") else response)
+            content_data = response.content if hasattr(response, "content") else response
+
             state.history.append({
                 "user": state.user.model_dump(),
                 "resource": state.current_resource.model_dump(),
                 "generated_content": content_data
             })
 
-        except (json.JSONDecodeError, ValidationError) as e:
+            print(content_data)
+            print(state.history)
+        except Expectation as e:
             print(f"Error generating content: {e}")
 
 
