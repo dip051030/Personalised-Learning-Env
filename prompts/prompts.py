@@ -102,13 +102,19 @@ import json
 from langchain_core.prompts import PromptTemplate
 import json
 
+from langchain_core.prompts import PromptTemplate
+import json
+
 class ContentGenerationTemplate(PromptTemplate):
     """
-    Prompt to generate personalized educational content based on:
-    - User profile (grade, interests, activity)
-    - Learning resource (topic and subtopic)
+    Prompt to generate personalized educational content in the following format:
+    {
+      "user": natural language summary of the user,
+      "resource": natural language summary of the learning resource,
+      "generated_content": a markdown-formatted educational explanation
+    }
 
-    The model must return only the generated content as markdown.
+    The output must be a valid JSON object, with no additional explanation or commentary.
     """
 
     def __init__(self):
@@ -125,16 +131,23 @@ Learning Resource:
 {resource_data}
 
 Instructions:
-- Write an educational explanation based on the topic and subtopic.
-- Tailor it to the user's grade level and interests.
-- Use simple, clear language suitable for the user's academic level.
-- The output must be a structured markdown explanation.
-- Do not return JSON or restate the input.
+- Summarize the user information in 1-2 sentences.
+- Summarize the learning resource in 1-2 sentences.
+- Generate personalized educational content using Markdown format.
+- Tailor the content to the user's grade level, interests, and background.
+- The content should be clear, focused, and age-appropriate.
 
-Example format:
-## Topic Title
+Return your final output in **this exact JSON format**:
 
-Explanation starts here...
+{{
+  "user": "<natural language summary of the user>",
+  "resource": "<natural language summary of the learning resource>",
+  "generated_content": "<markdown content based on topic and user>"
+}}
+
+Important:
+- Do not include any explanation outside of the JSON.
+- The value of `generated_content` must be a markdown-formatted string.
 """
             ),
             input_variables=["action", "user_data", "resource_data"]
@@ -146,7 +159,6 @@ Explanation starts here...
             user_data=json.dumps(user_data, indent=2),
             resource_data=json.dumps(resource_data, indent=2)
         )
-
 
 
 # -----------------------------------------------------------------------------------------

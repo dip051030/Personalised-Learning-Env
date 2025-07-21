@@ -65,8 +65,8 @@ def content_generation(state: LearningState) -> str:
                 "generated_content": content_data
             })
 
-            print(content_data)
-            print(state.history)
+            print(response)
+
         except Expectation as e:
             print(f"Error generating content: {e}")
 
