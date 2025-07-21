@@ -37,7 +37,7 @@ def learning_resource_node(state: LearningState) -> LearningState:
 
             resource_data = response.content if hasattr(response, "content") else response
             state.current_resource = state.current_resource.model_validate(resource_data)
-
+            print(state.current_resource)
         except Exception as e:
             print(f"Error processing learning resource data: {e}")
             state.current_resource = None

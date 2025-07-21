@@ -85,23 +85,71 @@ Return the result as a JSON object. Do not include explanations outside the JSON
             input_variables=["action", "existing_data", 'current_resources_data']
         )
 
-    def format_prompt(self, action: str, existing_data: dict) -> str:
+    def format_prompt(self, action: str, existing_data: dict, current_resources_data : dict) -> str:
         """
         Convert input data to formatted string and inject into prompt.
         """
         return self.format(
             action=action,
             existing_data=json.dumps(existing_data, indent=2),
-            current_resources_data=json.dumps(existing_data.get('current_resources_data', {}), indent=2)
+            current_resources_data=json.dumps(current_resources_data, indent=2)
         )
+
+
+from langchain_core.prompts import PromptTemplate
+import json
+
+class ContentGenerationTemplate(PromptTemplate):
+    """
+    Prompt for generating personalized learning content based on:
+    - The user's background, interests, and academic level
+    - The topic and subtopic of the current learning resource
+
+    The LLM is expected to produce content that is adaptive to user needs.
+    """
+
+    def __init__(self):
+        super().__init__(
+            template=(
+                """Your role is {action}. You are an educational content generator.
+
+You are given:
+1. User Data:
+{user_data}
+
+2. Learning Resource:
+{resource_data}
+
+Your task:
+- Create clear, accurate, and age-appropriate educational content for the user.
+- Relate the topic and subtopic to the user's background and interests.
+- Ensure the explanation is relevant to the user's current level (e.g., grade).
+- Focus on being helpful, structured, and goal-driven.
+
+Return your output as a plain text explanation — no JSON required.
+
+Example:
+"Since the user is in Grade 12 and interested in algebra, here's a lesson on solving linear equations: ..."
+
+"""
+            ),
+            input_variables=["action", "user_data", "resource_data"]
+        )
+
+    def format_prompt(self, action: str, user_data: dict, resource_data: dict) -> str:
+        return self.format(
+            action=action,
+            user_data=json.dumps(user_data, indent=2),
+            resource_data=json.dumps(resource_data, indent=2)
+        )
+
 
 # -----------------------------------------------------------------------------------------
 # 🔗 Build chain objects by piping prompt → model
 # These can be used directly in LangGraph or LangChain agents
 # -----------------------------------------------------------------------------------------
 
-from langchain_core.prompts import PromptTemplate
-import json
+
 
 
 prompt_user = UserSummaryTemplate()
