@@ -4,7 +4,7 @@ import json
 from pydantic import BaseModel
 
 from models.llm_models import get_llm_model
-from schemas import UserInfo, LearningResource, LearningState
+from schemas import UserInfo, LearningResource, LearningState, ContentResponse
 
 
 # ---------------------------------------------------------------------------------
@@ -107,14 +107,16 @@ import json
 
 class ContentGenerationTemplate(PromptTemplate):
     """
-    Prompt to generate personalized educational content in the following format:
+    Prompt to generate educational content with strict JSON structure.
+
+    Expected output format:
     {
-      "user": natural language summary of the user,
-      "resource": natural language summary of the learning resource,
-      "generated_content": a markdown-formatted educational explanation
+      "user": "<natural language summary>",
+      "resource": "<summary of the topic/subtopic>",
+      "generated_content": "<markdown lesson based on the topic and user's level>"
     }
 
-    The output must be a valid JSON object, with no additional explanation or commentary.
+    Only return this JSON. No extra explanations or markdown outside the JSON.
     """
 
     def __init__(self):
@@ -124,30 +126,21 @@ class ContentGenerationTemplate(PromptTemplate):
 
 Task: {action}
 
-User Profile:
+User Info:
 {user_data}
 
 Learning Resource:
 {resource_data}
 
 Instructions:
-- Summarize the user information in 1-2 sentences.
-- Summarize the learning resource in 1-2 sentences.
-- Generate personalized educational content using Markdown format.
-- Tailor the content to the user's grade level, interests, and background.
-- The content should be clear, focused, and age-appropriate.
+- Generate structured, grade-appropriate markdown content under "generated_content".
+- Your response MUST be a valid JSON object with exactly these 3 keys:
 
-Return your final output in **this exact JSON format**:
+Return this exact format (no backticks, no explanations):
 
 {{
-  "user": "<natural language summary of the user>",
-  "resource": "<natural language summary of the learning resource>",
-  "generated_content": "<markdown content based on topic and user>"
+  "generated_content": "## Title\\n\\nContent here... Use bullets, equations, examples if helpful."
 }}
-
-Important:
-- Do not include any explanation outside of the JSON.
-- The value of `generated_content` must be a markdown-formatted string.
 """
             ),
             input_variables=["action", "user_data", "resource_data"]
@@ -161,13 +154,6 @@ Important:
         )
 
 
-# -----------------------------------------------------------------------------------------
-# 🔗 Build chain objects by piping prompt → model
-# These can be used directly in LangGraph or LangChain agents
-# -----------------------------------------------------------------------------------------
-
-
-
 
 prompt_user = UserSummaryTemplate()
 prompt_resource = LearningResourceTemplate()
@@ -175,4 +161,4 @@ prompt_content_generation = ContentGenerationTemplate()
 
 user_summary = (prompt_user | get_llm_model(UserInfo))
 learning_resource = (prompt_resource | get_llm_model(LearningResource))
-user_content_generation = (prompt_content_generation | get_llm_model(LearningState))
+user_content_generation = (prompt_content_generation | get_llm_model(ContentResponse))

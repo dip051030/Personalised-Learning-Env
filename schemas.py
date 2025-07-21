@@ -44,6 +44,18 @@ class UserProgress(BaseModel):
         from_attributes = True
 
 
+class ContentResponse(BaseModel):
+    content: str = Field(description="The generated content from the LLM.")
+    metadata: Optional[dict] = Field(default=None, description="Optional metadata about the content generation.")
+
+    class Config:
+        from_attributes = True
+
+class HistoryEntry(BaseModel):
+    user_info: dict
+    resource_data: dict
+    generated_content: ContentResponse
+
 class LearningState(BaseModel):
     # Your existing models
     user: UserInfo
@@ -52,5 +64,5 @@ class LearningState(BaseModel):
 
     # Workflow control
     next_action: str = "select_resource"
-    history: List[Dict] = []  # For LLM interaction logs
+    history: List[HistoryEntry] = []
 

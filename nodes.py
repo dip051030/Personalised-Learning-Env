@@ -17,7 +17,7 @@ def user_info_node(state: LearningState) -> LearningState:
 
             user_data = response.content if hasattr(response, 'content') else response
             state.user = state.user.model_validate(user_data if isinstance(user_data, dict) else user_data.model_dump())
-            print(state.user)
+            # print(state.user)
         except Exception as e:
             print(f"Error processing user data: {e}")
     return state
@@ -37,15 +37,14 @@ def learning_resource_node(state: LearningState) -> LearningState:
 
             resource_data = response.content if hasattr(response, "content") else response
             state.current_resource = state.current_resource.model_validate(resource_data)
-            print(state.current_resource)
+            # print(state.current_resource)
         except Exception as e:
             print(f"Error processing learning resource data: {e}")
-            state.current_resource = None
 
     return state
 
 
-def content_generation(state: LearningState) -> str:
+def content_generation(state: LearningState) -> LearningState:
     """
     Generate content based on the current state.
     """
@@ -59,16 +58,21 @@ def content_generation(state: LearningState) -> str:
 
             content_data = response.content if hasattr(response, "content") else response
 
+            print('RAW LLM RESPONSE:', content_data)
+
             state.history.append({
-                "user": state.user.model_dump(),
-                "resource": state.current_resource.model_dump(),
                 "generated_content": content_data
             })
 
-            print(response)
-
+            # print(response)
+            # print(state.user)
+            # print(state.current_resource)
+            # print(content_data)
+            return content_data
         except Expectation as e:
             print(f"Error generating content: {e}")
+
+    return state
 
 
 
