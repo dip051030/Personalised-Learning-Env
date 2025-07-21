@@ -16,13 +16,13 @@ def user_info_node(state: LearningState) -> LearningState:
                 "existing_data": state.user.model_dump()
             })
 
-
-            user_data = json.loads(response.content if hasattr(response, 'content') else response)
+            user_data = response.content if hasattr(response, 'content') else response
             state.user = state.user.model_validate(user_data)
-            print(state.user)
+            # print(state.user)
         except Exception as e:
+            print('State User:', state.user.model_dump())
+            print('State User:', state.user.model_dump())
             print(f"Error processing user data: {e}")
-            state.user = None
     return state
 
 
@@ -38,14 +38,10 @@ def learning_resource_node(state: LearningState) -> LearningState:
                 "current_resources_data": state.current_resource.model_dump()
             })
 
-            resource_data = json.loads(response.content if hasattr(response, "content") else response)
-            print(response)
-            print(resource_data)
+            resource_data = response.content if hasattr(response, "content") else response
             state.current_resource = state.current_resource.model_validate(resource_data)
 
         except Exception as e:
-            print(state.current_resource.model_dump())
-            # print(resource_data)
             print(f"Error processing learning resource data: {e}")
             state.current_resource = None
 
@@ -58,7 +54,7 @@ def content_generation(state: LearningState) -> str:
     """
     if state.user and state.current_resource:
         try:
-            response: AIMessage = chain.invoke({
+            response= chain.invoke({
                 "action": "generate_content",
                 "user_data": state.user.model_dump(),
                 "resource_data": state.current_resource.model_dump()
