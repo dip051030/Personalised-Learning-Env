@@ -1,5 +1,5 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
-from lanchain_chat_groq import  ChatGroq
+from langchain_groq import  ChatGroq
 from keys.apis import set_env
 from schemas import UserInfo
 

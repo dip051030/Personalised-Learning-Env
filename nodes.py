@@ -3,7 +3,8 @@ from langgraph.graph import StateGraph, START, END
 from pydantic_core import ValidationError
 from sympy.stats import Expectation
 
-from prompts.prompts import user_summary, learning_resource, user_content_generation, CONTENT_GENERATION_SYSTEM_PROMPT
+from prompts.prompts import user_summary, learning_resource, user_content_generation, CONTENT_GENERATION_SYSTEM_PROMPT, \
+    prompt_content_improviser
 from schemas import LearningState
 import  json
 
@@ -94,7 +95,7 @@ def content_generation(state: LearningState) -> LearningState:
 #     return state
 
 
-def content_improviser(state: LearningState) -> LearningState:
+def content_improviser_node(state: LearningState) -> LearningState:
     if state.user and state.current_resource:
         try:
             messages = [
@@ -127,7 +128,7 @@ builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)
 builder.add_node("learning_resource", learning_resource_node)
 builder.add_node("content_generation", content_generation)
-builder.add_node("content_improviser", content_improviser)
+builder.add_node("content_improviser", content_improviser_node)
 
 builder.set_entry_point('user_info')
 builder.add_edge("user_info", "learning_resource")
