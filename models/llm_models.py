@@ -11,9 +11,9 @@ def get_gemini_model(output_schema):
         temperature=1,
     ).with_structured_output(output_schema)
 
-def get_groq_model(output_schema):
+def get_groq_model():
     return ChatGroq(
         model='meta-llama/llama-4-scout-17b-16e-instruct',
         api_key=set_env('GROQ_API_KEY'),
         temperature=0.5
-    ).with_structured_output(output_schema)
+    )

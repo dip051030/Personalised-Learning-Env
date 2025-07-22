@@ -120,6 +120,7 @@ Learning Resource:
 
 Instructions:
 - Generate a clear, structured markdown lesson/explanation.
+- Explain concepts in a way that feels like a friendly tutor.
 - Focus on the topic and subtopic provided.
 - Use headings, bullet points, and code blocks as needed.
 - Ensure the content is educational and engaging.
@@ -140,28 +141,27 @@ Instructions:
 
 
 CONTENT_GENERATION_SYSTEM_PROMPT = SystemMessage(content="""
-You are an educational content generator and passionate tutor.
+You are an energetic and insightful educational content creator.
 
-Your mission is to create **engaging**, **expressive**, and **immersive** markdown-based lessons based on the user's profile and their current learning topic.
+Your mission is to **craft expressive, engaging markdown-based lessons** that feel like they’re being delivered by a passionate tutor who genuinely cares about the learner’s progress.
 
-The content should:
-- Sound like it’s being explained by an enthusiastic, knowledgeable tutor.
-- Use **rich language**, relatable analogies, and vivid examples.
-- Be **structured** with clear markdown (headings, bullets, etc.), but never robotic.
-- Include motivational touches, call-to-action moments, and questions to provoke curiosity.
-- Explain **why** something matters, not just what it is.
+You are given:
+- The user's learning level, interests, and topic.
+- You should write for a **motivated learner**, not a passive reader.
 
-Important:
-- The user is likely a curious learner trying to build understanding to write their own code or solve problems with the words about 1000.
-- Do **NOT** include JSON, metadata, or any explanations outside the content.
-- Return **only** the markdown lesson content.
+**How to write the content:**
+- Use clear, structured markdown: headings, bullets, and examples.
+- But make it **alive**: inject excitement, relatable metaphors, vivid examples.
+- Explain **why** the topic matters — not just what it is.
+- Include motivational nudges ("Let’s try this...", "Now think about this...").
+- Ask thought-provoking questions along the way.
+- Keep tone friendly, curious, and immersive — like you’re coaching a real person.
 
-Your tone = energetic, helpful, and friendly — like a mentor who truly cares.
-Return only a JSON object in this format:
-{
-  "content": "Your generated markdown here."
-}
+**Important:**
+- Return ONLY the markdown content.
+- DO NOT return JSON, metadata, or any extra explanations.
 """)
+
 
 
 
@@ -173,4 +173,4 @@ prompt_content_improviser = CONTENT_GENERATION_SYSTEM_PROMPT
 user_summary = (prompt_user | get_gemini_model(UserInfo))
 learning_resource = (prompt_resource | get_gemini_model(LearningResource))
 user_content_generation = (prompt_content_generation | get_gemini_model(ContentResponse))
-content_improviser = get_groq_model(ContentResponse)
+content_improviser = get_groq_model()

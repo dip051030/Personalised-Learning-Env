@@ -95,27 +95,20 @@ def content_generation(state: LearningState) -> LearningState:
 
 
 def content_improviser_node(state: LearningState) -> LearningState:
-    if state.user and state.current_resource:
+    if state.generated_content is not None:
         try:
             messages = [
                 CONTENT_GENERATION_SYSTEM_PROMPT,
                 HumanMessage(content=f"""
 
-Learning Resource:
+Unpolished Learning Resource:
 {state.generated_content.model_dump()}
-
-Instructions:
-- Generate a clear, structured markdown lesson/explanation.
-- Focus on the topic and subtopic.
-- Tailor to user's grade and interests.
-- Return ONLY the markdown content (no JSON or metadata).
-- Care to Explain the topic in a way that is easy to understand.
 """)
             ]
 
-            response = content_improviser.invoke(messages)
+            response = content_improviser(messages)
             generated_markdown = response.content if hasattr(response, "content") else str(response)
-            print(generated_markdown)
+            print('Improvised:', generated_markdown)
             # print('GENERATED CONTENT:', state.content)
         except Exception as e:
             print(f"Error improvising content: {e}")
