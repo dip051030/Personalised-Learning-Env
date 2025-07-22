@@ -10,3 +10,8 @@ def get_gemini_model(output_schema):
         api_key=set_env('GOOGLE_API_KEY'),
     ).with_structured_output(output_schema)
 
+def get_groq_model(output_schema):
+    return ChatGroq(
+        model='groq-llama-3.1-70b',
+        api_key=set_env('GROQ_API_KEY')
+    ).with_structured_output(output_schema)
