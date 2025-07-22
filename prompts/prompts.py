@@ -157,6 +157,10 @@ Important:
 - Return **only** the markdown lesson content.
 
 Your tone = energetic, helpful, and friendly — like a mentor who truly cares.
+Return only a JSON object in this format:
+{
+  "content": "Your generated markdown here."
+}
 """)
 
 

@@ -113,10 +113,9 @@ Instructions:
 """)
             ]
 
-            response = content_improviser(messages)
-            generated_markdown = response
+            response = content_improviser.invoke(messages)
+            generated_markdown = response.content if hasattr(response, "content") else str(response)
             print(generated_markdown)
-            state.content = state.content.model_validate(generated_markdown)
             # print('GENERATED CONTENT:', state.content)
         except Exception as e:
             print(f"Error improvising content: {e}")
