@@ -3,7 +3,7 @@ import json
 
 from pydantic import BaseModel
 
-from models.llm_models import get_llm_model
+from models.llm_models import get_gemini_model
 from schemas import UserInfo, LearningResource, LearningState, ContentResponse
 
 
@@ -137,11 +137,10 @@ Instructions:
             resource_data=json.dumps(resource_data, indent=2)
         )
 
-
 prompt_user = UserSummaryTemplate()
 prompt_resource = LearningResourceTemplate()
 prompt_content_generation = ContentGenerationTemplate()
 
-user_summary = (prompt_user | get_llm_model(UserInfo))
-learning_resource = (prompt_resource | get_llm_model(LearningResource))
-user_content_generation = (prompt_content_generation | get_llm_model(ContentResponse))
+user_summary = (prompt_user | get_gemini_model(UserInfo))
+learning_resource = (prompt_resource | get_gemini_model(LearningResource))
+user_content_generation = (prompt_content_generation | get_gemini_model(ContentResponse))
