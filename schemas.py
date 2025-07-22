@@ -55,13 +55,13 @@ class ContentResponse(BaseModel):
 class HistoryEntry(BaseModel):
     user_info: UserInfo
     resource_data: LearningResource
-    generated_content: ContentResponse
 
 
 class LearningState(BaseModel):
     user: UserInfo
     current_resource: Optional[LearningResource] = None
     progress: List[UserProgress] = []
+    generated_content: Optional[ContentResponse] = None
 
     next_action: str = "select_resource"
     history: List[HistoryEntry] = []

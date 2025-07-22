@@ -3,9 +3,8 @@ from langgraph.graph import StateGraph, START, END
 from pydantic_core import ValidationError
 from sympy.stats import Expectation
 
-from prompts.prompts import user_summary, learning_resource, user_content_generation, CONTENT_GENERATION_SYSTEM_PROMPT, \
-    prompt_content_improviser
-from schemas import LearningState
+from prompts.prompts import user_summary, learning_resource, user_content_generation, CONTENT_GENERATION_SYSTEM_PROMPT, content_improviser
+from schemas import LearningState, ContentResponse
 import  json
 
 
@@ -62,8 +61,8 @@ def content_generation(state: LearningState) -> LearningState:
 
             # generated_content = content_data.get("generated_content", "") if isinstance(content_data,dict) else content_data
             # print('RAW LLM RESPONSE:', content_raw)
-            state.content= state.content.model_validate(content_raw)
-            print('GENERATED CONTENT:', state.content)
+            state.generated_content = ContentResponse(content = content_raw)
+            # print('GENERATED CONTENT:', state.generated_content)
             # state.history.append({
             #     "user": state.user.model_dump(),
             #     "resource": state.current_resource.model_dump(),
@@ -99,11 +98,11 @@ def content_improviser_node(state: LearningState) -> LearningState:
     if state.user and state.current_resource:
         try:
             messages = [
-                SystemMessage(content=CONTENT_GENERATION_SYSTEM_PROMPT),
+                CONTENT_GENERATION_SYSTEM_PROMPT,
                 HumanMessage(content=f"""
 
 Learning Resource:
-{state.current_resource.model_dump()}
+{state.generated_content.model_dump()}
 
 Instructions:
 - Generate a clear, structured markdown lesson/explanation.
@@ -114,12 +113,13 @@ Instructions:
 """)
             ]
 
-            response = content_improviser.run(messages)
+            response = content_improviser(messages)
             generated_markdown = response
+            print(generated_markdown)
             state.content = state.content.model_validate(generated_markdown)
-            print('GENERATED CONTENT:', state.content)
+            # print('GENERATED CONTENT:', state.content)
         except Exception as e:
-            print(f"Error generating content: {e}")
+            print(f"Error improvising content: {e}")
 
     return state
 

@@ -1,3 +1,4 @@
+from langchain_core.messages import SystemMessage
 from langchain_core.prompts import PromptTemplate
 import json
 
@@ -123,7 +124,7 @@ Instructions:
 - Use headings, bullet points, and code blocks as needed.
 - Ensure the content is educational and engaging.
 - Tailor it to the user's grade level and interests.
-- Return ONLY the markdown content text and dont introduct yourself or provide any other information.
+- Return ONLY the markdown content text and dont introduce yourself or provide any other information.
 - Do NOT return JSON, metadata, or extra commentary.
 """
             ),
@@ -138,13 +139,26 @@ Instructions:
         )
 
 
+CONTENT_GENERATION_SYSTEM_PROMPT = SystemMessage(content="""
+You are an educational content generator and passionate tutor.
 
-CONTENT_GENERATION_SYSTEM_PROMPT = """
-You are an educational content generator and Tutor.
-Generate markdown educational content ONLY based on the input user.
+Your mission is to create **engaging**, **expressive**, and **immersive** markdown-based lessons based on the user's profile and their current learning topic.
 
-No JSON or metadata, just markdown.
-"""
+The content should:
+- Sound like it’s being explained by an enthusiastic, knowledgeable tutor.
+- Use **rich language**, relatable analogies, and vivid examples.
+- Be **structured** with clear markdown (headings, bullets, etc.), but never robotic.
+- Include motivational touches, call-to-action moments, and questions to provoke curiosity.
+- Explain **why** something matters, not just what it is.
+
+Important:
+- The user is likely a curious learner trying to build understanding to write their own code or solve problems with the words about 1000.
+- Do **NOT** include JSON, metadata, or any explanations outside the content.
+- Return **only** the markdown lesson content.
+
+Your tone = energetic, helpful, and friendly — like a mentor who truly cares.
+""")
+
 
 
 prompt_user = UserSummaryTemplate()
@@ -155,4 +169,4 @@ prompt_content_improviser = CONTENT_GENERATION_SYSTEM_PROMPT
 user_summary = (prompt_user | get_gemini_model(UserInfo))
 learning_resource = (prompt_resource | get_gemini_model(LearningResource))
 user_content_generation = (prompt_content_generation | get_gemini_model(ContentResponse))
-content_improviser = (prompt_content_improviser | get_groq_model(ContentResponse))
+content_improviser = get_groq_model(ContentResponse)
