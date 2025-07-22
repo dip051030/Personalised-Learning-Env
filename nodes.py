@@ -1,8 +1,9 @@
+from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.graph import StateGraph, START, END
 from pydantic_core import ValidationError
 from sympy.stats import Expectation
 
-from prompts.prompts import user_summary, learning_resource, user_content_generation
+from prompts.prompts import user_summary, learning_resource, user_content_generation, CONTENT_GENERATION_SYSTEM_PROMPT
 from schemas import LearningState
 import  json
 
@@ -59,7 +60,9 @@ def content_generation(state: LearningState) -> LearningState:
             content_raw = response.content if hasattr(response, "content") else response
 
             # generated_content = content_data.get("generated_content", "") if isinstance(content_data,dict) else content_data
-            print('RAW LLM RESPONSE:', content_raw)
+            # print('RAW LLM RESPONSE:', content_raw)
+            state.content= state.content.model_validate(content_raw)
+            print('GENERATED CONTENT:', state.content)
             # state.history.append({
             #     "user": state.user.model_dump(),
             #     "resource": state.current_resource.model_dump(),
@@ -72,15 +75,64 @@ def content_generation(state: LearningState) -> LearningState:
     return state
 
 
+# def conent_improviser(state: LearningState) -> LearningState:
+#     """
+#     Improviser for content generation.
+#     """
+#     if state.current_resource:
+#         try:
+#             response = user_content_generation.invoke({
+#                 "action": "improvise_content",
+#                 "resource_data": state.generated_content.model_dump()
+#             })
+#
+#             improvised_content = response.content if hasattr(response, "content") else response
+#             print('IMPROVISED CONTENT:', improvised_content)
+#         except ValidationError as e:
+#             print(f"Error improvising content: {e}")
+#
+#     return state
+
+
+def content_improviser(state: LearningState) -> LearningState:
+    if state.user and state.current_resource:
+        try:
+            messages = [
+                SystemMessage(content=CONTENT_GENERATION_SYSTEM_PROMPT),
+                HumanMessage(content=f"""
+
+Learning Resource:
+{state.current_resource.model_dump()}
+
+Instructions:
+- Generate a clear, structured markdown lesson/explanation.
+- Focus on the topic and subtopic.
+- Tailor to user's grade and interests.
+- Return ONLY the markdown content (no JSON or metadata).
+- Care to Explain the topic in a way that is easy to understand.
+""")
+            ]
+
+            response = content_improviser.run(messages)
+            generated_markdown = response
+            state.content = state.content.model_validate(generated_markdown)
+            print('GENERATED CONTENT:', state.content)
+        except Exception as e:
+            print(f"Error generating content: {e}")
+
+    return state
+
 
 builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)
 builder.add_node("learning_resource", learning_resource_node)
 builder.add_node("content_generation", content_generation)
+builder.add_node("content_improviser", content_improviser)
 
 builder.set_entry_point('user_info')
 builder.add_edge("user_info", "learning_resource")
 builder.add_edge("learning_resource", "content_generation")
+builder.add_edge("content_generation", "content_improviser")
 builder.add_edge('content_generation', END)
 
 graph = builder.compile()

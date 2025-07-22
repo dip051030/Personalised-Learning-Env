@@ -3,7 +3,7 @@ import json
 
 from pydantic import BaseModel
 
-from models.llm_models import get_gemini_model
+from models.llm_models import get_gemini_model, get_groq_model
 from schemas import UserInfo, LearningResource, LearningState, ContentResponse
 
 
@@ -137,10 +137,22 @@ Instructions:
             resource_data=json.dumps(resource_data, indent=2)
         )
 
+
+
+CONTENT_GENERATION_SYSTEM_PROMPT = """
+You are an educational content generator and Tutor.
+Generate markdown educational content ONLY based on the input user.
+
+No JSON or metadata, just markdown.
+"""
+
+
 prompt_user = UserSummaryTemplate()
 prompt_resource = LearningResourceTemplate()
 prompt_content_generation = ContentGenerationTemplate()
+prompt_content_improviser = CONTENT_GENERATION_SYSTEM_PROMPT
 
 user_summary = (prompt_user | get_gemini_model(UserInfo))
 learning_resource = (prompt_resource | get_gemini_model(LearningResource))
 user_content_generation = (prompt_content_generation | get_gemini_model(ContentResponse))
+content_improviser = (prompt_content_improviser | get_groq_model(ContentResponse))
