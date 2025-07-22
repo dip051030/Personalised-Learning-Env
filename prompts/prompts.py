@@ -119,6 +119,9 @@ Learning Resource:
 
 Instructions:
 - Generate a clear, structured markdown lesson/explanation.
+- Focus on the topic and subtopic provided.
+- Use headings, bullet points, and code blocks as needed.
+- Ensure the content is educational and engaging.
 - Tailor it to the user's grade level and interests.
 - Return ONLY the markdown content text.
 - Do NOT return JSON, metadata, or extra commentary.
