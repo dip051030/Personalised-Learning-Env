@@ -123,7 +123,7 @@ Instructions:
 - Use headings, bullet points, and code blocks as needed.
 - Ensure the content is educational and engaging.
 - Tailor it to the user's grade level and interests.
-- Return ONLY the markdown content text.
+- Return ONLY the markdown content text and dont introduct yourself or provide any other information.
 - Do NOT return JSON, metadata, or extra commentary.
 """
             ),
@@ -137,12 +137,6 @@ Instructions:
             resource_data=json.dumps(resource_data, indent=2)
         )
 
-    def format_prompt(self, action: str, user_data: dict, resource_data: dict) -> str:
-        return self.format(
-            action=action,
-            user_data=json.dumps(user_data, indent=2),
-            resource_data=json.dumps(resource_data, indent=2)
-        )
 
 prompt_user = UserSummaryTemplate()
 prompt_resource = LearningResourceTemplate()
