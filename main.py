@@ -11,7 +11,7 @@ user_data = {
         "is_active": True
     },
     "current_resource": {
-        "topic": "math",  # Must match ResourceTopic enum
+        "topic": "math",
         "subtopic": "algebra"
     },
     "progress": [

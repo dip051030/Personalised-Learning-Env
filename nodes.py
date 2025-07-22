@@ -56,19 +56,16 @@ def content_generation(state: LearningState) -> LearningState:
                 "resource_data": state.current_resource.model_dump()
             })
 
-            content_data = response.content if hasattr(response, "content") else response
+            content_raw = response.content if hasattr(response, "content") else response
 
-            print('RAW LLM RESPONSE:', content_data)
-
-            state.history.append({
-                "generated_content": content_data
-            })
-
-            # print(response)
-            # print(state.user)
-            # print(state.current_resource)
-            # print(content_data)
-            return content_data
+            # generated_content = content_data.get("generated_content", "") if isinstance(content_data,dict) else content_data
+            print('RAW LLM RESPONSE:', content_raw)
+            # state.history.append({
+            #     "user": state.user.model_dump(),
+            #     "resource": state.current_resource.model_dump(),
+            #     "generated_content": generated_content
+            # })
+            # return content_data
         except Expectation as e:
             print(f"Error generating content: {e}")
 

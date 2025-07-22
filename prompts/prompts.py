@@ -96,27 +96,12 @@ Return the result as a JSON object. Do not include explanations outside the JSON
         )
 
 
-from langchain_core.prompts import PromptTemplate
-import json
-
-from langchain_core.prompts import PromptTemplate
-import json
-
-from langchain_core.prompts import PromptTemplate
-import json
-
 class ContentGenerationTemplate(PromptTemplate):
     """
-    Prompt to generate educational content with strict JSON structure.
+    Prompt to generate markdown educational content ONLY.
 
-    Expected output format:
-    {
-      "user": "<natural language summary>",
-      "resource": "<summary of the topic/subtopic>",
-      "generated_content": "<markdown lesson based on the topic and user's level>"
-    }
-
-    Only return this JSON. No extra explanations or markdown outside the JSON.
+    The model must return ONLY the markdown content as a plain string.
+    No JSON, no metadata, no explanations outside the content.
     """
 
     def __init__(self):
@@ -133,14 +118,10 @@ Learning Resource:
 {resource_data}
 
 Instructions:
-- Generate structured, grade-appropriate markdown content under "generated_content".
-- Your response MUST be a valid JSON object with exactly these 3 keys:
-
-Return this exact format (no backticks, no explanations):
-
-{{
-  "generated_content": "## Title\\n\\nContent here... Use bullets, equations, examples if helpful."
-}}
+- Generate a clear, structured markdown lesson/explanation.
+- Tailor it to the user's grade level and interests.
+- Return ONLY the markdown content text.
+- Do NOT return JSON, metadata, or extra commentary.
 """
             ),
             input_variables=["action", "user_data", "resource_data"]
@@ -153,7 +134,12 @@ Return this exact format (no backticks, no explanations):
             resource_data=json.dumps(resource_data, indent=2)
         )
 
-
+    def format_prompt(self, action: str, user_data: dict, resource_data: dict) -> str:
+        return self.format(
+            action=action,
+            user_data=json.dumps(user_data, indent=2),
+            resource_data=json.dumps(resource_data, indent=2)
+        )
 
 prompt_user = UserSummaryTemplate()
 prompt_resource = LearningResourceTemplate()
