@@ -33,4 +33,3 @@ user_data = {
 
 output = graph_run(user_data)
 logging.info(f"Graph output: {output}")
-print(output)

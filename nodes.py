@@ -51,6 +51,64 @@ def learning_resource_node(state: LearningState) -> LearningState:
     return state
 
 
+
+def route_selector_node(state: LearningState) -> LearningState:
+    if state.user is not None and state.current_resource is not None:
+        try:
+            response  = decision_node(state=state).lower()
+
+            if response == "blog":
+                logging.info("Blog generation route selected.")
+                return "blog_generation"
+            elif response == "lesson":
+                logging.info("Lesson generation route selected.")
+                return "lesson_generation"
+            else:
+                logging.info("Defaulting to lesson generation route.")
+                return "lesson_generation"
+        except Exception as e:
+            logging.error(f"Error selecting route: {e}")
+
+    return state
+
+
+def generate_lesson_content(state: LearningState) -> LearningState:
+    if state.user is not None and state.current_resource is not None:
+        try:
+            logical_response = lesson_decision_node(state=state)
+            logging.info(f"Logical response for lesson generation: {logical_response}")
+            response = lesson_content_generator.invoke({
+                "action": "generate_lesson",
+                "user_data": state.user.model_dump(),
+                "resource_data": state.current_resource.model_dump(),
+                "style": logical_response
+            })
+
+
+            state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
+
+        except Expectation as e:
+            logging.error(f"Error generating lesson content: {e}")
+
+def generate_blog_content(state: LearningState) -> LearningState:
+    if state.user is not None and state.current_resource is not None:
+        try:
+            logical_response = blog_decision_node(state=state)
+            logging.info(f"Logical response for lesson generation: {logical_response}")
+            response = lesson_content_generator.invoke({
+                "action": "generate_lesson",
+                "user_data": state.user.model_dump(),
+                "resource_data": state.current_resource.model_dump(),
+                "style": logical_response
+            })
+
+
+            state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
+
+        except Expectation as e:
+            logging.error(f"Error generating blog content: {e}")
+
+
 def content_generation(state: LearningState) -> LearningState:
     """
     Generate content based on the current state.
@@ -121,62 +179,6 @@ Unpolished Learning Resource:
 
     return state
 
-
-def route_selector_node(state: LearningState) -> LearningState:
-    if state.user is not None and state.current_resource is not None:
-        try:
-            response  = decision_node(state=state).lower()
-
-            if response == "blog":
-                logging.info("Blog generation route selected.")
-                return "blog_generation"
-            elif response == "lesson":
-                logging.info("Lesson generation route selected.")
-                return "lesson_generation"
-            else:
-                logging.info("Defaulting to lesson generation route.")
-                return "lesson_generation"
-        except Exception as e:
-            logging.error(f"Error selecting route: {e}")
-
-    return state
-
-
-def generate_lesson_content(state: LearningState) -> LearningState:
-    if state.user is not None and state.current_resource is not None:
-        try:
-            logical_response = lesson_decision_node(state=state)
-            logging.info(f"Logical response for lesson generation: {logical_response}")
-            response = lesson_content_generator.invoke({
-                "action": "generate_lesson",
-                "user_data": state.user.model_dump(),
-                "resource_data": state.current_resource.model_dump(),
-                "style": logical_response
-            })
-
-
-            state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
-
-        except Expectation as e:
-            logging.error(f"Error generating lesson content: {e}")
-
-def generate_blog_content(state: LearningState) -> LearningState:
-    if state.user is not None and state.current_resource is not None:
-        try:
-            logical_response = blog_decision_node(state=state)
-            logging.info(f"Logical response for lesson generation: {logical_response}")
-            response = lesson_content_generator.invoke({
-                "action": "generate_lesson",
-                "user_data": state.user.model_dump(),
-                "resource_data": state.current_resource.model_dump(),
-                "style": logical_response
-            })
-
-
-            state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
-
-        except Expectation as e:
-            logging.error(f"Error generating blog content: {e}")
 
 builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)
