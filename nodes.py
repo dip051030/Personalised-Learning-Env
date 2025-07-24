@@ -5,7 +5,7 @@ from pydantic_core import ValidationError
 from sympy.stats import Expectation
 import logging
 
-from logis.logical_functions import decision_node, lesson_decision_node
+from logis.logical_functions import decision_node, lesson_decision_node, blog_decision_node
 from prompts.prompts import user_summary, learning_resource, user_content_generation, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT
 from schemas import LearningState, ContentResponse
@@ -155,7 +155,28 @@ def generate_lesson_content(state: LearningState) -> LearningState:
             })
 
 
-            state.generated_content = ContentResponse(content=content_raw)
+            state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
+
+        except Expectation as e:
+            logging.error(f"Error generating lesson content: {e}")
+
+def generate_blog_content(state: LearningState) -> LearningState:
+    if state.user is not None and state.current_resource is not None:
+        try:
+            logical_response = blog_decision_node(state=state)
+            logging.info(f"Logical response for lesson generation: {logical_response}")
+            response = lesson_content_generator.invoke({
+                "action": "generate_lesson",
+                "user_data": state.user.model_dump(),
+                "resource_data": state.current_resource.model_dump(),
+                "style": logical_response
+            })
+
+
+            state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
+
+        except Expectation as e:
+            logging.error(f"Error generating blog content: {e}")
 
 builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)
