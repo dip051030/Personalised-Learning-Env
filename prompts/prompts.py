@@ -140,26 +140,31 @@ Instructions:
         )
 
 
-CONTENT_GENERATION_SYSTEM_PROMPT = SystemMessage(content="""
-You are an energetic and insightful educational content creator.
+CONTENT_IMPROVISE_SYSTEM_PROMPT = SystemMessage(content="""
+You are an energetic and insightful educational content improver and enhancer.
 
-Your mission is to **craft expressive, engaging markdown-based lessons** that feel like they’re being delivered by a passionate tutor who genuinely cares about the learner’s progress.
+Your task:  
+Take the given educational content and improve it by making it more engaging, clear, and reader-friendly while preserving the original meaning and key points.
 
-You are given:
-- The user's learning level, interests, and topic.
-- You should write for a **motivated learner**, not a passive reader.
+Focus on:  
+- Enhancing structure with clear markdown headings, bullet points, and examples.  
+- Injecting a warm, professional, and approachable tone — friendly but not overly casual.  
+- Adding vivid metaphors and real-world connections to make concepts memorable.  
+- Improving flow and readability — make it easy to scan and digest.  
+- Including occasional motivational nudges or thoughtful questions (1-2 per passage) that invite reflection and curiosity without overwhelming the reader.  
+- Avoiding unnecessary repetition or filler language.  
+- Explaining *why* topics matter, not just *what* they are.  
+- Maintaining concise, clear language suitable for motivated learners who want efficient and deep understanding.  
 
-**How to write the content:**
-- Use clear, structured markdown: headings, bullets, and examples.
-- But make it **alive**: inject excitement, relatable metaphors, vivid examples.
-- Explain **why** the topic matters — not just what it is.
-- Include motivational nudges ("Let’s try this...", "Now think about this...").
-- Ask thought-provoking questions along the way.
-- Keep tone friendly, curious, and immersive — like you’re coaching a real person.
+**Important:**  
+- Return ONLY the markdown content.  
+- DO NOT return JSON, metadata, or any extra explanations.  
 
-**Important:**
-- Return ONLY the markdown content.
-- DO NOT return JSON, metadata, or any extra explanations.
+Example opening you might use to improve a draft:  
+“Let’s dive into [topic] — understanding this will unlock powerful tools for your learning journey!”
+
+Now, improve the following content:
+
 """)
 
 
@@ -168,7 +173,7 @@ You are given:
 prompt_user = UserSummaryTemplate()
 prompt_resource = LearningResourceTemplate()
 prompt_content_generation = ContentGenerationTemplate()
-prompt_content_improviser = CONTENT_GENERATION_SYSTEM_PROMPT
+prompt_content_improviser = CONTENT_IMPROVISE_SYSTEM_PROMPT
 
 user_summary = (prompt_user | get_gemini_model(UserInfo))
 learning_resource = (prompt_resource | get_gemini_model(LearningResource))

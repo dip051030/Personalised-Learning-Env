@@ -3,7 +3,8 @@ from langgraph.graph import StateGraph, START, END
 from pydantic_core import ValidationError
 from sympy.stats import Expectation
 
-from prompts.prompts import user_summary, learning_resource, user_content_generation, CONTENT_GENERATION_SYSTEM_PROMPT, content_improviser
+from prompts.prompts import user_summary, learning_resource, user_content_generation, \
+    content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT
 from schemas import LearningState, ContentResponse
 import  json
 
@@ -98,7 +99,7 @@ def content_improviser_node(state: LearningState) -> LearningState:
     if state.generated_content is not None:
         try:
             messages = [
-                CONTENT_GENERATION_SYSTEM_PROMPT,
+                CONTENT_IMPROVISE_SYSTEM_PROMPT,
                 HumanMessage(content=f"""
 
 Unpolished Learning Resource:
