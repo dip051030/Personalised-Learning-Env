@@ -146,7 +146,6 @@ builder.add_node("content_improviser", content_improviser_node)
 
 builder.set_entry_point('user_info')
 builder.add_edge("user_info", "learning_resource")
-builder.add_edge("learning_resource", "route_selector")
 builder.add_edge("learning_resource", "content_generation")
 builder.add_edge("content_generation", "content_improviser")
 builder.add_edge('content_generation', END)
