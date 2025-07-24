@@ -61,7 +61,12 @@ class LearningState(BaseModel):
     user: UserInfo
     current_resource: Optional[LearningResource] = None
     progress: List[UserProgress] = []
-    generated_content: Optional[ContentResponse] = None
+
+    # NEW for advanced content workflow
+    topic_data: Optional[dict] = None
+    related_examples: Optional[List[str]] = None
+    content_type: Optional[str] = "lesson"  # or "blog"
+
+    content: Optional[ContentResponse] = None  # Final markdown output
     next_action: Optional[str] = 'lesson_selection'
     history: List[HistoryEntry] = []
-
