@@ -1,9 +1,11 @@
 from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.graph import StateGraph, START, END
+from langsmith import expect
 from pydantic_core import ValidationError
 from sympy.stats import Expectation
 import logging
 
+from logis.logical_functions import decision_node
 from prompts.prompts import user_summary, learning_resource, user_content_generation, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT
 from schemas import LearningState, ContentResponse
@@ -123,16 +125,28 @@ Unpolished Learning Resource:
 def route_selector_node(state: LearningState) -> LearningState:
     if state.user is not None and state.current_resource is not None:
         try:
-            reponse  =
+            response  = decision_node(state=state).lower()
+
+            if response == "blog":
+                return "blog_generation"
+            elif response == "lesson":
+                return "lesson_generation"
+            else:
+                return "lesson_generation"
+        except Exception as e:
+            logging.error(f"Error selecting route: {e}")
+
 
 builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)
 builder.add_node("learning_resource", learning_resource_node)
+builder.add_node("route_selector", route_selector_node)
 builder.add_node("content_generation", content_generation)
 builder.add_node("content_improviser", content_improviser_node)
 
 builder.set_entry_point('user_info')
 builder.add_edge("user_info", "learning_resource")
+builder.add_edge("learning_resource", "route_selector")
 builder.add_edge("learning_resource", "content_generation")
 builder.add_edge("content_generation", "content_improviser")
 builder.add_edge('content_generation', END)
