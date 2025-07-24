@@ -2,11 +2,14 @@ from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.graph import StateGraph, START, END
 from pydantic_core import ValidationError
 from sympy.stats import Expectation
+import logging
 
 from prompts.prompts import user_summary, learning_resource, user_content_generation, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT
 from schemas import LearningState, ContentResponse
 import  json
+
+logging.basicConfig(level=logging.INFO)
 
 
 def user_info_node(state: LearningState) -> LearningState:
@@ -19,9 +22,9 @@ def user_info_node(state: LearningState) -> LearningState:
 
             user_data = response.content if hasattr(response, 'content') else response
             state.user = state.user.model_validate(user_data if isinstance(user_data, dict) else user_data.model_dump())
-            # print(state.user)
+            logging.info(f"User info processed: {state.user}")
         except Exception as e:
-            print(f"Error processing user data: {e}")
+            logging.error(f"Error processing user data: {e}")
     return state
 
 
@@ -39,9 +42,9 @@ def learning_resource_node(state: LearningState) -> LearningState:
 
             resource_data = response.content if hasattr(response, "content") else response
             state.current_resource = state.current_resource.model_validate(resource_data)
-            # print(state.current_resource)
+            logging.info(f"Learning resource processed: {state.current_resource}")
         except Exception as e:
-            print(f"Error processing learning resource data: {e}")
+            logging.error(f"Error processing learning resource data: {e}")
 
     return state
 
@@ -63,6 +66,7 @@ def content_generation(state: LearningState) -> LearningState:
             # generated_content = content_data.get("generated_content", "") if isinstance(content_data,dict) else content_data
             # print('RAW LLM RESPONSE:', content_raw)
             state.generated_content = ContentResponse(content = content_raw)
+            logging.info(f"Content generated: {state.generated_content}")
             # print('GENERATED CONTENT:', state.generated_content)
             # state.history.append({
             #     "user": state.user.model_dump(),
@@ -71,7 +75,7 @@ def content_generation(state: LearningState) -> LearningState:
             # })
             # return content_data
         except Expectation as e:
-            print(f"Error generating content: {e}")
+            logging.error(f"Error generating content: {e}")
 
     return state
 
@@ -109,13 +113,17 @@ Unpolished Learning Resource:
 
             response = content_improviser(messages)
             generated_markdown = response.content if hasattr(response, "content") else str(response)
-            print('Improvised:', generated_markdown)
-            # print('GENERATED CONTENT:', state.content)
+            logging.info(f"Improvised content: {generated_markdown}")
         except Exception as e:
-            print(f"Error improvising content: {e}")
+            logging.error(f"Error improvising content: {e}")
 
     return state
 
+
+def route_selector_node(state: LearningState) -> LearningState:
+    if state.user is not None and state.current_resource is not None:
+        try:
+            reponse  =
 
 builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)

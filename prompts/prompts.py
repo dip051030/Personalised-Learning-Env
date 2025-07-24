@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 from models.llm_models import get_gemini_model, get_groq_model
 from schemas import UserInfo, LearningResource, LearningState, ContentResponse
+from nodes import user_info_node, learning_resource_node, content_generation, content_improviser_node
 
 
 # ---------------------------------------------------------------------------------
@@ -167,6 +168,14 @@ Now, improve the following content:
 
 """)
 
+class RouteSelectorNode(PromptTemplate):
+    def __init__(self):
+        super.__init__(
+            template = '''
+            You are a route selector for an educational learning system.
+            Your task is to determine the next action based on the user''s current state and progress.'''
+    )
+
 
 
 
@@ -174,8 +183,15 @@ prompt_user = UserSummaryTemplate()
 prompt_resource = LearningResourceTemplate()
 prompt_content_generation = ContentGenerationTemplate()
 prompt_content_improviser = CONTENT_IMPROVISE_SYSTEM_PROMPT
+prompt_route_selector = RouteSelectorNode()
 
-user_summary = (prompt_user | get_gemini_model(UserInfo))
-learning_resource = (prompt_resource | get_gemini_model(LearningResource))
-user_content_generation = (prompt_content_generation | get_gemini_model(ContentResponse))
+user_summary = (prompt_user | get_geminit_gemini_model(LearningResource))
+user_content_generation = (prompt_content_model(UserInfo))
+learning_resource = (prompt_resource | ge_generation | get_gemini_model(ContentResponse))
 content_improviser = get_groq_model()
+
+# Node references for graph construction or direct use
+user_info = user_info_node
+learning_resource = learning_resource_node
+content_generation_node = content_generation
+content_improviser = content_improviser_node

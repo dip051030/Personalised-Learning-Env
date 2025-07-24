@@ -1,6 +1,9 @@
 import json
+import logging
 from nodes import graph_run
 
+
+logging.basicConfig(level=logging.INFO)
 
 user_data = {
     "user": {
@@ -29,4 +32,5 @@ user_data = {
 }
 
 output = graph_run(user_data)
+logging.info(f"Graph output: {output}")
 print(output)

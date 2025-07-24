@@ -62,7 +62,6 @@ class LearningState(BaseModel):
     current_resource: Optional[LearningResource] = None
     progress: List[UserProgress] = []
     generated_content: Optional[ContentResponse] = None
-
-    next_action: str = "select_resource"
+    next_action: Optional[str] = 'lesson_selection'
     history: List[HistoryEntry] = []
 
