@@ -76,7 +76,7 @@ class LearningResourceTemplate(PromptTemplate):
 {current_resources_data}
 
 Your task:
-- For every field present (e.g., `topic`, `subtopic`), summarize it in natural language.
+- For every field present (e.g., `subject`, `subtopic`), summarize it in natural language.
 - Relate the content back to the user's needs or learning goals if applicable.
 - Maintain the same keys as input.
 
@@ -121,7 +121,7 @@ Learning Resource:
 Instructions:
 - Generate a clear, structured markdown lesson/explanation.
 - Explain concepts in a way that feels like a friendly tutor.
-- Focus on the topic and subtopic provided.
+- Focus on the subject and subtopic provided.
 - Use headings, bullet points, and code blocks as needed.
 - Ensure the content is educational and engaging.
 - Tailor it to the user's grade level and interests.
@@ -153,7 +153,7 @@ Focus on:
 - Improving flow and readability — make it easy to scan and digest.  
 - Including occasional motivational nudges or thoughtful questions (1-2 per passage) that invite reflection and curiosity without overwhelming the reader.  
 - Avoiding unnecessary repetition or filler language.  
-- Explaining *why* topics matter, not just *what* they are.  
+- Explaining *why* subtopics matter, not just *what* they are.  
 - Maintaining concise, clear language suitable for motivated learners who want efficient and deep understanding.  
 
 **Important:**  
@@ -161,7 +161,7 @@ Focus on:
 - DO NOT return JSON, metadata, or any extra explanations.  
 
 Example opening you might use to improve a draft:  
-“Let’s dive into [topic] — understanding this will unlock powerful tools for your learning journey!”
+“Let’s dive into [subject] — understanding this will unlock powerful tools for your learning journey!”
 
 Now, improve the following content:
 

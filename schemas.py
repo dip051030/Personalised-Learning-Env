@@ -28,7 +28,7 @@ class ResourceTopic(str, Enum):
 
 
 class LearningResource(BaseModel):
-    topic: ResourceTopic
+    subject: ResourceTopic
     subtopic: str
 
     class Config:
