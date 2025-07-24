@@ -86,7 +86,7 @@ def generate_lesson_content(state: LearningState) -> LearningState:
 
 
             state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
-
+            print('GENERATED CONTENT:', state.generated_content)
         except Expectation as e:
             logging.error(f"Error generating lesson content: {e}")
 
@@ -102,7 +102,7 @@ def generate_blog_content(state: LearningState) -> LearningState:
                 "style": logical_response
             })
 
-
+            print('GENERATED CONTENT:', response)
             state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
 
         except Expectation as e:
@@ -122,18 +122,8 @@ def content_generation(state: LearningState) -> LearningState:
             })
 
             content_raw = response.content if hasattr(response, "content") else response
-
-            # generated_content = content_data.get("generated_content", "") if isinstance(content_data,dict) else content_data
-            # print('RAW LLM RESPONSE:', content_raw)
             state.generated_content = ContentResponse(content = content_raw)
             logging.info(f"Content generated: {state.generated_content}")
-            # print('GENERATED CONTENT:', state.generated_content)
-            # state.history.append({
-            #     "user": state.user.model_dump(),
-            #     "resource": state.current_resource.model_dump(),
-            #     "generated_content": generated_content
-            # })
-            # return content_data
         except Expectation as e:
             logging.error(f"Error generating content: {e}")
 
