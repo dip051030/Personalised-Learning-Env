@@ -7,26 +7,25 @@ logging.basicConfig(level=logging.INFO)
 
 user_data = {
     "user": {
-        "username": "dyane_master",
-        "age": 22,
-        "grade": 12.5,
+        "username": "anonymous",
+        "age": 18,
+        "grade": 19,
         "id": 1,
         "is_active": True
     },
     "current_resource": {
-        "subject": "math",
-        "topic": "algebra"
+        "subject": "physics",
+        "grade": 12,
+        "unit": "Mechanics",
+        "topic_id": '',
+        "topic": "period of pendulum",
+        "description": "",
+        "elaboration": "",
+        "keywords": [],
+        "hours": None,
+        "references": ""
     },
-    "progress": [
-        {
-            "id": 101,
-            "resource_topic": {
-                "subject": "math",
-                "topic": "algebra"
-            },
-            "completed": False
-        }
-    ],
+    "progress": [],
     "next_action": "select_resource",
     "history": []
 }
