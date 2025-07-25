@@ -3,141 +3,200 @@ from typing import Optional, Union, List, Dict
 from pydantic import BaseModel, Field
 from datetime import datetime
 
-# Enum for subjects, extensible for future use
+# -----------------------------
+# ✅ ENUMS: Standard subject and content types
+# -----------------------------
+
 class ResourceSubject(str, Enum):
+    """Academic subjects supported by the system."""
     PHYSICS = "physics"
     CHEMISTRY = "chemistry"
     MATH = "math"
     ENGLISH = "english"
     SCIENCE = "science"
 
-# Enum for content types
 class ContentType(str, Enum):
+    """Types of educational content that can be generated or tracked."""
     LESSON = "lesson"
     QUIZ = "quiz"
     PROJECT = "project"
     PRACTICAL = "practical"
 
-# User information model
+# -----------------------------
+# ✅ CURRICULUM MODELS: Structure of the official curriculum
+# -----------------------------
+
+class Topic(BaseModel):
+    """Represents a single topic in a curriculum unit."""
+    topic_id: str
+    description: str
+    elaboration: str
+    keywords: List[str]
+    hours: int
+    references: str
+
+class Unit(BaseModel):
+    """Groups multiple related topics under one curriculum unit."""
+    unit: str
+    topics: List[Topic]
+
+class Objective(BaseModel):
+    """Defines learning objectives for the subject."""
+    id: int
+    description: str
+
+class PracticalActivity(BaseModel):
+    """Describes practical experiments or lab work in the syllabus."""
+    id: int
+    description: str
+    unit: str
+    hours: int
+    elaboration: str
+    keywords: List[str]
+    references: str
+
+class InternalAssessmentComponent(BaseModel):
+    """Details components of internal evaluation (e.g., class participation)."""
+    description: str
+    marks: int
+    elaboration: str
+
+class ExternalAssessment(BaseModel):
+    """Structure of external board-level evaluation."""
+    weightage: int
+    description: str
+    references: str
+
+class AssessmentApproach(BaseModel):
+    """Skills-based evaluation methods used in learning facilitation."""
+    type: str
+    description: str
+    marks: int
+    elaboration: str
+
+class LearningFacilitation(BaseModel):
+    """Teaching methods and assessment strategies recommended by the curriculum."""
+    methods: List[str]
+    assessment_approach: List[AssessmentApproach]
+    references: str
+
+class MeasurementTool(BaseModel):
+    """Instruments used in lab or physical measurements."""
+    tool: str
+    precision: str
+    use: str
+
+class CurriculumMetadata(BaseModel):
+    """Administrative details of the curriculum document."""
+    curriculum_year: int
+    publisher: str
+    language: str
+    references: str
+
+class CurriculumIntro(BaseModel):
+    """General introduction to the curriculum."""
+    description: str
+
+class Evaluation(BaseModel):
+    """Overall grading strategy combining internal and external components."""
+    internal: Dict[str, Union[int, List[InternalAssessmentComponent]]]
+    external: ExternalAssessment
+
+class LearningCurriculum(BaseModel):
+    """Full curriculum structure for a subject and grade."""
+    subject: str
+    grade: int
+    credit_hours: int
+    subject_code: str
+    metadata: CurriculumMetadata
+    introduction: CurriculumIntro
+    objectives: List[Objective]
+    scope_and_sequence: List[Unit]
+    practical_activities: List[PracticalActivity]
+    evaluation: Evaluation
+    learning_facilitation: LearningFacilitation
+    measurement_tools: List[MeasurementTool]
+
+class CurriculumWrapper(BaseModel):
+    """Wrapper for loading a full curriculum JSON into a single root object."""
+    curriculum: LearningCurriculum
+
+# -----------------------------
+# ✅ USER + LEARNING MODELS: User data and learning session tracking
+# -----------------------------
+
 class UserInfo(BaseModel):
-    username: str = Field(description="The user's username or handle (e.g., Dip).")
-    age: Union[int, float, str] = Field(
-        description="The user's age. Can be an integer, float, or string (e.g., '22 years old').")
-    grade: Optional[Union[int, float, str]] = Field(
-        default=None,
-        description="The user's grade level (e.g., 11, 12, or 'Grade 11').")
-    id: Union[str, int] = Field(description="Unique identifier for the user.")
-    is_active: bool = Field(default=True, description="Indicates if the user account is active.")
+    """User profile information."""
+    username: str
+    age: Union[int, float, str]
+    grade: Optional[Union[int, float, str]] = None
+    id: Union[str, int]
+    is_active: bool = True
 
     class Config:
         from_attributes = True
 
-# Enhanced Learning Resource model to map to curriculum JSON
 class LearningResource(BaseModel):
-    subject: ResourceSubject = Field(description="Subject of the resource, e.g., Physics.")
-    grade: int = Field(description="Grade level (11 or 12).")
-    unit: str = Field(description="Curriculum unit, e.g., Mechanics, Thermodynamics.")
-    topic_id: str = Field(default='', description="Unique topic identifier from curriculum JSON, e.g., '2.5'.")
-    topic: str = Field(description="Topic name, e.g., 'Derive expression for period of simple pendulum'.")
-    description: str = Field(description="Brief description of the topic.")
-    elaboration: Optional[str] = Field(
-        default=None,
-        description="Detailed explanation with real-world applications, e.g., 'Used in timekeeping devices.'"
-    )
-    keywords: List[str] = Field(description="Keywords for semantic search, e.g., ['pendulum', 'oscillation'].")
-    hours: int = Field(description="Teaching hours allocated to the topic.")
-    references: str = Field(description="Reference to curriculum source, e.g., 'Page 27'.")
+    """A flattened topic extracted from curriculum and prepared for delivery or search."""
+    subject: ResourceSubject
+    grade: int
+    unit: str
+    topic_id: str
+    topic: str
+    description: str
+    elaboration: Optional[str] = None
+    keywords: List[str]
+    hours: int
+    references: str
 
     class Config:
         from_attributes = True
 
-# Progress tracking for specific topics or activities
 class UserProgress(BaseModel):
-    id: int = Field(description="Unique progress entry ID.")
-    user_id: Union[str, int] = Field(description="Reference to UserInfo.id.")
-    resource: LearningResource = Field(description="The learning resource being tracked.")
-    completed: bool = Field(default=False, description="Completion status of the topic.")
-    completion_date: Optional[datetime] = Field(
-        default=None,
-        description="Date when the topic was completed."
-    )
-    score: Optional[float] = Field(
-        default=None,
-        description="Score or performance metric (e.g., quiz score out of 100)."
-    )
+    """Tracks the user's progress on a specific topic or activity."""
+    id: int
+    user_id: Union[str, int]
+    resource: LearningResource
+    completed: bool = False
+    completion_date: Optional[datetime] = None
+    score: Optional[float] = None
 
     class Config:
         from_attributes = True
 
-# Enhanced content response for RAG-generated output
 class ContentResponse(BaseModel):
-    content: str = Field(description="Markdown-formatted educational content generated by the model.")
-    content_type: ContentType = Field(description="Type of content: lesson, quiz, project, or practical.")
-    topic_id: Optional[str] = Field(
-        default=None,
-        description="Reference to the topic_id from LearningResource."
-    )
-    keywords: Optional[List[str]] = Field(
-        default=None,
-        description="Keywords associated with the content for retrieval."
-    )
-    references: Optional[str] = Field(
-        default=None,
-        description="Source references, e.g., 'Secondary Education Curriculum 2076, Page 27'."
-    )
-    socratic_questions: Optional[List[str]] = Field(
-        default=None,
-        description="Socratic-style questions to encourage critical thinking, e.g., 'How does pendulum period relate to gravity?'"
-    )
+    """Output generated by the LLM (lessons, quizzes, etc)."""
+    content: str
+    content_type: ContentType
+    topic_id: Optional[str] = None
+    keywords: Optional[List[str]] = None
+    references: Optional[str] = None
+    socratic_questions: Optional[List[str]] = None
 
     class Config:
         from_attributes = True
 
-# History entry for tracking user interactions
 class HistoryEntry(BaseModel):
-    user_id: Union[str, int] = Field(description="Reference to UserInfo.id.")
-    resource: LearningResource = Field(description="Resource accessed by the user.")
-    timestamp: datetime = Field(description="Time of interaction.")
-    action: str = Field(description="Action taken, e.g., 'viewed', 'completed', 'quiz_taken'.")
+    """Logs a single user action (e.g., viewed content)."""
+    user_id: Union[str, int]
+    resource: LearningResource
+    timestamp: datetime
+    action: str
 
     class Config:
         from_attributes = True
 
-# Learning state for managing user’s learning journey
 class LearningState(BaseModel):
-    user: UserInfo = Field(description="User information.")
-    current_resource: Optional[LearningResource] = Field(
-        default=None,
-        description="The current topic or resource being studied."
-    )
-    progress: List[UserProgress] = Field(
-        default_factory=list,
-        description="List of user progress entries for tracking completion."
-    )
-    topic_data: Optional[Dict] = Field(
-        default=None,
-        description="Additional topic metadata or embeddings for RAG retrieval."
-    )
-    related_examples: Optional[List[str]] = Field(
-        default=None,
-        description="Real-world examples related to the current topic, e.g., 'Planetary orbits for centripetal force.'"
-    )
-    content_type: ContentType = Field(
-        default=ContentType.LESSON,
-        description="Type of content being delivered: lesson, quiz, project, blog, or practical."
-    )
-    content: Optional[ContentResponse] = Field(
-        default=None,
-        description="Generated content for the current learning session."
-    )
-    next_action: Optional[str] = Field(
-        default="lesson_selection",
-        description="Suggested next action, e.g., 'next_topic', 'take_quiz', 'start_project'."
-    )
-    history: List[HistoryEntry] = Field(
-        default_factory=list,
-        description="History of user interactions with resources."
-    )
+    """Tracks the session state of a user's learning journey across all nodes."""
+    user: UserInfo
+    current_resource: Optional[LearningResource] = None
+    progress: List[UserProgress] = []
+    topic_data: Optional[Dict] = None
+    related_examples: Optional[List[str]] = None
+    content_type: ContentType = ContentType.LESSON
+    content: Optional[ContentResponse] = None
+    next_action: Optional[str] = "lesson_selection"
+    history: List[HistoryEntry] = []
 
     class Config:
         from_attributes = True
