@@ -15,14 +15,14 @@ user_data = {
     },
     "current_resource": {
         "subject": "math",
-        "subtopic": "algebra"
+        "topic": "algebra"
     },
     "progress": [
         {
             "id": 101,
             "resource_topic": {
                 "subject": "math",
-                "subtopic": "algebra"
+                "topic": "algebra"
             },
             "completed": False
         }

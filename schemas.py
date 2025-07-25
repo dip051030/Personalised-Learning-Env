@@ -29,7 +29,7 @@ class ResourceTopic(str, Enum):
 
 class LearningResource(BaseModel):
     subject: ResourceTopic
-    subtopic: str
+    topic: str
 
     class Config:
         from_attributes = True
