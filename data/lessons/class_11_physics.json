@@ -1,411 +1,327 @@
-{
-  "curriculum": {
+[
+  {
     "subject": "Physics",
     "grade": 11,
-    "credit_hours": 5,
-    "subject_code": "Phy. 101",
-    "metadata": {
-      "curriculum_year": 2076,
-      "publisher": "Curriculum Development Centre, Nepal",
-      "language": "English",
-      "references": "Secondary Education Curriculum 2076 (Physics), Pages 26-62"
-    },
-    "introduction": {
-      "description": "The Grade 11 Physics curriculum introduces students to fundamental concepts in mechanics, heat and thermodynamics, waves and optics, and electricity and magnetism, fostering critical thinking and practical application skills for real-world scenarios like motion analysis and electrical circuit design."
-    },
-    "objectives": [
-      {
-        "id": 1,
-        "description": "Understand fundamental physics principles across mechanics, thermodynamics, waves, and electricity."
-      },
-      {
-        "id": 2,
-        "description": "Apply physics concepts to solve real-world problems, such as calculating energy requirements or motion dynamics."
-      },
-      {
-        "id": 3,
-        "description": "Conduct experiments to validate physical laws and analyze data using graphical methods."
-      },
-      {
-        "id": 4,
-        "description": "Promote care for the environment, indigenous knowledge, social values, and ethics through physics applications."
-      },
-      {
-        "id": 5,
-        "description": "Construct simple models to illustrate physical concepts, such as pendulums or electrical circuits."
-      }
-    ],
-    "scope_and_sequence": [
-      {
-        "unit": "Mechanics",
-        "topics": [
-          {
-            "topic_id": "2.5",
-            "description": "Derive expression for period of simple pendulum",
-            "elaboration": "Calculate the period of a simple pendulum using the formula T = 2π√(L/g), with applications in timekeeping devices.",
-            "keywords": ["simple pendulum", "period", "oscillation", "gravity"],
-            "hours": 10,
-            "references": "Page 27"
-          },
-          {
-            "topic_id": "2.6",
-            "description": "Describe scalar and vector products",
-            "elaboration": "Explain scalar (dot) and vector (cross) products, with examples like work (scalar) and torque (vector) calculations.",
-            "keywords": ["scalar product", "vector product", "dot product", "cross product"],
-            "hours": 10,
-            "references": "Page 28"
-          },
-          {
-            "topic_id": "2.7",
-            "description": "Understand the meaning and applications of scalar and vector products",
-            "elaboration": "Apply scalar products to compute work done and vector products for torque in mechanical systems.",
-            "keywords": ["work", "torque", "scalar product", "vector product"],
-            "hours": 10,
-            "references": "Page 28"
-          },
-          {
-            "topic_id": "3.2",
-            "description": "Relative velocity",
-            "elaboration": "Analyze motion of objects relative to different reference frames, such as a boat crossing a river.",
-            "keywords": ["relative velocity", "reference frame", "motion"],
-            "hours": 9,
-            "references": "Page 46"
-          },
-          {
-            "topic_id": "3.3",
-            "description": "Equation of motion using calculus and graphical methods",
-            "elaboration": "Derive equations of motion using integration and analyze motion graphs (e.g., velocity vs. time).",
-            "keywords": ["equations of motion", "calculus", "graphical analysis"],
-            "hours": 9,
-            "references": "Page 46"
-          },
-          {
-            "topic_id": "4.2",
-            "description": "Define and use force as rate of change of momentum",
-            "elaboration": "Relate force to momentum change in dynamic systems, such as rocket propulsion.",
-            "keywords": ["force", "momentum", "Newton’s second law"],
-            "hours": 8,
-            "references": "Page 29"
-          },
-          {
-            "topic_id": "4.3",
-            "description": "State and prove the principle of conservation of linear momentum",
-            "elaboration": "Demonstrate conservation of momentum in collisions, such as billiard ball interactions.",
-            "keywords": ["conservation of momentum", "collisions", "linear momentum"],
-            "hours": 8,
-            "references": "Page 29"
-          },
-          {
-            "topic_id": "6.3",
-            "description": "Define centripetal force",
-            "elaboration": "Explain the force required for circular motion, with examples like planetary orbits or car turns.",
-            "keywords": ["centripetal force", "circular motion", "orbits"],
-            "hours": 9,
-            "references": "Page 29"
-          },
-          {
-            "topic_id": "6.4",
-            "description": "Derive the expression for centripetal acceleration and solve related problems",
-            "elaboration": "Derive a = v²/r and apply it to problems like satellite motion.",
-            "keywords": ["centripetal acceleration", "circular motion", "velocity"],
-            "hours": 9,
-            "references": "Page 30"
-          },
-          {
-            "topic_id": "6.7",
-            "description": "Conical pendulum",
-            "elaboration": "Analyze the motion of a conical pendulum and derive its period, used in mechanical systems like governors.",
-            "keywords": ["conical pendulum", "period", "circular motion"],
-            "hours": 9,
-            "references": "Page 47"
-          },
-          {
-            "topic_id": "6.8",
-            "description": "Motion in a vertical circle",
-            "elaboration": "Study forces and energy in vertical circular motion, such as a roller coaster loop.",
-            "keywords": ["vertical circle", "energy conservation", "circular motion"],
-            "hours": 9,
-            "references": "Page 47"
-          },
-          {
-            "topic_id": "6.9",
-            "description": "Applications of banking",
-            "elaboration": "Apply banking angle concepts to design safe road curves for vehicles.",
-            "keywords": ["banking", "circular motion", "vehicle dynamics"],
-            "hours": 9,
-            "references": "Page 47"
-          }
-        ]
-      },
-      {
-        "unit": "Heat and Thermodynamics",
-        "topics": [
-          {
-            "topic_id": "8.4",
-            "description": "Define Young’s modulus, bulk modulus, and Poisson’s ratio",
-            "elaboration": "Explain elastic moduli and their applications in material science, such as bridge construction.",
-            "keywords": ["Young’s modulus", "bulk modulus", "Poisson’s ratio", "elasticity"],
-            "hours": 6,
-            "references": "Page 30"
-          },
-          {
-            "topic_id": "8.5",
-            "description": "Derive the expression for energy stored in a stretched wire",
-            "elaboration": "Calculate elastic potential energy in deformed materials, like springs in machinery.",
-            "keywords": ["elastic energy", "stretched wire", "potential energy"],
-            "hours": 6,
-            "references": "Page 30"
-          },
-          {
-            "topic_id": "8.6",
-            "description": "Solve numerical problems and conceptual questions regarding elasticity",
-            "elaboration": "Address problems involving stress, strain, and elastic moduli in real-world structures.",
-            "keywords": ["elasticity", "stress", "strain", "numerical problems"],
-            "hours": 6,
-            "references": "Page 31"
-          },
-          {
-            "topic_id": "10.1",
-            "description": "Linear expansion and its measurement",
-            "elaboration": "Measure thermal expansion in solids using experimental setups, like railway track gaps.",
-            "keywords": ["linear expansion", "thermal expansion", "measurement"],
-            "hours": 6,
-            "references": "Page 48"
-          },
-          {
-            "topic_id": "10.2",
-            "description": "Explain linear, superficial, cubical expansion and define their coefficients",
-            "elaboration": "Differentiate types of thermal expansion and calculate coefficients for materials.",
-            "keywords": ["thermal expansion", "linear expansion", "cubical expansion", "coefficients"],
-            "hours": 6,
-            "references": "Page 32"
-          }
-        ]
-      },
-      {
-        "unit": "Waves and Optics",
-        "topics": [
-          {
-            "topic_id": "11.1",
-            "description": "Explain the phenomenon of interference",
-            "elaboration": "Describe constructive and destructive interference with examples like sound waves or light patterns.",
-            "keywords": ["interference", "constructive interference", "destructive interference"],
-            "hours": 3,
-            "references": "Page 36"
-          },
-          {
-            "topic_id": "11.2",
-            "description": "Understand the meaning of coherent sources and their significance",
-            "elaboration": "Explain the role of coherent sources in producing stable interference patterns, as in lasers.",
-            "keywords": ["coherent sources", "interference", "lasers"],
-            "hours": 3,
-            "references": "Page 36"
-          },
-          {
-            "topic_id": "15.5",
-            "description": "Learn the relation between refractive indices and total internal reflection",
-            "elaboration": "Analyze light behavior at boundaries, calculating critical angles for optical fibers.",
-            "keywords": ["refractive index", "total internal reflection", "optical fibers"],
-            "hours": 3,
-            "references": "Page 35"
-          }
-        ]
-      },
-      {
-        "unit": "Electricity and Magnetism",
-        "topics": [
-          {
-            "topic_id": "14.3",
-            "description": "Describe Meter bridge and understand its use",
-            "elaboration": "Explain the working principle of a Meter bridge for measuring unknown resistances.",
-            "keywords": ["Meter bridge", "resistance", "Wheatstone bridge"],
-            "hours": 5,
-            "references": "Page 36"
-          },
-          {
-            "topic_id": "14.4",
-            "description": "Know construction, working, and importance of Potentiometer",
-            "elaboration": "Describe potentiometer applications in measuring EMF and potential differences in circuits.",
-            "keywords": ["potentiometer", "EMF", "potential difference"],
-            "hours": 5,
-            "references": "Page 37"
-          },
-          {
-            "topic_id": "19.4",
-            "description": "State Coulomb’s law",
-            "elaboration": "Apply Coulomb’s law to calculate forces between point charges, as in electrostatic interactions.",
-            "keywords": ["Coulomb’s law", "electrostatic force", "charges"],
-            "hours": 5,
-            "references": "Page 37"
-          },
-          {
-            "topic_id": "21.2",
-            "description": "Use electron volt as a unit of electric potential energy",
-            "elaboration": "Convert energy values to electron volts for atomic-scale calculations, like electron transitions.",
-            "keywords": ["electron volt", "electric potential energy", "atomic physics"],
-            "hours": 5,
-            "references": "Page 38"
-          },
-          {
-            "topic_id": "21.3",
-            "description": "Recall and use V = Q/(4πε₀r) for electric potential",
-            "elaboration": "Calculate electric potential due to point charges, applicable in capacitor design.",
-            "keywords": ["electric potential", "point charge", "capacitor"],
-            "hours": 5,
-            "references": "Page 38"
-          }
-        ]
-      }
-    ],
-    "practical_activities": [
-      {
-        "id": 1,
-        "description": "Verification of Ohm’s law and determination of resistance of a thin-film resistor by graphical method",
-        "unit": "Electricity and Magnetism",
-        "hours": 4,
-        "elaboration": "Plot voltage vs. current to confirm linearity and calculate resistance, used in circuit analysis.",
-        "keywords": ["Ohm’s law", "resistance", "graphical method"],
-        "references": "Page 56"
-      },
-      {
-        "id": 2,
-        "description": "Determination of the coefficient of viscosity of a liquid by Stoke’s method",
-        "unit": "Mechanics",
-        "hours": 4,
-        "elaboration": "Graphically analyze terminal velocity to compute viscosity, applicable in fluid dynamics.",
-        "keywords": ["viscosity", "Stoke’s method", "terminal velocity"],
-        "references": "Page 57"
-      },
-      {
-        "id": 3,
-        "description": "Study the variation of image distance with respect to object distance",
-        "unit": "Waves and Optics",
-        "hours": 4,
-        "elaboration": "Use lens formula to analyze image formation in optical systems, like camera lenses.",
-        "keywords": ["lens formula", "image distance", "optics"],
-        "references": "Page 55"
-      },
-      {
-        "id": 4,
-        "description": "Compare rise of water in capillaries of different diameters dipped in water",
-        "unit": "Mechanics",
-        "hours": 4,
-        "elaboration": "Measure capillary rise to study surface tension, relevant to plant water transport.",
-        "keywords": ["capillary action", "surface tension", "fluid mechanics"],
-        "references": "Page 56"
-      },
-      {
-        "id": 5,
-        "description": "Study the status of hydroelectricity in Nepal",
-        "unit": "Applications",
-        "hours": 4,
-        "elaboration": "Analyze data on hydroelectric power generation and its physics principles, like energy conversion.",
-        "keywords": ["hydroelectricity", "energy conversion", "Nepal"],
-        "references": "Page 58"
-      },
-      {
-        "id": 6,
-        "description": "Study the application of physics laws in a chosen context",
-        "unit": "Applications",
-        "hours": 4,
-        "elaboration": "Apply physics principles to a real-world scenario, e.g., energy conservation in mechanical systems.",
-        "keywords": ["physics applications", "energy conservation", "real-world"],
-        "references": "Page 58"
-      }
-    ],
-    "evaluation": {
-      "internal": {
-        "weightage": 25,
-        "components": [
-          {
-            "description": "Class participation",
-            "marks": 3,
-            "elaboration": "Assess engagement in discussions and group activities, fostering collaborative learning."
-          },
-          {
-            "description": "Trimester examinations",
-            "marks": 6,
-            "elaboration": "Evaluate theoretical understanding through periodic written tests."
-          },
-          {
-            "description": "Project and practical work",
-            "marks": 16,
-            "elaboration": "Assess hands-on experiments and project reports, emphasizing practical skills."
-          }
-        ]
-      },
-      "external": {
-        "weightage": 75,
-        "description": "Based on specification chart by Curriculum Development Centre, assessing knowledge, skills, and application through written exams.",
-        "references": "Page 62"
-      }
-    },
-    "learning_facilitation": {
-      "methods": [
-        "Discussion",
-        "Debate",
-        "Seminar presentation",
-        "Journal publishing",
-        "Daily assignments",
-        "Practical/experimental approaches",
-        "Project work",
-        "Group discussions (satellite learning group, peer group, small and large group)"
-      ],
-      "assessment_approach": [
-        {
-          "type": "Operational",
-          "description": "Explain how to measure a variable in an experiment",
-          "marks": 2,
-          "elaboration": "Assess ability to describe experimental measurement techniques, e.g., using a vernier caliper."
-        },
-        {
-          "type": "Relational",
-          "description": "Explain relationships between variables in an experiment",
-          "marks": 2,
-          "elaboration": "Evaluate understanding of variable interactions, like force vs. acceleration."
-        },
-        {
-          "type": "Conclusion",
-          "description": "Value of constants or prediction with justification",
-          "marks": 1,
-          "elaboration": "Assess ability to derive constants or predict outcomes, e.g., gravitational constant."
-        },
-        {
-          "type": "Error Handling",
-          "description": "Handling of errors and precautions in experiments",
-          "marks": 1,
-          "elaboration": "Evaluate error analysis and experimental precautions."
-        },
-        {
-          "type": "Viva",
-          "description": "Oral examination on practical work",
-          "marks": 5,
-          "elaboration": "Assess verbal explanation of experimental procedures and results."
-        }
-      ],
-      "references": "Pages 58-62"
-    },
-    "measurement_tools": [
-      {
-        "tool": "Vernier calipers",
-        "precision": "0.1 mm",
-        "use": "Measure lengths and diameters accurately, e.g., in mechanics experiments."
-      },
-      {
-        "tool": "Spherometer",
-        "precision": "0.01 mm",
-        "use": "Measure curvature of surfaces, like lenses in optics."
-      },
-      {
-        "tool": "Micrometer screw gauge",
-        "precision": "0.01 mm",
-        "use": "Measure small dimensions with high precision, e.g., wire thickness."
-      },
-      {
-        "tool": "Stopwatch",
-        "precision": "0.01 s",
-        "use": "Measure time intervals in experiments, like pendulum periods."
-      }
-    ]
+    "unit": "Mechanics",
+    "topic_id": "2.5",
+    "topic_title": "Derive expression for period of simple pendulum",
+    "description": "Calculate the period of a simple pendulum using the formula T = 2π√(L/g) and explore its applications in timekeeping devices.",
+    "elaboration": "Calculate the period of a simple pendulum using the formula T = 2π√(L/g), with applications in timekeeping devices.",
+    "keywords": ["simple pendulum", "period", "oscillation", "gravity"],
+    "references": "Page 27",
+    "hours": 10,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Mechanics",
+    "topic_id": "2.6",
+    "topic_title": "Describe scalar and vector products",
+    "description": "Explain the concepts of scalar (dot) and vector (cross) products with applications like work and torque calculations.",
+    "elaboration": "Explain scalar (dot) and vector (cross) products, with examples like work (scalar) and torque (vector) calculations.",
+    "keywords": ["scalar product", "vector product", "dot product", "cross product"],
+    "references": "Page 28",
+    "hours": 10,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Mechanics",
+    "topic_id": "2.7",
+    "topic_title": "Applications of scalar and vector products",
+    "description": "Apply scalar products to calculate work done and vector products to compute torque in mechanical systems.",
+    "elaboration": "Apply scalar products to compute work done and vector products for torque in mechanical systems.",
+    "keywords": ["work", "torque", "scalar product", "vector product"],
+    "references": "Page 28",
+    "hours": 10,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Mechanics",
+    "topic_id": "3.2",
+    "topic_title": "Relative velocity",
+    "description": "Analyze the motion of objects relative to different reference frames, such as a boat crossing a river.",
+    "elaboration": "Analyze motion of objects relative to different reference frames, such as a boat crossing a river.",
+    "keywords": ["relative velocity", "reference frame", "motion"],
+    "references": "Page 46",
+    "hours": 9,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Mechanics",
+    "topic_id": "3.3",
+    "topic_title": "Equation of motion using calculus and graphical methods",
+    "description": "Derive equations of motion using integration and analyze motion through graphical methods like velocity vs. time graphs.",
+    "elaboration": "Derive equations of motion using integration and analyze motion graphs (e.g., velocity vs. time).",
+    "keywords": ["equations of motion", "calculus", "graphical analysis"],
+    "references": "Page 46",
+    "hours": 9,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Mechanics",
+    "topic_id": "4.2",
+    "topic_title": "Force as rate of change of momentum",
+    "description": "Relate force to the rate of change of momentum in dynamic systems, such as rocket propulsion.",
+    "elaboration": "Relate force to momentum change in dynamic systems, such as rocket propulsion.",
+    "keywords": ["force", "momentum", "Newton’s second law"],
+    "references": "Page 29",
+    "hours": 8,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Mechanics",
+    "topic_id": "4.3",
+    "topic_title": "Principle of conservation of linear momentum",
+    "description": "State and prove the principle of conservation of linear momentum with applications in collisions, like billiard ball interactions.",
+    "elaboration": "Demonstrate conservation of momentum in collisions, such as billiard ball interactions.",
+    "keywords": ["conservation of momentum", "collisions", "linear momentum"],
+    "references": "Page 29",
+    "hours": 8,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Mechanics",
+    "topic_id": "6.3",
+    "topic_title": "Define centripetal force",
+    "description": "Define and explain centripetal force required for circular motion, with examples like planetary orbits or car turns.",
+    "elaboration": "Explain the force required for circular motion, with examples like planetary orbits or car turns.",
+    "keywords": ["centripetal force", "circular motion", "orbits"],
+    "references": "Page 29",
+    "hours": 9,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Mechanics",
+    "topic_id": "6.4",
+    "topic_title": "Centripetal acceleration",
+    "description": "Derive the expression for centripetal acceleration (a = v²/r) and solve problems related to circular motion, such as satellite motion.",
+    "elaboration": "Derive a = v²/r and apply it to problems like satellite motion.",
+    "keywords": ["centripetal acceleration", "circular motion", "velocity"],
+    "references": "Page 30",
+    "hours": 9,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Mechanics",
+    "topic_id": "6.7",
+    "topic_title": "Conical pendulum",
+    "description": "Analyze the motion of a conical pendulum and derive its period, with applications in mechanical systems like governors.",
+    "elaboration": "Analyze the motion of a conical pendulum and derive its period, used in mechanical systems like governors.",
+    "keywords": ["conical pendulum", "period", "circular motion"],
+    "references": "Page 47",
+    "hours": 9,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Mechanics",
+    "topic_id": "6.8",
+    "topic_title": "Motion in a vertical circle",
+    "description": "Study forces and energy conservation in vertical circular motion, such as in a roller coaster loop.",
+    "elaboration": "Study forces and energy in vertical circular motion, such as a roller coaster loop.",
+    "keywords": ["vertical circle", "energy conservation", "circular motion"],
+    "references": "Page 47",
+    "hours": 9,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Mechanics",
+    "topic_id": "6.9",
+    "topic_title": "Applications of banking",
+    "description": "Apply banking angle concepts to design safe road curves for vehicles in circular motion.",
+    "elaboration": "Apply banking angle concepts to design safe road curves for vehicles.",
+    "keywords": ["banking", "circular motion", "vehicle dynamics"],
+    "references": "Page 47",
+    "hours": 9,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "8.4",
+    "topic_title": "Elastic moduli",
+    "description": "Define Young’s modulus, bulk modulus, and Poisson’s ratio, with applications in material science, such as bridge construction.",
+    "elaboration": "Explain elastic moduli and their applications in material science, such as bridge construction.",
+    "keywords": ["Young’s modulus", "bulk modulus", "Poisson’s ratio", "elasticity"],
+    "references": "Page 30",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "8.5",
+    "topic_title": "Energy stored in a stretched wire",
+    "description": "Derive the expression for elastic potential energy stored in a stretched wire, with applications in machinery like springs.",
+    "elaboration": "Calculate elastic potential energy in deformed materials, like springs in machinery.",
+    "keywords": ["elastic energy", "stretched wire", "potential energy"],
+    "references": "Page 30",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "8.6",
+    "topic_title": "Numerical problems on elasticity",
+    "description": "Solve numerical problems and conceptual questions involving stress, strain, and elastic moduli in real-world structures.",
+    "elaboration": "Address problems involving stress, strain, and elastic moduli in real-world structures.",
+    "keywords": ["elasticity", "stress", "strain", "numerical problems"],
+    "references": "Page 31",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "10.1",
+    "topic_title": "Linear expansion and its measurement",
+    "description": "Measure thermal expansion in solids using experimental setups, such as gaps in railway tracks.",
+    "elaboration": "Measure thermal expansion in solids using experimental setups, like railway track gaps.",
+    "keywords": ["linear expansion", "thermal expansion", "measurement"],
+    "references": "Page 48",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "10.2",
+    "topic_title": "Types of thermal expansion and their coefficients",
+    "description": "Differentiate linear, superficial, and cubical thermal expansion and calculate their coefficients for materials.",
+    "elaboration": "Differentiate types of thermal expansion and calculate coefficients for materials.",
+    "keywords": ["thermal expansion", "linear expansion", "cubical expansion", "coefficients"],
+    "references": "Page 32",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Waves and Optics",
+    "topic_id": "11.1",
+    "topic_title": "Phenomenon of interference",
+    "description": "Explain constructive and destructive interference with examples like sound waves or light patterns.",
+    "elaboration": "Describe constructive and destructive interference with examples like sound waves or light patterns.",
+    "keywords": ["interference", "constructive interference", "destructive interference"],
+    "references": "Page 36",
+    "hours": 3,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Waves and Optics",
+    "topic_id": "11.2",
+    "topic_title": "Coherent sources and their significance",
+    "description": "Explain the role of coherent sources in producing stable interference patterns, as in lasers.",
+    "elaboration": "Explain the role of coherent sources in producing stable interference patterns, as in lasers.",
+    "keywords": ["coherent sources", "interference", "lasers"],
+    "references": "Page 36",
+    "hours": 3,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Waves and Optics",
+    "topic_id": "15.5",
+    "topic_title": "Refractive indices and total internal reflection",
+    "description": "Analyze light behavior at boundaries and calculate critical angles for applications like optical fibers.",
+    "elaboration": "Analyze light behavior at boundaries, calculating critical angles for optical fibers.",
+    "keywords": ["refractive index", "total internal reflection", "optical fibers"],
+    "references": "Page 35",
+    "hours": 3,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Electricity and Magnetism",
+    "topic_id": "14.3",
+    "topic_title": "Meter bridge",
+    "description": "Describe the working principle of a Meter bridge for measuring unknown resistances in electrical circuits.",
+    "elaboration": "Explain the working principle of a Meter bridge for measuring unknown resistances.",
+    "keywords": ["Meter bridge", "resistance", "Wheatstone bridge"],
+    "references": "Page 36",
+    "hours": 5,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Electricity and Magnetism",
+    "topic_id": "14.4",
+    "topic_title": "Potentiometer",
+    "description": "Explain the construction, working, and applications of a potentiometer in measuring EMF and potential differences.",
+    "elaboration": "Describe potentiometer applications in measuring EMF and potential differences in circuits.",
+    "keywords": ["potentiometer", "EMF", "potential difference"],
+    "references": "Page 37",
+    "hours": 5,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Electricity and Magnetism",
+    "topic_id": "19.4",
+    "topic_title": "Coulomb’s law",
+    "description": "Apply Coulomb’s law to calculate electrostatic forces between point charges in various systems.",
+    "elaboration": "Apply Coulomb’s law to calculate forces between point charges, as in electrostatic interactions.",
+    "keywords": ["Coulomb’s law", "electrostatic force", "charges"],
+    "references": "Page 37",
+    "hours": 5,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Electricity and Magnetism",
+    "topic_id": "21.2",
+    "topic_title": "Electron volt as a unit of electric potential energy",
+    "description": "Use electron volt as a unit for electric potential energy in atomic-scale calculations, such as electron transitions.",
+    "elaboration": "Convert energy values to electron volts for atomic-scale calculations, like electron transitions.",
+    "keywords": ["electron volt", "electric potential energy", "atomic physics"],
+    "references": "Page 38",
+    "hours": 5,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 11,
+    "unit": "Electricity and Magnetism",
+    "topic_id": "21.3",
+    "topic_title": "Electric potential due to point charges",
+    "description": "Calculate electric potential due to point charges using V = Q/(4πε₀r), with applications in capacitor design.",
+    "elaboration": "Calculate electric potential due to point charges, applicable in capacitor design.",
+    "keywords": ["electric potential", "point charge", "capacitor"],
+    "references": "Page 38",
+    "hours": 5,
+    "type": "lesson_topic"
   }
-}
+]

@@ -1,418 +1,496 @@
-{
-  "curriculum": {
+[
+  {
     "subject": "Physics",
     "grade": 12,
-    "credit_hours": 5,
-    "subject_code": "Phy. 102",
-    "metadata": {
-      "curriculum_year": 2076,
-      "publisher": "Curriculum Development Centre, Nepal",
-      "language": "English",
-      "references": "Secondary Education Curriculum 2076 (Physics), Pages 26-62"
-    },
-    "introduction": {
-      "description": "The Grade 12 Physics curriculum builds on Grade 11, covering advanced topics in mechanics, thermodynamics, waves and optics, electricity and magnetism, modern physics, and emerging physics, preparing students for applications like satellite technology, medical imaging, and nanotechnology."
-    },
-    "objectives": [
-      {
-        "id": 1,
-        "description": "Apply advanced physics principles to analyze complex systems in mechanics, thermodynamics, and modern physics."
-      },
-      {
-        "id": 2,
-        "description": "Solve practical problems using concepts like electromagnetic induction and nuclear physics."
-      },
-      {
-        "id": 3,
-        "description": "Conduct experiments to verify physical laws, such as heat engine efficiency or wave properties."
-      },
-      {
-        "id": 4,
-        "description": "Integrate physics with environmental care, social values, and ethical considerations."
-      },
-      {
-        "id": 5,
-        "description": "Develop models to demonstrate advanced concepts, like capacitors or quantum phenomena."
-      }
-    ],
-    "scope_and_sequence": [
-      {
-        "unit": "Mechanics",
-        "topics": [
-          {
-            "topic_id": "3.2",
-            "description": "Surface tension: Theory of surface tension; Surface energy",
-            "elaboration": "Explain surface tension and surface energy, with applications in capillary action for plant water transport.",
-            "keywords": ["surface tension", "surface energy", "capillary action"],
-            "hours": 9,
-            "references": "Page 45"
-          },
-          {
-            "topic_id": "6.4",
-            "description": "Centripetal force",
-            "elaboration": "Define and calculate centripetal force for systems like satellites in orbit or vehicles on curved roads.",
-            "keywords": ["centripetal force", "circular motion", "satellite orbits"],
-            "hours": 9,
-            "references": "Page 46"
-          }
-        ]
-      },
-      {
-        "unit": "Heat and Thermodynamics",
-        "topics": [
-          {
-            "topic_id": "9.0",
-            "description": "State and explain second law of thermodynamics (Kelvin’s and Clausius’ statements)",
-            "elaboration": "Apply the second law to heat engines and refrigerators, analyzing efficiency in power plants.",
-            "keywords": ["second law of thermodynamics", "heat engine", "efficiency"],
-            "hours": 6,
-            "references": "Page 31"
-          },
-          {
-            "topic_id": "5.8",
-            "description": "Solve mathematical problems related to heat engine",
-            "elaboration": "Calculate efficiency and work output of heat engines, such as in car engines or thermal power plants.",
-            "keywords": ["heat engine", "efficiency", "thermodynamics"],
-            "hours": 6,
-            "references": "Page 32"
-          },
-          {
-            "topic_id": "13.4",
-            "description": "Explain molecules, intermolecular forces, and derive ideal gas equation",
-            "elaboration": "Derive PV=nRT and explain molecular interactions in gases, applicable to weather modeling.",
-            "keywords": ["ideal gas equation", "intermolecular forces", "gas laws"],
-            "hours": 8,
-            "references": "Page 33"
-          },
-          {
-            "topic_id": "13.5",
-            "description": "Average translational kinetic energy of gas molecule",
-            "elaboration": "Calculate kinetic energy of gas molecules, relevant to temperature scales in meteorology.",
-            "keywords": ["kinetic energy", "gas molecules", "thermodynamics"],
-            "hours": 8,
-            "references": "Page 48"
-          },
-          {
-            "topic_id": "13.6",
-            "description": "Boltzmann constant, root mean square speed",
-            "elaboration": "Use Boltzmann constant to compute RMS speed, applied in gas diffusion studies.",
-            "keywords": ["Boltzmann constant", "RMS speed", "gas kinetics"],
-            "hours": 8,
-            "references": "Page 48"
-          },
-          {
-            "topic_id": "13.7",
-            "description": "Heat capacities: gases and solids",
-            "elaboration": "Analyze heat capacities for gases and solids, used in material science for thermal design.",
-            "keywords": ["heat capacity", "gases", "solids", "thermodynamics"],
-            "hours": 8,
-            "references": "Page 48"
-          }
-        ]
-      },
-      {
-        "unit": "Waves and Optics",
-        "topics": [
-          {
-            "topic_id": "10.0",
-            "description": "Nature and propagation of light",
-            "elaboration": "Study light as an electromagnetic wave, with applications in optical communication.",
-            "keywords": ["light propagation", "electromagnetic wave", "optics"],
-            "hours": 3,
-            "references": "Page 49"
-          },
-          {
-            "topic_id": "10.1",
-            "description": "Huygen’s principle to explain reflection and refraction of light",
-            "elaboration": "Use Huygen’s principle to model wave fronts in lens design and optical systems.",
-            "keywords": ["Huygen’s principle", "reflection", "refraction"],
-            "hours": 3,
-            "references": "Page 35"
-          },
-          {
-            "topic_id": "18.2",
-            "description": "Chromatic and spherical aberration",
-            "elaboration": "Analyze lens aberrations and their correction in telescopes and microscopes.",
-            "keywords": ["chromatic aberration", "spherical aberration", "optics"],
-            "hours": 3,
-            "references": "Page 50"
-          },
-          {
-            "topic_id": "18.3",
-            "description": "Achromatism and its applications",
-            "elaboration": "Design achromatic lenses for clear imaging in cameras and optical instruments.",
-            "keywords": ["achromatism", "lenses", "optics"],
-            "hours": 3,
-            "references": "Page 50"
-          }
-        ]
-      },
-      {
-        "unit": "Electricity and Magnetism",
-        "topics": [
-          {
-            "topic_id": "15.2",
-            "description": "Peltier effect: Variation of EMF",
-            "elaboration": "Study thermoelectric effects for applications in cooling systems.",
-            "keywords": ["Peltier effect", "thermoelectric", "EMF"],
-            "hours": 3,
-            "references": "Page 50"
-          },
-          {
-            "topic_id": "17.3",
-            "description": "Hysteresis",
-            "elaboration": "Explain magnetic hysteresis in transformers and magnetic storage devices.",
-            "keywords": ["hysteresis", "magnetism", "transformers"],
-            "hours": 5,
-            "references": "Page 51"
-          },
-          {
-            "topic_id": "17.4",
-            "description": "Dia-, para-, and ferromagnetic materials",
-            "elaboration": "Classify magnetic materials and their uses in motors and MRI machines.",
-            "keywords": ["ferromagnetic", "paramagnetic", "diamagnetic", "magnetism"],
-            "hours": 5,
-            "references": "Page 38"
-          },
-          {
-            "topic_id": "19.7",
-            "description": "Discuss power in AC circuits and know the term power factor",
-            "elaboration": "Analyze power consumption in AC circuits, critical for electrical grid management.",
-            "keywords": ["AC circuits", "power factor", "electricity"],
-            "hours": 5,
-            "references": "Page 40"
-          },
-          {
-            "topic_id": "22.2",
-            "description": "Parallel plate capacitor: Derive capacitance formula",
-            "elaboration": "Derive C=ε₀A/d and apply to capacitor design in electronics.",
-            "keywords": ["capacitor", "capacitance", "parallel plate"],
-            "hours": 5,
-            "references": "Page 39"
-          },
-          {
-            "topic_id": "23.4",
-            "description": "Resistances in series and parallel",
-            "elaboration": "Derive equivalent resistance formulas and apply to circuit design.",
-            "keywords": ["resistance", "series circuit", "parallel circuit"],
-            "hours": 5,
-            "references": "Page 41"
-          }
-        ]
-      },
-      {
-        "unit": "Modern Physics",
-        "topics": [
-          {
-            "topic_id": "21.4",
-            "description": "Derive Einstein’s photoelectric equation",
-            "elaboration": "Derive hf=φ+KE_max and apply to solar cells and photodetectors.",
-            "keywords": ["photoelectric effect", "Einstein", "quantum physics"],
-            "hours": 6,
-            "references": "Page 42"
-          },
-          {
-            "topic_id": "23.10",
-            "description": "Illustrate different properties of X-rays",
-            "elaboration": "Analyze X-ray properties for medical imaging and crystallography.",
-            "keywords": ["X-rays", "medical imaging", "crystallography"],
-            "hours": 6,
-            "references": "Page 43"
-          },
-          {
-            "topic_id": "24.3",
-            "description": "Half-life, mean-life, and decay constant",
-            "elaboration": "Calculate radioactive decay parameters, used in carbon dating and nuclear medicine.",
-            "keywords": ["half-life", "decay constant", "radioactivity"],
-            "hours": 6,
-            "references": "Page 53"
-          },
-          {
-            "topic_id": "24.4",
-            "description": "Geiger-Muller Tube",
-            "elaboration": "Explain the working of Geiger-Muller tubes for radiation detection.",
-            "keywords": ["Geiger-Muller tube", "radiation detection", "nuclear physics"],
-            "hours": 6,
-            "references": "Page 54"
-          },
-          {
-            "topic_id": "24.5",
-            "description": "Carbon dating",
-            "elaboration": "Apply radioactive decay to determine the age of archaeological artifacts.",
-            "keywords": ["carbon dating", "radioactivity", "archaeology"],
-            "hours": 6,
-            "references": "Page 54"
-          },
-          {
-            "topic_id": "24.6",
-            "description": "Medical use of nuclear radiation",
-            "elaboration": "Explore applications like radiotherapy and PET scans in healthcare.",
-            "keywords": ["nuclear radiation", "radiotherapy", "medical physics"],
-            "hours": 6,
-            "references": "Page 54"
-          },
-          {
-            "topic_id": "24.7",
-            "description": "Nuclear fission and fusion, energy released",
-            "elaboration": "Analyze energy release in nuclear reactions, critical for nuclear power plants.",
-            "keywords": ["nuclear fission", "nuclear fusion", "energy release"],
-            "hours": 6,
-            "references": "Page 53"
-          }
-        ]
-      },
-      {
-        "unit": "Emerging Physics",
-        "topics": [
-          {
-            "topic_id": "26.1",
-            "description": "Gravitational Wave",
-            "elaboration": "Study detection and implications of gravitational waves, as observed by LIGO.",
-            "keywords": ["gravitational wave", "LIGO", "relativity"],
-            "hours": 3,
-            "references": "Page 44"
-          },
-          {
-            "topic_id": "26.2",
-            "description": "Nanotechnology",
-            "elaboration": "Explore nanoscale physics applications in electronics and medicine.",
-            "keywords": ["nanotechnology", "nanoscale", "electronics"],
-            "hours": 3,
-            "references": "Page 44"
-          },
-          {
-            "topic_id": "26.3",
-            "description": "Higgs Boson",
-            "elaboration": "Understand the role of the Higgs Boson in particle physics and the Standard Model.",
-            "keywords": ["Higgs Boson", "particle physics", "Standard Model"],
-            "hours": 3,
-            "references": "Page 44"
-          }
-        ]
-      }
-    ],
-    "practical_activities": [
-      {
-        "id": 1,
-        "description": "Study the variation of flame height with burner position",
-        "unit": "Heat and Thermodynamics",
-        "hours": 4,
-        "elaboration": "Analyze flame dynamics to study combustion physics, relevant to engine design.",
-        "keywords": ["combustion", "flame height", "thermodynamics"],
-        "references": "Page 57"
-      },
-      {
-        "id": 2,
-        "description": "Study the status of hydroelectricity in Nepal",
-        "unit": "Applications",
-        "hours": 4,
-        "elaboration": "Investigate hydroelectric power generation principles, like energy conversion efficiency.",
-        "keywords": ["hydroelectricity", "energy conversion", "Nepal"],
-        "references": "Page 58"
-      },
-      {
-        "id": 3,
-        "description": "Apply physics laws in a chosen context",
-        "unit": "Applications",
-        "hours": 4,
-        "elaboration": "Demonstrate physics principles in real-world scenarios, e.g., nuclear physics in medical imaging.",
-        "keywords": ["physics applications", "real-world", "nuclear physics"],
-        "references": "Page 58"
-      }
-    ],
-    "evaluation": {
-      "internal": {
-        "weightage": 25,
-        "components": [
-          {
-            "description": "Class participation",
-            "marks": 3,
-            "elaboration": "Assess engagement in discussions and collaborative learning activities."
-          },
-          {
-            "description": "Trimester examinations",
-            "marks": 6,
-            "elaboration": "Evaluate theoretical understanding through periodic written tests."
-          },
-          {
-            "description": "Project and practical work",
-            "marks": 16,
-            "elaboration": "Assess experimental skills and project reports, emphasizing application."
-          }
-        ]
-      },
-      "external": {
-        "weightage": 75,
-        "description": "Based on specification chart by Curriculum Development Centre, assessing knowledge, skills, and application through written exams.",
-        "references": "Page 62"
-      }
-    },
-    "learning_facilitation": {
-      "methods": [
-        "Discussion",
-        "Debate",
-        "Seminar presentation",
-        "Journal publishing",
-        "Daily assignments",
-        "Practical/experimental approaches",
-        "Project work",
-        "Group discussions (satellite learning group, peer group, small and large group)"
-      ],
-      "assessment_approach": [
-        {
-          "type": "Operational",
-          "description": "Explain how to measure a variable in an experiment",
-          "marks": 2,
-          "elaboration": "Assess measurement techniques, e.g., using a Geiger-Muller tube for radiation."
-        },
-        {
-          "type": "Relational",
-          "description": "Explain relationships between variables in an experiment",
-          "marks": 2,
-          "elaboration": "Evaluate variable interactions, like temperature vs. gas pressure."
-        },
-        {
-          "type": "Conclusion",
-          "description": "Value of constants or prediction with justification",
-          "marks": 1,
-          "elaboration": "Assess derivation of constants, e.g., Boltzmann constant."
-        },
-        {
-          "type": "Error Handling",
-          "description": "Handling of errors and precautions in experiments",
-          "marks": 1,
-          "elaboration": "Evaluate error analysis in experiments like X-ray measurements."
-        },
-        {
-          "type": "Viva",
-          "description": "Oral examination on practical work",
-          "marks": 5,
-          "elaboration": "Assess verbal explanation of experimental procedures and results."
-        }
-      ],
-      "references": "Pages 58-62"
-    },
-    "measurement_tools": [
-      {
-        "tool": "Vernier calipers",
-        "precision": "0.1 mm",
-        "use": "Measure lengths and diameters, e.g., in surface tension experiments."
-      },
-      {
-        "tool": "Spherometer",
-        "precision": "0.01 mm",
-        "use": "Measure curvature of surfaces, like lenses in optics experiments."
-      },
-      {
-        "tool": "Micrometer screw gauge",
-        "precision": "0.01 mm",
-        "use": "Measure small dimensions, e.g., wire thickness in electrical experiments."
-      },
-      {
-        "tool": "Stopwatch",
-        "precision": "0.01 s",
-        "use": "Measure time intervals, e.g., in wave propagation experiments."
-      }
-    ]
+    "unit": "Mechanics",
+    "topic_id": "3.2",
+    "topic_title": "Surface tension and surface energy",
+    "description": "Explain surface tension and surface energy with applications in capillary action for plant water transport.",
+    "elaboration": "Explain surface tension and surface energy, with applications in capillary action for plant water transport.",
+    "keywords": ["surface tension", "surface energy", "capillary action"],
+    "references": "Page 45",
+    "hours": 9,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Mechanics",
+    "topic_id": "6.4",
+    "topic_title": "Centripetal force",
+    "description": "Define and calculate centripetal force for systems like satellites in orbit or vehicles on curved roads.",
+    "elaboration": "Define and calculate centripetal force for systems like satellites in orbit or vehicles on curved roads.",
+    "keywords": ["centripetal force", "circular motion", "satellite orbits"],
+    "references": "Page 46",
+    "hours": 9,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "9.0",
+    "topic_title": "Second law of thermodynamics",
+    "description": "State and explain the second law of thermodynamics, applying it to heat engines and refrigerators.",
+    "elaboration": "Apply the second law to heat engines and refrigerators, analyzing efficiency in power plants.",
+    "keywords": ["second law of thermodynamics", "heat engine", "efficiency"],
+    "references": "Page 31",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "5.8",
+    "topic_title": "Heat engine problems",
+    "description": "Solve mathematical problems related to heat engine efficiency and work output, such as in car engines.",
+    "elaboration": "Calculate efficiency and work output of heat engines, such as in car engines or thermal power plants.",
+    "keywords": ["heat engine", "efficiency", "thermodynamics"],
+    "references": "Page 32",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "13.4",
+    "topic_title": "Ideal gas equation and intermolecular forces",
+    "description": "Derive the ideal gas equation (PV=nRT) and explain molecular interactions in gases for weather modeling.",
+    "elaboration": "Derive PV=nRT and explain molecular interactions in gases, applicable to weather modeling.",
+    "keywords": ["ideal gas equation", "intermolecular forces", "gas laws"],
+    "references": "Page 33",
+    "hours": 8,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "13.5",
+    "topic_title": "Translational kinetic energy of gas molecules",
+    "description": "Calculate the average translational kinetic energy of gas molecules, relevant to temperature scales.",
+    "elaboration": "Calculate kinetic energy of gas molecules, relevant to temperature scales in meteorology.",
+    "keywords": ["kinetic energy", "gas molecules", "thermodynamics"],
+    "references": "Page 48",
+    "hours": 8,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "13.6",
+    "topic_title": "Boltzmann constant and RMS speed",
+    "description": "Use Boltzmann constant to compute root mean square speed of gas molecules for gas diffusion studies.",
+    "elaboration": "Use Boltzmann constant to compute RMS speed, applied in gas diffusion studies.",
+    "keywords": ["Boltzmann constant", "RMS speed", "gas kinetics"],
+    "references": "Page 48",
+    "hours": 8,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "13.7",
+    "topic_title": "Heat capacities of gases and solids",
+    "description": "Analyze heat capacities of gases and solids for applications in thermal design.",
+    "elaboration": "Analyze heat capacities for gases and solids, used in material science for thermal design.",
+    "keywords": ["heat capacity", "gases", "solids", "thermodynamics"],
+    "references": "Page 48",
+    "hours": 8,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Waves and Optics",
+    "topic_id": "10.0",
+    "topic_title": "Nature and propagation of light",
+    "description": "Study light as an electromagnetic wave with applications in optical communication.",
+    "elaboration": "Study light as an electromagnetic wave, with applications in optical communication.",
+    "keywords": ["light propagation", "electromagnetic wave", "optics"],
+    "references": "Page 49",
+    "hours": 3,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Waves and Optics",
+    "topic_id": "10.1",
+    "topic_title": "Huygen’s principle for reflection and refraction",
+    "description": "Use Huygen’s principle to explain reflection and refraction in lens design and optical systems.",
+    "elaboration": "Use Huygen’s principle to model wave fronts in lens design and optical systems.",
+    "keywords": ["Huygen’s principle", "reflection", "refraction"],
+    "references": "Page 35",
+    "hours": 3,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Waves and Optics",
+    "topic_id": "18.2",
+    "topic_title": "Chromatic and spherical aberration",
+    "description": "Analyze chromatic and spherical aberrations in lenses, with applications in telescopes and microscopes.",
+    "elaboration": "Analyze lens aberrations and their correction in telescopes and microscopes.",
+    "keywords": ["chromatic aberration", "spherical aberration", "optics"],
+    "references": "Page 50",
+    "hours": 3,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Waves and Optics",
+    "topic_id": "18.3",
+    "topic_title": "Achromatism in lenses",
+    "description": "Design achromatic lenses for clear imaging in cameras and optical instruments.",
+    "elaboration": "Design achromatic lenses for clear imaging in cameras and optical instruments.",
+    "keywords": ["achromatism", "lenses", "optics"],
+    "references": "Page 50",
+    "hours": 3,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Electricity and Magnetism",
+    "topic_id": "15.2",
+    "topic_title": "Peltier effect",
+    "description": "Study the Peltier effect and its applications in thermoelectric cooling systems.",
+    "elaboration": "Study thermoelectric effects for applications in cooling systems.",
+    "keywords": ["Peltier effect", "thermoelectric", "EMF"],
+    "references": "Page 50",
+    "hours": 3,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Electricity and Magnetism",
+    "topic_id": "17.3",
+    "topic_title": "Magnetic hysteresis",
+    "description": "Explain magnetic hysteresis and its role in transformers and magnetic storage devices.",
+    "elaboration": "Explain magnetic hysteresis in transformers and magnetic storage devices.",
+    "keywords": ["hysteresis", "magnetism", "transformers"],
+    "references": "Page 51",
+    "hours": 5,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Electricity and Magnetism",
+    "topic_id": "17.4",
+    "topic_title": "Magnetic materials",
+    "description": "Classify diamagnetic, paramagnetic, and ferromagnetic materials and their uses in motors and MRI machines.",
+    "elaboration": "Classify magnetic materials and their uses in motors and MRI machines.",
+    "keywords": ["ferromagnetic", "paramagnetic", "diamagnetic", "magnetism"],
+    "references": "Page 38",
+    "hours": 5,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Electricity and Magnetism",
+    "topic_id": "19.7",
+    "topic_title": "Power in AC circuits",
+    "description": "Analyze power consumption in AC circuits and understand the concept of power factor.",
+    "elaboration": "Analyze power consumption in AC circuits, critical for electrical grid management.",
+    "keywords": ["AC circuits", "power factor", "electricity"],
+    "references": "Page 40",
+    "hours": 5,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Electricity and Magnetism",
+    "topic_id": "22.2",
+    "topic_title": "Parallel plate capacitor",
+    "description": "Derive the capacitance formula for a parallel plate capacitor and apply it to electronics design.",
+    "elaboration": "Derive C=ε₀A/d and apply to capacitor design in electronics.",
+    "keywords": ["capacitor", "capacitance", "parallel plate"],
+    "references": "Page 39",
+    "hours": 5,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Electricity and Magnetism",
+    "topic_id": "23.4",
+    "topic_title": "Resistances in series and parallel",
+    "description": "Derive equivalent resistance formulas for series and parallel circuits and apply to circuit design.",
+    "elaboration": "Derive equivalent resistance formulas and apply to circuit design.",
+    "keywords": ["resistance", "series circuit", "parallel circuit"],
+    "references": "Page 41",
+    "hours": 5,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Modern Physics",
+    "topic_id": "21.4",
+    "topic_title": "Photoelectric effect",
+    "description": "Derive Einstein’s photoelectric equation and apply it to solar cells and photodetectors.",
+    "elaboration": "Derive hf=φ+KE_max and apply to solar cells and photodetectors.",
+    "keywords": ["photoelectric effect", "Einstein", "quantum physics"],
+    "references": "Page 42",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Modern Physics",
+    "topic_id": "23.10",
+    "topic_title": "Properties of X-rays",
+    "description": "Analyze the properties of X-rays and their applications in medical imaging and crystallography.",
+    "elaboration": "Analyze X-ray properties for medical imaging and crystallography.",
+    "keywords": ["X-rays", "medical imaging", "crystallography"],
+    "references": "Page 43",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Modern Physics",
+    "topic_id": "24.3",
+    "topic_title": "Radioactive decay parameters",
+    "description": "Calculate half-life, mean-life, and decay constant for applications in carbon dating and nuclear medicine.",
+    "elaboration": "Calculate radioactive decay parameters, used in carbon dating and nuclear medicine.",
+    "keywords": ["half-life", "decay constant", "radioactivity"],
+    "references": "Page 53",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Modern Physics",
+    "topic_id": "24.4",
+    "topic_title": "Geiger-Muller tube",
+    "description": "Explain the working of Geiger-Muller tubes for radiation detection in nuclear physics.",
+    "elaboration": "Explain the working of Geiger-Muller tubes for radiation detection.",
+    "keywords": ["Geiger-Muller tube", "radiation detection", "nuclear physics"],
+    "references": "Page 54",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Modern Physics",
+    "topic_id": "24.5",
+    "topic_title": "Carbon dating",
+    "description": "Apply radioactive decay principles to carbon dating for archaeological artifacts.",
+    "elaboration": "Apply radioactive decay to determine the age of archaeological artifacts.",
+    "keywords": ["carbon dating", "radioactivity", "archaeology"],
+    "references": "Page 54",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Modern Physics",
+    "topic_id": "24.6",
+    "topic_title": "Medical applications of nuclear radiation",
+    "description": "Explore the use of nuclear radiation in medical applications like radiotherapy and PET scans.",
+    "elaboration": "Explore applications like radiotherapy and PET scans in healthcare.",
+    "keywords": ["nuclear radiation", "radiotherapy", "medical physics"],
+    "references": "Page 54",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Modern Physics",
+    "topic_id": "24.7",
+    "topic_title": "Nuclear fission and fusion",
+    "description": "Analyze energy release in nuclear fission and fusion for nuclear power applications.",
+    "elaboration": "Analyze energy release in nuclear reactions, critical for nuclear power plants.",
+    "keywords": ["nuclear fission", "nuclear fusion", "energy release"],
+    "references": "Page 53",
+    "hours": 6,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Emerging Physics",
+    "topic_id": "26.1",
+    "topic_title": "Gravitational waves",
+    "description": "Study the detection and implications of gravitational waves, as observed by LIGO.",
+    "elaboration": "Study detection and implications of gravitational waves, as observed by LIGO.",
+    "keywords": ["gravitational wave", "LIGO", "relativity"],
+    "references": "Page 44",
+    "hours": 3,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Emerging Physics",
+    "topic_id": "26.2",
+    "topic_title": "Nanotechnology",
+    "description": "Explore nanoscale physics and its applications in electronics and medicine.",
+    "elaboration": "Explore nanoscale physics applications in electronics and medicine.",
+    "keywords": ["nanotechnology", "nanoscale", "electronics"],
+    "references": "Page 44",
+    "hours": 3,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Emerging Physics",
+    "topic_id": "26.3",
+    "topic_title": "Higgs Boson",
+    "description": "Understand the role of the Higgs Boson in particle physics and the Standard Model.",
+    "elaboration": "Understand the role of the Higgs Boson in particle physics and the Standard Model.",
+    "keywords": ["Higgs Boson", "particle physics", "Standard Model"],
+    "references": "Page 44",
+    "hours": 3,
+    "type": "lesson_topic"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Heat and Thermodynamics",
+    "topic_id": "1",
+    "topic_title": "Flame height variation study",
+    "description": "Study the variation of flame height with burner position to analyze combustion physics.",
+    "elaboration": "Analyze flame dynamics to study combustion physics, relevant to engine design.",
+    "keywords": ["combustion", "flame height", "thermodynamics"],
+    "references": "Page 57",
+    "hours": 4,
+    "type": "practical_activity"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Applications",
+    "topic_id": "2",
+    "topic_title": "Hydroelectricity in Nepal",
+    "description": "Investigate the principles of hydroelectric power generation in Nepal, focusing on energy conversion efficiency.",
+    "elaboration": "Investigate hydroelectric power generation principles, like energy conversion efficiency.",
+    "keywords": ["hydroelectricity", "energy conversion", "Nepal"],
+    "references": "Page 58",
+    "hours": 4,
+    "type": "practical_activity"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Applications",
+    "topic_id": "3",
+    "topic_title": "Real-world physics applications",
+    "description": "Apply physics principles in a chosen real-world context, such as nuclear physics in medical imaging.",
+    "elaboration": "Demonstrate physics principles in real-world scenarios, e.g., nuclear physics in medical imaging.",
+    "keywords": ["physics applications", "real-world", "nuclear physics"],
+    "references": "Page 58",
+    "hours": 4,
+    "type": "practical_activity"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Evaluation",
+    "topic_id": "Class participation",
+    "topic_title": "Class participation assessment",
+    "description": "Assess student engagement through participation in discussions and collaborative activities.",
+    "elaboration": "Assess engagement in discussions and collaborative learning activities.",
+    "keywords": ["class participation", "engagement", "assessment"],
+    "references": "Page 62",
+    "hours": 1,
+    "type": "evaluation_component"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Evaluation",
+    "topic_id": "Trimester examinations",
+    "topic_title": "Trimester examinations",
+    "description": "Evaluate theoretical understanding through periodic written tests.",
+    "elaboration": "Evaluate theoretical understanding through periodic written tests.",
+    "keywords": ["trimester exams", "theory", "assessment"],
+    "references": "Page 62",
+    "hours": 1,
+    "type": "evaluation_component"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Evaluation",
+    "topic_id": "Project and practical work",
+    "topic_title": "Project and practical work assessment",
+    "description": "Assess experimental skills and project reports, emphasizing practical applications.",
+    "elaboration": "Assess experimental skills and project reports, emphasizing application.",
+    "keywords": ["project work", "practical skills", "assessment"],
+    "references": "Page 62",
+    "hours": 1,
+    "type": "evaluation_component"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Experimental Physics",
+    "topic_id": "Vernier calipers",
+    "topic_title": "Vernier calipers",
+    "description": "Use Vernier calipers to measure lengths and diameters with 0.1 mm precision in experiments.",
+    "elaboration": "Measure lengths and diameters, e.g., in surface tension experiments.",
+    "keywords": ["Vernier calipers", "measurement", "precision"],
+    "references": "Page 62",
+    "hours": 1,
+    "type": "measurement_tool"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Experimental Physics",
+    "topic_id": "Spherometer",
+    "topic_title": "Spherometer",
+    "description": "Use a spherometer to measure the curvature of surfaces, like lenses, with 0.01 mm precision.",
+    "elaboration": "Measure curvature of surfaces, like lenses in optics experiments.",
+    "keywords": ["spherometer", "curvature", "precision"],
+    "references": "Page 62",
+    "hours": 1,
+    "type": "measurement_tool"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Experimental Physics",
+    "topic_id": "Micrometer screw gauge",
+    "topic_title": "Micrometer screw gauge",
+    "description": "Use a micrometer screw gauge to measure small dimensions, like wire thickness, with 0.01 mm precision.",
+    "elaboration": "Measure small dimensions, e.g., wire thickness in electrical experiments.",
+    "keywords": ["micrometer screw gauge", "measurement", "precision"],
+    "references": "Page 62",
+    "hours": 1,
+    "type": "measurement_tool"
+  },
+  {
+    "subject": "Physics",
+    "grade": 12,
+    "unit": "Experimental Physics",
+    "topic_id": "Stopwatch",
+    "topic_title": "Stopwatch",
+    "description": "Use a stopwatch to measure time intervals with 0.01 s precision in experiments.",
+    "elaboration": "Measure time intervals, e.g., in wave propagation experiments.",
+    "keywords": ["stopwatch", "time measurement", "precision"],
+    "references": "Page 62",
+    "hours": 1,
+    "type": "measurement_tool"
   }
-}
+]
