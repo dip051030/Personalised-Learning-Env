@@ -190,6 +190,21 @@ class HistoryEntry(BaseModel):
     class Config:
         from_attributes = True
 
+class EnrichedLearningResource(BaseModel):
+    """An enriched version of a learning resource with LLM-generated summaries."""
+    subject: str
+    topic: str
+    topic_id: str
+    unit: str
+    grade: int
+    enriched_description: str
+    enriched_elaboration: Optional[str] = None
+    keywords: List[str]
+    references: Optional[str] = None
+    summary: Optional[str] = None
+    user_contextual_description: Optional[str] = None
+
+
 class LearningState(BaseModel):
     """Tracks the session state of a user's learning journey across all nodes."""
     user: UserInfo

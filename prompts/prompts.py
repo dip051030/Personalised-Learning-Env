@@ -61,38 +61,41 @@ Example output:
 # -----------------------------------------------------------------------------------------
 # 📚 LearningResourceTemplate: Summarizes learning content + links it to user interest
 # -----------------------------------------------------------------------------------------
-
-class EnrichContent(PromptTemplate):
+class EnrichContentPrompt(PromptTemplate):
     """
-    Template for summarizing a learning resource. The LLM is expected to:
-    - Convert each key into a natural language explanation
-    - Relate the learning resource back to the user's interests or context
+    LLM prompt for enriching a LearningResource entry.
+    It adds natural language summaries or learning insights for each key.
+    Result must remain in key-value structure with added 'enriched_' fields.
     """
 
     def __init__(self):
         super().__init__(
             template=(
-                """Your role is {action}. Based on this structured learning resource data:
+                """You are an educational content assistant.
+
+Given this structured topic metadata:
+### Existing Metadata:
 {existing_data}
+
+And current resource:
 {current_resources_data}
 
-Your task:
-- For every field present (e.g., `subject`, `topic`), summarize it in natural language.
-- Relate the content back to the user's needs or learning goals if applicable.
-- Maintain the same keys as input.
+Enrich it by adding the following fields:
+- enriched_description: make the description more intuitive or student-friendly.
+- enriched_elaboration: explain how it connects to real-world examples or practical use.
+- enriched_keywords: give a one-line purpose for each keyword.
+- socratic_questions: generate 3 Socratic questions (in bullet list) to spark curiosity.
+- why_important: explain why learning this topic matters.
 
-Return the result as a JSON object. Do not include explanations outside the JSON.
+Keep all original keys. Add only these new ones.
+Format the output as a single JSON object. No prose outside it.
 """
             ),
-            input_variables=["action", "existing_data", 'current_resources_data']
+            input_variables=["existing_data", "current_resources_data"]
         )
 
-    def format_prompt(self, action: str, existing_data: dict, current_resources_data : dict) -> str:
-        """
-        Convert input data to formatted string and inject into prompt.
-        """
+    def format_prompt(self, existing_data: dict, current_resources_data: dict) -> str:
         return self.format(
-            action=action,
             existing_data=json.dumps(existing_data, indent=2),
             current_resources_data=json.dumps(current_resources_data, indent=2)
         )
