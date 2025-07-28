@@ -1,4 +1,28 @@
+import logging
+
+from sympy import resultant
+
 from schemas import LearningState
+from db.vector_db import build_chroma_db_collection
+
+def retrieve_and_search(state:LearningState) -> str:
+    """
+    Retrieve and search for resources based on the current state.
+    This function can be expanded to include more complex search logic as needed.
+    """
+
+    try:
+        if state.current_resource is not None:
+            collection = build_chroma_db_collection('data/lessons/class_11_physics.json', collection_name='lessons')
+            query_embedding = model.encode([state.current_resource.topic]).tolist()
+            results = collection.query(
+                query_embeddings=query_embedding,
+                n_results=5
+            )
+            return results
+    except Exception as e:
+        logging.error(f"Error retrieving and searching resources: {e}")
+        return "Error retrieving resources"
 
 
 def decision_node(state: LearningState) -> str:
