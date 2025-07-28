@@ -3,6 +3,9 @@ from typing import Optional, Union, List, Dict
 from pydantic import BaseModel, Field
 from datetime import datetime
 
+from triton.profiler import deactivate
+
+
 # -----------------------------
 # ✅ ENUMS: Standard subject and content types
 # -----------------------------
@@ -132,6 +135,7 @@ class UserInfo(BaseModel):
     grade: Optional[Union[int, float, str]] = None
     id: Union[str, int]
     is_active: bool = True
+    user_info: Optional[str] = Field(default='', description="Summarised User Info. ")
 
     class Config:
         from_attributes = True

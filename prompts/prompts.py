@@ -62,7 +62,7 @@ Example output:
 # 📚 LearningResourceTemplate: Summarizes learning content + links it to user interest
 # -----------------------------------------------------------------------------------------
 
-class LearningResourceTemplate(PromptTemplate):
+class EnrichContent(PromptTemplate):
     """
     Template for summarizing a learning resource. The LLM is expected to:
     - Convert each key into a natural language explanation
