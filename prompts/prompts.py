@@ -1,6 +1,9 @@
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import PromptTemplate
 import json
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 from pydantic import BaseModel
 
@@ -23,6 +26,7 @@ class UserSummaryTemplate(PromptTemplate):
     """
 
     def __init__(self):
+        logging.info("Initializing UserSummaryTemplate")
         super().__init__(
             template=(
                 """Your role is {action}. You are given structured user data:
@@ -53,6 +57,7 @@ Example output:
         """
         Convert the input dict to a pretty JSON string for better formatting and inject it into the prompt.
         """
+        logging.info(f"Formatting UserSummaryTemplate prompt for action: {action}")
         return self.format(
             action=action,
             existing_data=json.dumps(existing_data, indent=2)
@@ -72,6 +77,7 @@ class EnrichContent(PromptTemplate):
     """
 
     def __init__(self):
+        logging.info("Initializing EnrichContent Template")
         super().__init__(
             template=(
                 """You're a curriculum enrichment agent. Based on this structured topic:
@@ -94,6 +100,7 @@ Return only a single valid JSON object. Do not explain your process.
         Converts the provided topic data dictionary into a JSON-formatted
         string to insert into the prompt.
         """
+        logging.info("Formatting EnrichContent prompt")
         return self.format(
             current_resource_data=json.dumps(current_resource_data, indent=2)
         )
@@ -108,6 +115,7 @@ class ContentGenerationTemplate(PromptTemplate):
     """
 
     def __init__(self):
+        logging.info("Initializing ContentGenerationTemplate")
         super().__init__(
             template=(
                 """You are an educational content generator.
@@ -135,6 +143,7 @@ Instructions:
         )
 
     def format_prompt(self, action: str, user_data: dict, resource_data: dict) -> str:
+        logging.info(f"Formatting ContentGenerationTemplate prompt for action: {action}")
         return self.format(
             action=action,
             user_data=json.dumps(user_data, indent=2),
@@ -183,6 +192,7 @@ class BlogGenerationPrompt(PromptTemplate):
     """
 
     def __init__(self):
+        logging.info("Initializing BlogGenerationPrompt Template")
         super().__init__(
             template=(
                 """You're a friendly education blogger.
@@ -206,16 +216,16 @@ Write a short, engaging blog post for students based on the above topic.
         )
 
     def format_prompt(self, user_data: dict, resource_data: dict, style: str) -> str:
+        logging.info(f"Formatting BlogGenerationPrompt for style: {style}")
         return self.format(
             user_data=json.dumps(user_data, indent=2),
             resource_data=json.dumps(resource_data, indent=2),
             style=style
         )
 
-
-
 class RouteSelectorNode(PromptTemplate):
     def __init__(self):
+        logging.info("Initializing RouteSelectorNode Template")
         super.__init__(
             template = '''
             You are a route selector for an educational learning system.
@@ -224,13 +234,12 @@ class RouteSelectorNode(PromptTemplate):
     , input_variables=["current_resources"]
         )
 
-
     def format_prompt(self, action: str, current_resources: dict) -> str:
+        logging.info(f"Formatting RouteSelectorNode prompt for action: {action}")
         return self.format(
             action=action,
             current_resources=json.dumps(current_resources, indent=2)
         )
-
 
 
 prompt_user = UserSummaryTemplate()

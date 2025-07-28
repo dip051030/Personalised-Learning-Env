@@ -16,6 +16,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 def user_info_node(state: LearningState) -> LearningState:
+    logging.info("Entering user_info_node")
     if state.user is not None:
         try:
             response = user_summary.invoke({
@@ -32,13 +33,11 @@ def user_info_node(state: LearningState) -> LearningState:
 
 
 def enrich_content(state: LearningState) -> LearningState:
-    """
-    Process learning resource data.
-    """
+    logging.info("Entering enrich_content node")
     if state.current_resource is not None:
         try:
             retrieved_content = retrieve_and_search(state=state)
-            logging.info(f"Enriching content for resource: {retrieve_and_search(state=state)}")
+            logging.info(f"Retrieved content: {retrieved_content}")
             response= enriched_content.invoke({
                 "action": "content_enrichment",
                 "current_resources_data": parse_chromadb_metadata(retrieved_content).model_dump()
@@ -55,9 +54,10 @@ def enrich_content(state: LearningState) -> LearningState:
 
 
 def route_selector_node(state: LearningState) -> LearningState:
+    logging.info("Entering route_selector_node")
     if state.user is not None and state.current_resource is not None:
         try:
-            logging.info(f"Selecting the route")
+            logging.info(f"Selecting the route for resource: {state.current_resource}")
             response = route_selector.invoke({
                 'current_resources' : state.current_resource.model_dump()
             })
@@ -67,9 +67,11 @@ def route_selector_node(state: LearningState) -> LearningState:
 
         except Exception as e:
             logging.error(f"Error selecting route: {e}")
+    return state
 
 
 def generate_lesson_content(state: LearningState) -> LearningState:
+    logging.info("Entering generate_lesson_content node")
     if state.user is not None and state.current_resource is not None:
         try:
             logical_response = lesson_decision_node(state=state)
@@ -83,15 +85,18 @@ def generate_lesson_content(state: LearningState) -> LearningState:
 
 
             state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
-            logging.info(f"Blog content has been generated!")
+            logging.info(f"Lesson content has been generated!")
         except Expectation as e:
             logging.error(f"Error generating lesson content: {e}")
+    return state
+
 
 def generate_blog_content(state: LearningState) -> LearningState:
+    logging.info("Entering generate_blog_content node")
     if state.user is not None and state.current_resource is not None:
         try:
             logical_response = blog_decision_node(state=state)
-            logging.info(f"Logical response for lesson generation: {logical_response}")
+            logging.info(f"Logical response for blog generation: {logical_response}")
             response = blog_generation.invoke({
                 "action": "generate_lesson",
                 "user_data": state.user.model_dump(),
@@ -99,54 +104,15 @@ def generate_blog_content(state: LearningState) -> LearningState:
                 "style": logical_response
             })
 
-            logging.info(f"Blog content has been generated!")
             state.content = ContentResponse(content=response.content if hasattr(response, "content") else response)
-
+            logging.info(f"Blog content has been generated!")
         except Expectation as e:
             logging.error(f"Error generating blog content: {e}")
-
-
-# def content_generation(state: LearningState) -> LearningState:
-#     """
-#     Generate content based on the current state.
-#     """
-#     if state.user and state.current_resource:
-#         try:
-#             response= user_content_generation.invoke({
-#                 "action": "generate_content",
-#                 "user_data": state.user.model_dump(),
-#                 "resource_data": state.current_resource.model_dump()
-#             })
-#
-#             content_raw = response.content if hasattr(response, "content") else response
-#             state.content = ContentResponse(content = content_raw)
-#             logging.info(f"Content generated: {state.content}")
-#         except Expectation as e:
-#             logging.error(f"Error generating content: {e}")
-#
-#     return state
-
-
-# def conent_improviser(state: LearningState) -> LearningState:
-#     """
-#     Improviser for content generation.
-#     """
-#     if state.current_resource:
-#         try:
-#             response = user_content_generation.invoke({
-#                 "action": "improvise_content",
-#                 "resource_data": state.generated_content.model_dump()
-#             })
-#
-#             improvised_content = response.content if hasattr(response, "content") else response
-#             print('IMPROVISED CONTENT:', improvised_content)
-#         except ValidationError as e:
-#             print(f"Error improvising content: {e}")
-#
-#     return state
+    return state
 
 
 def content_improviser_node(state: LearningState) -> LearningState:
+    logging.info("Entering content_improviser_node")
     if state.generated_content is not None:
         try:
             messages = [
