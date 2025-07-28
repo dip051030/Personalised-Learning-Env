@@ -61,7 +61,7 @@ def route_selector_node(state: LearningState) -> LearningState:
             response = route_selector.invoke({
                 'current_resources' : state.current_resource.model_dump()
             })
-
+            state.content_type = ContentResponse.LESSON if decision_node(state) == "lesson_selection" else ContentResponse.BLOG
             state.next_action = response.content if hasattr(response, "content") else response
             logging.info(f"Route selection response: {state.next_action}")
 
