@@ -205,6 +205,15 @@ class EnrichedLearningResource(BaseModel):
     user_contextual_description: Optional[str] = None
 
 
+class FeedBack(BaseModel):
+    """User feedback on generated content."""
+    resource: Optional[ContentResponse.content] = ''
+    rating: int = 1 # 1-5 scale
+    comments: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
 class LearningState(BaseModel):
     """Tracks the session state of a user's learning journey across all nodes."""
     user: UserInfo
@@ -216,16 +225,8 @@ class LearningState(BaseModel):
     content: Optional[ContentResponse] = None
     next_action: Optional[str] = Field(default="lesson_selection", description="Should return lesson_selection or blog_selection")
     history: List[HistoryEntry] = []
+    feedback: Optional[FeedBack] = {}
 
     class Config:
         from_attributes = True
 
-
-class FeedBack(BaseModel):
-    """User feedback on generated content."""
-    resource: Optional[ContentResponse]
-    rating: int = 1 # 1-5 scale
-    comments: Optional[str] = None
-
-    class Config:
-        from_attributes = True

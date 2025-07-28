@@ -95,20 +95,21 @@ def generate_lesson_content(state: LearningState) -> LearningState:
 def generate_blog_content(state: LearningState) -> LearningState:
     logging.info("Entering generate_blog_content node")
     if state.user is not None and state.current_resource is not None:
-        try:
-            logical_response = blog_decision_node(state=state)
-            logging.info(f"Logical response for blog generation: {logical_response}")
-            response = blog_generation.invoke({
-                "action": "generate_lesson",
-                "user_data": state.user.model_dump(),
-                "resource_data": state.current_resource.model_dump(),
-                "style": logical_response
-            })
+        pass
+    try:
+        logical_response = blog_decision_node(state=state)
+        logging.info(f"Logical response for blog generation: {logical_response}")
+        response = blog_generation.invoke({
+            "action": "generate_lesson",
+            "user_data": state.user.model_dump(),
+            "resource_data": state.current_resource.model_dump(),
+            "style": logical_response
+        })
 
-            state.content.content = ContentResponse(content=response.content if hasattr(response, "content") else response)
-            logging.info.(f"Blog content has been generated!")
-        except Expectation as e:
-            logging.error(f"Error generating blog content: {e}")
+        state.content.content = ContentResponse(content=response.content if hasattr(response, "content") else response)
+        logging.info(f"Blog content has been generated!")
+    except Expectation as e:
+        logging.error(f"Error generating blog content: {e}")
     return state
 
 
@@ -141,10 +142,13 @@ def collect_feedback_node(state:LearningState) -> LearningState:
             messages = [
                 CONTENT_FEEDBACK_SYSTEM_PROMPT,
                 HumanMessage(content=f"""
-Resources:
-{state.content.model_dump()}
+Feedback:
+{state.feedback.model_dump()}
+
 """)
             ]
+            state.feedback = messages
+
             logging.info(f"Collecting feedback for content: {state.content.content}")
             # Assume feedback is collected and processed
         except Exception as e:
