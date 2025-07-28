@@ -3,7 +3,11 @@ from sentence_transformers import SentenceTransformer
 from db.loader import load_lesson_data
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 def build_chroma_db_collection(filename: str, collection_name: str = 'lessons'):
     logging.info(f"Building ChromaDB collection for {filename} with name '{collection_name}'")

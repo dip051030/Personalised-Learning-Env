@@ -13,7 +13,11 @@ from prompts.prompts import user_summary, enriched_content, \
 from schemas import LearningState, ContentResponse
 import  json
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 
 def user_info_node(state: LearningState) -> LearningState:

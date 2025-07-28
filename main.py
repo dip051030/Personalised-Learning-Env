@@ -3,7 +3,11 @@ import logging
 from nodes import graph_run
 
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 user_data = {
     "user": {
@@ -22,7 +26,7 @@ user_data = {
         "description": "",
         "elaboration": "",
         "keywords": [],
-        "hours": None,
+        "hours": 1,
         "references": ""
     },
     "progress": [],

@@ -3,7 +3,11 @@ from pathlib import Path
 from typing import List, Dict, Any
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 DATA_DIR = Path(__file__).parent.parent / "data" / "lessons"
 

@@ -3,7 +3,11 @@ import getpass
 from typing import Optional
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 
 def set_env(var: str) -> Optional[str]:

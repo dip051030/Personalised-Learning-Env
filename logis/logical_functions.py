@@ -1,4 +1,10 @@
 import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
 from schemas import LearningResource, ResourceSubject, LearningState, ContentResponse, FeedBack
 from db.vector_db import build_chroma_db_collection
 from sentence_transformers import SentenceTransformer

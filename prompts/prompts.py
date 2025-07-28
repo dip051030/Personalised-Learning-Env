@@ -3,13 +3,17 @@ from langchain_core.prompts import PromptTemplate
 import json
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 from pydantic import BaseModel
 
 from models.llm_models import get_gemini_model, get_groq_model
 from schemas import UserInfo, LearningResource, LearningState, ContentResponse
-from nodes import user_info_node, learning_resource_node, content_generation, content_improviser_node
+# from nodes import user_info_node, learning_resource_node, content_generation, content_improviser_node
 
 
 # ---------------------------------------------------------------------------------
@@ -226,7 +230,7 @@ Write a short, engaging blog post for students based on the above topic.
 class RouteSelectorNode(PromptTemplate):
     def __init__(self):
         logging.info("Initializing RouteSelectorNode Template")
-        super.__init__(
+        super().__init__(
             template = '''
             You are a route selector for an educational learning system.
             Your task is to determine the next action based on the user''s current state and progress.
