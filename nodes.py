@@ -30,7 +30,7 @@ def user_info_node(state: LearningState) -> LearningState:
     return state
 
 
-def learning_resource_node(state: LearningState) -> LearningState:
+def enrich_topic_content(state: LearningState) -> LearningState:
     """
     Process learning resource data.
     """
