@@ -84,7 +84,7 @@ def generate_lesson_content(state: LearningState) -> LearningState:
             })
 
 
-            state.content = ContentResponse(content=response.content if hasattr(response, "content") else response)
+            state.content.content = ContentResponse(content=response.content if hasattr(response, "content") else response)
             logging.info(f"Lesson content has been generated!")
         except Expectation as e:
             logging.error(f"Error generating lesson content: {e}")
@@ -104,8 +104,8 @@ def generate_blog_content(state: LearningState) -> LearningState:
                 "style": logical_response
             })
 
-            state.content = ContentResponse(content=response.content if hasattr(response, "content") else response)
-            logging.info(f"Blog content has been generated!")
+            state.content.content = ContentResponse(content=response.content if hasattr(response, "content") else response)
+            logging.info.(f"Blog content has been generated!")
         except Expectation as e:
             logging.error(f"Error generating blog content: {e}")
     return state
@@ -125,13 +125,24 @@ Unpolished Learning Resource:
 
             response = content_improviser(messages)
             generated_markdown = response.content if hasattr(response, "content") else str(response)
-            state.content = ContentResponse(content=generated_markdown)
+            state.content.content = ContentResponse(content=generated_markdown)
             logging.info(f"Improvised content has been generated!")
         except Exception as e:
             logging.error(f"Error improvising content: {e}")
 
     return state
 
+
+def collect_feedback_node(sate:LearningState) -> LearningState:
+    logging.info("Entering collect_feedback_node")
+    if sate.content is not None:
+        try:
+
+            logging.info(f"Collecting feedback for content: {sate.content.content}")
+            # Assume feedback is collected and processed
+        except Exception as e:
+            logging.error(f"Error collecting feedback: {e}")
+    return sate
 
 builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)

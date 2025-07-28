@@ -219,3 +219,13 @@ class LearningState(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class FeedBack(BaseModel):
+    """User feedback on generated content."""
+    resource: Optional[str] = ''
+    rating: int = 1 # 1-5 scale
+    comments: Optional[str] = None
+
+    class Config:
+        from_attributes = True
