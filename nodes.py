@@ -7,7 +7,7 @@ import logging
 
 from logis.logical_functions import decision_node, lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
     retrieve_and_search
-from prompts.prompts import user_summary, learning_resource, user_content_generation, \
+from prompts.prompts import user_summary, enriched_content, user_content_generation, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT
 from schemas import LearningState, ContentResponse
 import  json
@@ -39,7 +39,7 @@ def enrich_content(state: LearningState) -> LearningState:
         try:
             retrieved_content = retrieve_and_search(state=state)
             logging.info(f"Enriching content for resource: {retrieve_and_search(state=state)}")
-            response= learning_resource.invoke({
+            response= enriched_content.invoke({
                 "action": "content_enrichment",
                 "current_resources_data": parse_chromadb_metadata(retrieved_content).model_dump()
             })
@@ -174,7 +174,7 @@ Unpolished Learning Resource:
 
 builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)
-builder.add_node("learning_resource", learning_resource_node)
+builder.add_node("learning_resource", enrich_content)
 builder.add_node("route_selector", route_selector_node)
 builder.add_node("content_generation", content_generation)
 builder.add_node("content_improviser", content_improviser_node)

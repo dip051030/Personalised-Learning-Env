@@ -61,43 +61,41 @@ Example output:
 # -----------------------------------------------------------------------------------------
 # 📚 LearningResourceTemplate: Summarizes learning content + links it to user interest
 # -----------------------------------------------------------------------------------------
-class EnrichContentPrompt(PromptTemplate):
+
+class EnrichContent(PromptTemplate):
     """
-    LLM prompt for enriching a LearningResource entry.
-    It adds natural language summaries or learning insights for each key.
-    Result must remain in key-value structure with added 'enriched_' fields.
+    A simplified prompt template for enriching a learning resource.
+    The model is expected to:
+    - Expand and clarify fields like 'description' and 'elaboration'
+    - Generate summaries and student-friendly explanations
+    - Maintain the same keys as input (structured JSON output)
     """
 
     def __init__(self):
         super().__init__(
             template=(
-                """You are an educational content assistant.
-
-Given this structured topic metadata:
-### Existing Metadata:
-{existing_data}
-
-And current resource:
+                """You're a curriculum enrichment agent. Based on this structured topic:
 {current_resources_data}
 
-Enrich it by adding the following fields:
-- enriched_description: make the description more intuitive or student-friendly.
-- enriched_elaboration: explain how it connects to real-world examples or practical use.
-- enriched_keywords: give a one-line purpose for each keyword.
-- socratic_questions: generate 3 Socratic questions (in bullet list) to spark curiosity.
-- why_important: explain why learning this topic matters.
+Your task:
+- Enrich vague or brief fields (like `description`, `elaboration`)
+- Add a student-friendly summary
+- Include optional insights if relevant (e.g., practical uses, visual analogies)
+- Keep original keys. Maintain consistent structure.
 
-Keep all original keys. Add only these new ones.
-Format the output as a single JSON object. No prose outside it.
+Return only a single valid JSON object. Do not explain your process.
 """
             ),
-            input_variables=["existing_data", "current_resources_data"]
+            input_variables=["current_resources_data"]
         )
 
-    def format_prompt(self, existing_data: dict, current_resources_data: dict) -> str:
+    def format_prompt(self, current_resource_data: dict) -> str:
+        """
+        Converts the provided topic data dictionary into a JSON-formatted
+        string to insert into the prompt.
+        """
         return self.format(
-            existing_data=json.dumps(existing_data, indent=2),
-            current_resources_data=json.dumps(current_resources_data, indent=2)
+            current_resource_data=json.dumps(current_resource_data, indent=2)
         )
 
 
@@ -183,18 +181,12 @@ class RouteSelectorNode(PromptTemplate):
 
 
 prompt_user = UserSummaryTemplate()
-prompt_resource = LearningResourceTemplate()
+prompt_enrichment = EnrichContent()
 prompt_content_generation = ContentGenerationTemplate()
 prompt_content_improviser = CONTENT_IMPROVISE_SYSTEM_PROMPT
 prompt_route_selector = RouteSelectorNode()
 
 user_summary = (prompt_user | get_geminit_gemini_model(LearningResource))
 user_content_generation = (prompt_content_model(UserInfo))
-learning_resource = (prompt_resource | ge_generation | get_gemini_model(ContentResponse))
+enriched_content = (prompt_enrichment | get_gemini_model(ContentResponse))
 content_improviser = get_groq_model()
-
-# Node references for graph construction or direct use
-user_info = user_info_node
-learning_resource = learning_resource_node
-content_generation_node = content_generation
-content_improviser = content_improviser_node
