@@ -8,7 +8,7 @@ import logging
 from logis.logical_functions import decision_node, lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
     retrieve_and_search
 from prompts.prompts import user_summary, enriched_content, \
-    content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation
+    content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation
 from schemas import LearningState, ContentResponse
 import  json
 
@@ -106,25 +106,25 @@ def generate_blog_content(state: LearningState) -> LearningState:
             logging.error(f"Error generating blog content: {e}")
 
 
-def content_generation(state: LearningState) -> LearningState:
-    """
-    Generate content based on the current state.
-    """
-    if state.user and state.current_resource:
-        try:
-            response= user_content_generation.invoke({
-                "action": "generate_content",
-                "user_data": state.user.model_dump(),
-                "resource_data": state.current_resource.model_dump()
-            })
-
-            content_raw = response.content if hasattr(response, "content") else response
-            state.content = ContentResponse(content = content_raw)
-            logging.info(f"Content generated: {state.content}")
-        except Expectation as e:
-            logging.error(f"Error generating content: {e}")
-
-    return state
+# def content_generation(state: LearningState) -> LearningState:
+#     """
+#     Generate content based on the current state.
+#     """
+#     if state.user and state.current_resource:
+#         try:
+#             response= user_content_generation.invoke({
+#                 "action": "generate_content",
+#                 "user_data": state.user.model_dump(),
+#                 "resource_data": state.current_resource.model_dump()
+#             })
+#
+#             content_raw = response.content if hasattr(response, "content") else response
+#             state.content = ContentResponse(content = content_raw)
+#             logging.info(f"Content generated: {state.content}")
+#         except Expectation as e:
+#             logging.error(f"Error generating content: {e}")
+#
+#     return state
 
 
 # def conent_improviser(state: LearningState) -> LearningState:
@@ -171,14 +171,24 @@ builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)
 builder.add_node("learning_resource", enrich_content)
 builder.add_node("route_selector", route_selector_node)
-builder.add_node("content_generation", content_generation)
+builder.add_node("content_generation", generate_lesson_content)
+builder.add_node("blog_generation", generate_blog_content)
 builder.add_node("content_improviser", content_improviser_node)
 
-builder.set_entry_point('user_info')
+builder.set_entry_point("user_info")
 builder.add_edge("user_info", "learning_resource")
-builder.add_edge("learning_resource", "content_generation")
+builder.add_edge("learning_resource", "route_selector")
+builder.add_conditional_edges(
+    "route_selector",
+    lambda state: "blog_generation" if state.next_action == "blog" else "content_generation",
+    {
+        "blog_generation": "blog_generation",
+        "content_generation": "content_generation"
+    }
+)
 builder.add_edge("content_generation", "content_improviser")
-builder.add_edge('content_generation', END)
+builder.add_edge("blog_generation", "content_improviser")
+builder.add_edge("content_improviser", END)
 
 graph = builder.compile()
 
