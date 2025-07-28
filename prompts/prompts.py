@@ -176,13 +176,14 @@ class RouteSelectorNode(PromptTemplate):
             You are a route selector for an educational learning system.
             Your task is to determine the next action based on the user''s current state and progress.
             Based on the {current_resources} decide whether to generate a blog or a lesson and return the output.'''
-    )
+    , input_variables=["current_resources"]
+        )
 
 
-    def format_prompt(self, action: str, current_resources_data: dict) -> str:
+    def format_prompt(self, action: str, current_resources: dict) -> str:
         return self.format(
             action=action,
-            current_resources_data=json.dumps(current_resources_data, indent=2)
+            current_resources=json.dumps(current_resources, indent=2)
         )
 
 
@@ -193,7 +194,8 @@ prompt_content_generation = ContentGenerationTemplate()
 prompt_content_improviser = CONTENT_IMPROVISE_SYSTEM_PROMPT
 prompt_route_selector = RouteSelectorNode()
 
-user_summary = (prompt_user | get_geminit_gemini_model(LearningResource))
-user_content_generation = (prompt_content_model(UserInfo))
-enriched_content = (prompt_enrichment | get_gemini_model(EnrichContent))
+user_summary = prompt_user | get_gemini_model(LearningResource)
+user_content_generation = prompt_content_model(UserInfo)
+enriched_content = prompt_enrichment | get_gemini_model(EnrichContent)
+route_selector = prompt_route_selector | get_gemini_model(RouteSelectorNode)
 content_improviser = get_groq_model()

@@ -214,7 +214,7 @@ class LearningState(BaseModel):
     related_examples: Optional[List[str]] = None
     content_type: ContentType = ContentType.LESSON
     content: Optional[ContentResponse] = None
-    next_action: Optional[str] = "lesson_selection"
+    next_action: Optional[str] = Field(default="lesson_selection", description="Should return lesson_selection or blog_selection")
     history: List[HistoryEntry] = []
 
     class Config:

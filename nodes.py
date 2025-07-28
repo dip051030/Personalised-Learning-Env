@@ -8,7 +8,7 @@ import logging
 from logis.logical_functions import decision_node, lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
     retrieve_and_search
 from prompts.prompts import user_summary, enriched_content, user_content_generation, \
-    content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT
+    content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector
 from schemas import LearningState, ContentResponse
 import  json
 
@@ -57,21 +57,16 @@ def enrich_content(state: LearningState) -> LearningState:
 def route_selector_node(state: LearningState) -> LearningState:
     if state.user is not None and state.current_resource is not None:
         try:
-            response  = decision_node(state=state).lower()
+            logging.info(f"Selecting the route")
+            response = route_selector.invoke({
+                'current_resources' : state.current_resource.model_dump()
+            })
 
-            if response == "blog":
-                logging.info("Blog generation route selected.")
-                return "blog_generation"
-            elif response == "lesson":
-                logging.info("Lesson generation route selected.")
-                return "lesson_generation"
-            else:
-                logging.info("Defaulting to lesson generation route.")
-                return "lesson_generation"
+            state.next_action = response.content if hasattr(response, "content") else response
+            logging.info(f"Route selection response: {state.next_action}")
+
         except Exception as e:
             logging.error(f"Error selecting route: {e}")
-
-    return state
 
 
 def generate_lesson_content(state: LearningState) -> LearningState:
