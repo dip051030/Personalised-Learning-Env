@@ -8,7 +8,8 @@ import logging
 from logis.logical_functions import decision_node, lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
     retrieve_and_search
 from prompts.prompts import user_summary, enriched_content, \
-    content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation
+    content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
+    CONTENT_FEEDBACK_SYSTEM_PROMPT
 from schemas import LearningState, ContentResponse
 import  json
 
@@ -133,16 +134,22 @@ Unpolished Learning Resource:
     return state
 
 
-def collect_feedback_node(sate:LearningState) -> LearningState:
+def collect_feedback_node(state:LearningState) -> LearningState:
     logging.info("Entering collect_feedback_node")
-    if sate.content is not None:
+    if state.content is not None:
         try:
-
-            logging.info(f"Collecting feedback for content: {sate.content.content}")
+            messages = [
+                CONTENT_FEEDBACK_SYSTEM_PROMPT,
+                HumanMessage(content=f"""
+Resources:
+{state.content.model_dump()}
+""")
+            ]
+            logging.info(f"Collecting feedback for content: {state.content.content}")
             # Assume feedback is collected and processed
         except Exception as e:
             logging.error(f"Error collecting feedback: {e}")
-    return sate
+    return state
 
 builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)

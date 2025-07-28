@@ -1,5 +1,5 @@
 import logging
-from schemas import LearningResource, ResourceSubject, LearningState
+from schemas import LearningResource, ResourceSubject, LearningState, ContentResponse, FeedBack
 from db.vector_db import build_chroma_db_collection
 from sentence_transformers import SentenceTransformer
 

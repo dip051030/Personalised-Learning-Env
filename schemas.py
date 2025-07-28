@@ -223,7 +223,7 @@ class LearningState(BaseModel):
 
 class FeedBack(BaseModel):
     """User feedback on generated content."""
-    resource: Optional[str] = ''
+    resource: Optional[ContentResponse]
     rating: int = 1 # 1-5 scale
     comments: Optional[str] = None
 
