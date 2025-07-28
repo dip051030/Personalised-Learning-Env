@@ -84,7 +84,7 @@ def generate_lesson_content(state: LearningState) -> LearningState:
             })
 
 
-            state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
+            state.content = ContentResponse(content=response.content if hasattr(response, "content") else response)
             logging.info(f"Lesson content has been generated!")
         except Expectation as e:
             logging.error(f"Error generating lesson content: {e}")
@@ -113,20 +113,20 @@ def generate_blog_content(state: LearningState) -> LearningState:
 
 def content_improviser_node(state: LearningState) -> LearningState:
     logging.info("Entering content_improviser_node")
-    if state.generated_content is not None:
+    if state.content is not None:
         try:
             messages = [
                 CONTENT_IMPROVISE_SYSTEM_PROMPT,
                 HumanMessage(content=f"""
-
 Unpolished Learning Resource:
-{state.generated_content.model_dump()}
+{state.content.model_dump()}
 """)
             ]
 
             response = content_improviser(messages)
             generated_markdown = response.content if hasattr(response, "content") else str(response)
-            logging.info(f"Improvised content: {generated_markdown}")
+            state.content = ContentResponse(content=generated_markdown)
+            logging.info(f"Improvised content has been generated!")
         except Exception as e:
             logging.error(f"Error improvising content: {e}")
 
