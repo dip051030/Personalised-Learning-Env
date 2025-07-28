@@ -143,13 +143,13 @@ def collect_feedback_node(state:LearningState) -> LearningState:
                 CONTENT_FEEDBACK_SYSTEM_PROMPT,
                 HumanMessage(content=f"""
 Feedback:
-{state.feedback.model_dump()}
+{state.content.content}
 
 """)
             ]
-            state.feedback = messages
-
+            response = messages
             logging.info(f"Collecting feedback for content: {state.content.content}")
+            logging.info(f"Response: {response}")
             # Assume feedback is collected and processed
         except Exception as e:
             logging.error(f"Error collecting feedback: {e}")
