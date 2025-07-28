@@ -7,8 +7,8 @@ import logging
 
 from logis.logical_functions import decision_node, lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
     retrieve_and_search
-from prompts.prompts import user_summary, enriched_content, user_content_generation, \
-    content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector
+from prompts.prompts import user_summary, enriched_content, \
+    content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation
 from schemas import LearningState, ContentResponse
 import  json
 
@@ -74,7 +74,7 @@ def generate_lesson_content(state: LearningState) -> LearningState:
         try:
             logical_response = lesson_decision_node(state=state)
             logging.info(f"Logical response for lesson generation: {logical_response}")
-            response = lesson_content_generator.invoke({
+            response = content_generation.invoke({
                 "action": "generate_lesson",
                 "user_data": state.user.model_dump(),
                 "resource_data": state.current_resource.model_dump(),
@@ -83,7 +83,7 @@ def generate_lesson_content(state: LearningState) -> LearningState:
 
 
             state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
-            print('GENERATED CONTENT:', state.generated_content)
+            logging.info(f"Blog content has been generated!")
         except Expectation as e:
             logging.error(f"Error generating lesson content: {e}")
 
@@ -92,15 +92,15 @@ def generate_blog_content(state: LearningState) -> LearningState:
         try:
             logical_response = blog_decision_node(state=state)
             logging.info(f"Logical response for lesson generation: {logical_response}")
-            response = lesson_content_generator.invoke({
+            response = blog_generation.invoke({
                 "action": "generate_lesson",
                 "user_data": state.user.model_dump(),
                 "resource_data": state.current_resource.model_dump(),
                 "style": logical_response
             })
 
-            print('GENERATED CONTENT:', response)
-            state.generated_content = ContentResponse(content=response.content if hasattr(response, "content") else response)
+            logging.info(f"Blog content has been generated!")
+            state.content = ContentResponse(content=response.content if hasattr(response, "content") else response)
 
         except Expectation as e:
             logging.error(f"Error generating blog content: {e}")
@@ -119,8 +119,8 @@ def content_generation(state: LearningState) -> LearningState:
             })
 
             content_raw = response.content if hasattr(response, "content") else response
-            state.generated_content = ContentResponse(content = content_raw)
-            logging.info(f"Content generated: {state.generated_content}")
+            state.content = ContentResponse(content = content_raw)
+            logging.info(f"Content generated: {state.content}")
         except Expectation as e:
             logging.error(f"Error generating content: {e}")
 

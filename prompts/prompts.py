@@ -169,6 +169,51 @@ Now, improve the following content:
 
 """)
 
+
+from langchain.prompts import PromptTemplate
+import json
+
+class BlogGenerationPrompt(PromptTemplate):
+    """
+    Template for generating educational blog posts.
+    The LLM should:
+    - Translate academic topic into engaging blog format
+    - Make it informative but also fun/relatable
+    - Consider user's interests and the style logic
+    """
+
+    def __init__(self):
+        super().__init__(
+            template=(
+                """You're a friendly education blogger.
+
+USER PROFILE:
+{user_data}
+
+TOPIC INFORMATION:
+{resource_data}
+
+STYLE TO FOLLOW:
+{style}
+
+Write a short, engaging blog post for students based on the above topic.
+
+- Make it informative but not too formal.
+- Use real-world analogies and visuals if appropriate.
+- Output Markdown-formatted blog content only."""
+            ),
+            input_variables=["user_data", "resource_data", "style"]
+        )
+
+    def format_prompt(self, user_data: dict, resource_data: dict, style: str) -> str:
+        return self.format(
+            user_data=json.dumps(user_data, indent=2),
+            resource_data=json.dumps(resource_data, indent=2),
+            style=style
+        )
+
+
+
 class RouteSelectorNode(PromptTemplate):
     def __init__(self):
         super.__init__(
@@ -193,9 +238,12 @@ prompt_enrichment = EnrichContent()
 prompt_content_generation = ContentGenerationTemplate()
 prompt_content_improviser = CONTENT_IMPROVISE_SYSTEM_PROMPT
 prompt_route_selector = RouteSelectorNode()
+prompt_blog_generation = BlogGenerationPrompt()
 
 user_summary = prompt_user | get_gemini_model(LearningResource)
-user_content_generation = prompt_content_model(UserInfo)
+# user_content_generation = prompt_content_model(UserInfo)
 enriched_content = prompt_enrichment | get_gemini_model(EnrichContent)
 route_selector = prompt_route_selector | get_gemini_model(RouteSelectorNode)
+content_generation = prompt_content_generation | get_gemini_model(LearningResource)
+blog_generation = prompt_blog_generation | get_gemini_model(LearningResource)
 content_improviser = get_groq_model()
