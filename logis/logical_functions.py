@@ -13,6 +13,7 @@ from sentence_transformers import SentenceTransformer
 def retrieve_and_search(state: LearningState) -> dict:
     """
     Retrieve and search for resources based on the current state.
+    Returns the top matching resource from the ChromaDB collection.
     """
     try:
         if state.current_resource is not None:
@@ -27,27 +28,11 @@ def retrieve_and_search(state: LearningState) -> dict:
         logging.error(f"Error retrieving and searching resources: {e}")
         return None
 
-# def decision_node(state: LearningState) -> str:
-#     """
-#     Decide whether to generate a lesson or a blog.
-#     """
-#     topic = state.current_resource.topic
-#     grade = int(state.user.grade)
-#     blog_keywords = []
-#     lesson_keywords = []
-#
-#     if any(kw in topic for kw in blog_keywords) and grade > 10:
-#         return "blog"
-#     elif any(kw in topic for kw in lesson_keywords):
-#         return "lesson"
-#     elif grade <= 10:
-#         return "lesson"
-#     else:
-#         return "lesson"
 
 def lesson_decision_node(state: LearningState) -> str:
     """
     Decide lesson style based on user grade and topic.
+    Returns a string indicating the lesson style.
     """
     if "practice" in state.current_resource.topic:
         style = "exercise_heavy"
@@ -55,9 +40,11 @@ def lesson_decision_node(state: LearningState) -> str:
         style = "general_concept"
     return style
 
+
 def parse_chromadb_metadata(metadata: dict) -> LearningResource:
     """
     Convert ChromaDB metadata dict to a LearningResource model.
+    Returns a LearningResource instance.
     """
     return LearningResource(
     subject=ResourceSubject(metadata.get('subject', 'unknown').lower()),
@@ -72,9 +59,11 @@ def parse_chromadb_metadata(metadata: dict) -> LearningResource:
     elaboration=metadata.get("elaboration", "")
 )
 
+
 def blog_decision_node(state: LearningState) -> str:
     """
     Decide blog style based on topic and user grade.
+    Returns a string indicating the blog style.
     """
     if "importance" in state.current_resource.topic:
         style = "motivational"

@@ -224,4 +224,3 @@ class LearningState(BaseModel):
 
     class Config:
         from_attributes = True
-

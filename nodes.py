@@ -1,10 +1,6 @@
-from langchain_core.messages import SystemMessage, HumanMessage
-from langgraph.graph import StateGraph, START, END
-from langsmith import expect
-from pydantic_core import ValidationError
-from setuptools.namespaces import flatten
-from sympy.stats import Expectation
-import logging
+from more_itertools import flatten
+from langgraph.graph import StateGraph, END
+from langchain_core.messages import HumanMessage
 
 from logis.logical_functions import lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
     retrieve_and_search
@@ -12,7 +8,8 @@ from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
     CONTENT_FEEDBACK_SYSTEM_PROMPT
 from schemas import LearningState, ContentResponse, EnrichedLearningResource
-import  json
+import json
+import logging
 
 logging.basicConfig(
     level=logging.INFO,
@@ -22,6 +19,10 @@ logging.basicConfig(
 
 
 def user_info_node(state: LearningState) -> LearningState:
+    """
+    Node to process and summarize user information using the user_summary prompt.
+    Updates the state with validated user info.
+    """
     logging.info("Entering user_info_node")
     if state.user is not None:
         try:
@@ -32,9 +33,7 @@ def user_info_node(state: LearningState) -> LearningState:
             print(response)
             user_data = response.content if hasattr(response, 'content') else response
             print('hello')
-            # print(response)
             state.user = state.user.model_validate(user_data if isinstance(user_data, dict) else user_data.model_dump())
-
             logging.info(f"User info processed: {state.user}")
         except Exception as e:
             logging.error(f"Error processing user data: {e}")
@@ -42,30 +41,33 @@ def user_info_node(state: LearningState) -> LearningState:
 
 
 def enrich_content(state: LearningState) -> LearningState:
+    """
+    Node to enrich the current learning resource using LLM enrichment.
+    Updates the state with an enriched resource.
+    """
     logging.info("Entering enrich_content node")
     if state.current_resource is not None:
         try:
             retrieved_content = retrieve_and_search(state=state).get('metadatas', [])
-            # print(state.current_resource)
-            retrieved_content = list(flatten(retrieved_content))[0]
+            retrieved_content = list(flatten(retrieved_content) )[0]
             print('RETRIEVED CONTENT', retrieved_content)
             response= enriched_content.invoke({
                 "action": "content_enrichment",
                 "current_resources_data": parse_chromadb_metadata(retrieved_content).model_dump()
             })
-            # print('RESPONSE FROM THE MODEL:', state.enriched_resource.model_validate(response))
             resource_data = response.content if hasattr(response, "content") else response
             state.enriched_resource = EnrichedLearningResource.model_validate(resource_data)
             logging.info(f"Learning resource processed: {state.enriched_resource}")
         except Exception as e:
-            # print('METADATA:     ', parse_chromadb_metadata(retrieved_content).model_dump())
             logging.error(f"Error processing learning resource data: {e}")
-
     return state
 
 
-
 def route_selector_node(state: LearningState) -> LearningState:
+    """
+    Node to select the next route (lesson or blog) based on the enriched resource.
+    Updates the state with the next action.
+    """
     logging.info("Entering route_selector_node")
     if state.user is not None and state.current_resource is not None:
         try:
@@ -73,16 +75,17 @@ def route_selector_node(state: LearningState) -> LearningState:
             response = route_selector.invoke({
                 'current_resources' : state.enriched_resource.model_dump()
             })
-            # state.content_type = ContentResponse.LESSON if decision_node(state) == "lesson_selection" else ContentResponse.BLOG
             state.next_action = response.content if hasattr(response, "content") else response
             logging.info(f"Route selection response: {state.next_action}")
-
         except Exception as e:
             logging.error(f"Error selecting route: {e}")
     return state
 
 
 def generate_lesson_content(state: LearningState) -> LearningState:
+    """
+    Node to generate lesson content using the content_generation prompt.
+    """
     logging.info("Entering generate_lesson_content node")
     if state.user is not None and state.enriched_resource is not None:
         try:
@@ -96,17 +99,18 @@ def generate_lesson_content(state: LearningState) -> LearningState:
             })
             resource_data = response.content if hasattr(response, "content") else response
             print(f'Generated Content: {resource_data}')
-            # state.content.content = resource_data
             logging.info(f"Lesson content has been generated!")
-        except Expectation as e:
+        except Exception as e:
             logging.error(f"Error generating lesson content: {e}")
     return state
 
 
 def generate_blog_content(state: LearningState) -> LearningState:
+    """
+    Node to generate blog content using the blog_generation prompt.
+    """
     logging.info("Entering generate_blog_content node")
     if state.user is not None and state.enriched_resource is not None:
-
         try:
             logical_response = blog_decision_node(state=state)
             logging.info(f"Logical response for blog generation: {logical_response}")
@@ -116,15 +120,17 @@ def generate_blog_content(state: LearningState) -> LearningState:
                 "resource_data": state.enriched_resource.model_dump(),
                 "style": logical_response
             })
-
-            # state.content.content = ContentResponse(content=response.content if hasattr(response, "content") else response)
             logging.info(f"Blog content has been generated!")
-        except Expectation as e:
+        except Exception as e:
             logging.error(f"Error generating blog content: {e}")
     return state
 
 
 def content_improviser_node(state: LearningState) -> LearningState:
+    """
+    Node to improve generated content using the content improver LLM.
+    Updates the state with improved content.
+    """
     logging.info("Entering content_improviser_node")
     if state.content is not None:
         try:
@@ -142,11 +148,13 @@ Unpolished Learning Resource:
             logging.info(f"Improvised content has been generated!")
         except Exception as e:
             logging.error(f"Error improvising content: {e}")
-
     return state
 
 
 def collect_feedback_node(state:LearningState) -> LearningState:
+    """
+    Node to collect feedback on generated content.
+    """
     logging.info("Entering collect_feedback_node")
     if state.content is not None:
         try:
@@ -161,7 +169,6 @@ Feedback:
             response = messages
             logging.info(f"Collecting feedback for content: {state.content.content}")
             logging.info(f"Response: {response}")
-            # Assume feedback is collected and processed
         except Exception as e:
             logging.error(f"Error collecting feedback: {e}")
     return state

@@ -10,10 +10,29 @@ logging.basicConfig(
 )
 
 def sanitize_metadata(metadata: dict) -> dict:
+    """
+    Convert list values in metadata to comma-separated strings for ChromaDB compatibility.
+
+    Args:
+        metadata (dict): Metadata dictionary.
+
+    Returns:
+        dict: Sanitized metadata dictionary.
+    """
     return {k: (",".join(v) if isinstance(v, list) else v) for k, v in metadata.items()}
 
 
 def build_chroma_db_collection(filename: str, collection_name: str = 'lessons'):
+    """
+    Build a ChromaDB collection from lesson data and return the collection and embedding model.
+
+    Args:
+        filename (str): The lesson data filename.
+        collection_name (str): The name for the ChromaDB collection.
+
+    Returns:
+        tuple: (collection, embedding model)
+    """
     logging.info(f"Building ChromaDB collection for {filename} with name '{collection_name}'")
     lessons = load_lesson_data(filename)
     model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -38,7 +57,6 @@ def build_chroma_db_collection(filename: str, collection_name: str = 'lessons'):
             'description': lesson.get('description', ''),
             'elaboration': lesson.get('elaboration', '')
         }
-        
         for lesson in lessons
     ]
 

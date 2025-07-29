@@ -1,5 +1,5 @@
 from langchain_core.messages import SystemMessage
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 import json
 import logging
 

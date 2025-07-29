@@ -30,9 +30,16 @@ user_data = {
         "references": ""
     },
     "progress": [],
-    "next_action": {"next_node": "lesson_selection"},  # <-- THIS IS THE FIX
+    "next_action": {"next_node": "lesson_selection"},
     "history": []
 }
 
-output = graph_run(user_data)
-logging.info(f"Graph output: {output}")
+def main():
+    """
+    Entry point for running the learning graph with sample user data.
+    """
+    output = graph_run(user_data)
+    logging.info(f"Graph output: {output}")
+
+if __name__ == "__main__":
+    main()
