@@ -26,23 +26,23 @@ def retrieve_and_search(state: LearningState) -> dict:
         logging.error(f"Error retrieving and searching resources: {e}")
         return None
 
-def decision_node(state: LearningState) -> str:
-    """
-    Decide whether to generate a lesson or a blog.
-    """
-    topic = state.current_resource.topic
-    grade = int(state.user.grade)
-    blog_keywords = []
-    lesson_keywords = []
-
-    if any(kw in topic for kw in blog_keywords) and grade > 10:
-        return "blog"
-    elif any(kw in topic for kw in lesson_keywords):
-        return "lesson"
-    elif grade <= 10:
-        return "lesson"
-    else:
-        return "lesson"
+# def decision_node(state: LearningState) -> str:
+#     """
+#     Decide whether to generate a lesson or a blog.
+#     """
+#     topic = state.current_resource.topic
+#     grade = int(state.user.grade)
+#     blog_keywords = []
+#     lesson_keywords = []
+#
+#     if any(kw in topic for kw in blog_keywords) and grade > 10:
+#         return "blog"
+#     elif any(kw in topic for kw in lesson_keywords):
+#         return "lesson"
+#     elif grade <= 10:
+#         return "lesson"
+#     else:
+#         return "lesson"
 
 def lesson_decision_node(state: LearningState) -> str:
     """

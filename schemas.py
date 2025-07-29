@@ -217,6 +217,7 @@ class FeedBack(BaseModel):
 class LearningState(BaseModel):
     """Tracks the session state of a user's learning journey across all nodes."""
     user: UserInfo
+    # resources: Optional[List[LearningResource]] = []
     current_resource: Optional[LearningResource] = None
     progress: List[UserProgress] = []
     topic_data: Optional[Dict] = None

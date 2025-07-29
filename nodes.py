@@ -5,7 +5,7 @@ from pydantic_core import ValidationError
 from sympy.stats import Expectation
 import logging
 
-from logis.logical_functions import decision_node, lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
+from logis.logical_functions import lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
     retrieve_and_search
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
@@ -28,9 +28,12 @@ def user_info_node(state: LearningState) -> LearningState:
                 "action": "summarise_user",
                 "existing_data": state.user.model_dump()
             })
-
+            print(response)
             user_data = response.content if hasattr(response, 'content') else response
+            print('hello')
+            # print(response)
             state.user = state.user.model_validate(user_data if isinstance(user_data, dict) else user_data.model_dump())
+
             logging.info(f"User info processed: {state.user}")
         except Exception as e:
             logging.error(f"Error processing user data: {e}")
@@ -42,6 +45,8 @@ def enrich_content(state: LearningState) -> LearningState:
     if state.current_resource is not None:
         try:
             retrieved_content = retrieve_and_search(state=state)
+            # print(state.current_resource)
+            # print('RETRIEVED CONTENT', retrieved_content)
             logging.info(f"Retrieved content: {retrieved_content}")
             response= enriched_content.invoke({
                 "action": "content_enrichment",

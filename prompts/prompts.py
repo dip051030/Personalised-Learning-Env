@@ -33,16 +33,13 @@ class UserSummaryTemplate(PromptTemplate):
         logging.info("Initializing UserSummaryTemplate")
         super().__init__(
             template=(
-                """Your role is {action}. You are given structured user data:
-{existing_data}
-
+                """Your role is {action}. You are given structured user data: {existing_data}
 Your task:
 - For **every key-value pair**, write a meaningful, human-readable summary.
 - Maintain the same keys in the output.
 - Summarize any field, including: `username`, `age`, `grade`, `is_active` or any others present.
 
 Return the result as a JSON formatted object only. Do **not** add explanations outside of the JSON.
-
 Example output:
 {{
   "username": "User's name is dyane_master",
@@ -268,7 +265,7 @@ prompt_content_improviser = CONTENT_IMPROVISE_SYSTEM_PROMPT
 prompt_route_selector = RouteSelectorNode()
 prompt_blog_generation = BlogGenerationPrompt()
 
-user_summary = prompt_user | get_gemini_model(LearningResource)
+user_summary = prompt_user | get_gemini_model(UserInfo)
 # user_content_generation = prompt_content_model(UserInfo)
 enriched_content = prompt_enrichment | get_gemini_model(EnrichContent)
 route_selector = prompt_route_selector | get_gemini_model(RouteSelectorNode)
