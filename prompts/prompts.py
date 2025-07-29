@@ -96,7 +96,7 @@ class ContentGenerationTemplate(PromptTemplate):
     """
     Prompt to generate markdown educational content ONLY.
 
-    The model must return ONLY the markdown content as a plain string.
+    The model must return ONLY the Markdown content as a plain string.
     No JSON, no metadata, no explanations outside the content.
     """
 
@@ -104,7 +104,7 @@ class ContentGenerationTemplate(PromptTemplate):
         logging.info("Initializing ContentGenerationTemplate")
         super().__init__(
             template=(
-                """You are an educational content generator.
+"""You are an educational content generator.
 
 Task: {action}
 
@@ -164,10 +164,6 @@ Now, improve the following content:
 
 """)
 
-
-from langchain.prompts import PromptTemplate
-import json
-
 class BlogGenerationPrompt(PromptTemplate):
     """
     Template for generating educational blog posts.
@@ -181,7 +177,7 @@ class BlogGenerationPrompt(PromptTemplate):
         logging.info("Initializing BlogGenerationPrompt Template")
         super().__init__(
             template=(
-                """You're a friendly education blogger.
+"""You're a friendly education blogger.
 
 USER PROFILE:
 {user_data}
@@ -214,9 +210,9 @@ class RouteSelectorNode(PromptTemplate):
         logging.info("Initializing RouteSelectorNode Template")
         super().__init__(
             template = '''
-            You are a route selector for an educational learning system.
-            Your task is to determine the next action based on the user''s current state and progress.
-            Based on the {current_resources} decide whether to generate a blog or a lesson and return the output.'''
+You are a route selector for an educational learning system.
+Your task is to determine the next action based on the user''s current state and progress.
+Based on the {current_resources} decide whether to generate a blog or a lesson and return the output.'''
     , input_variables=["current_resources"]
         )
 
