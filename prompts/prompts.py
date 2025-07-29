@@ -29,7 +29,7 @@ class UserSummaryTemplate(PromptTemplate):
     It returns a JSON object with the same keys, but values are reworded explanations.
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         logging.info("Initializing UserSummaryTemplate")
         super().__init__(
             template=(
@@ -51,7 +51,7 @@ Example output:
 }}
 """
             ),
-            input_variables=["action", "existing_data"]
+            input_variables=["action", "existing_data"], *args, **kwargs
         )
 
     def format_prompt(self, action: str, existing_data: dict) -> str:
@@ -114,6 +114,9 @@ User Info:
 Learning Resource:
 {resource_data}
 
+style:
+{style}
+
 Instructions:
 - Generate a clear, structured markdown lesson/explanation.
 - Explain concepts in a way that feels like a friendly tutor.
@@ -125,15 +128,16 @@ Instructions:
 - Do NOT return JSON, metadata, or extra commentary.
 """
             ),
-            input_variables=["action", "user_data", "resource_data"]
+            input_variables=["action", "user_data", "resource_data", 'style']
         )
 
-    def format_prompt(self, action: str, user_data: dict, resource_data: dict) -> str:
+    def format_prompt(self, action: str, user_data: dict, resource_data: dict, style:str) -> str:
         logging.info(f"Formatting ContentGenerationTemplate prompt for action: {action}")
         return self.format(
             action=action,
             user_data=json.dumps(user_data, indent=2),
-            resource_data=json.dumps(resource_data, indent=2)
+            resource_data=json.dumps(resource_data, indent=2),
+            style = style
         )
 
 
@@ -216,7 +220,7 @@ Based on the {current_resources} decide whether to generate a blog or a lesson a
     , input_variables=["current_resources"]
         )
 
-    def format_prompt(self, action: str, current_resources: dict) -> str:
+    def format_prompt(self, current_resources: dict) -> str:
         logging.info(f"Formatting RouteSelectorNode prompt for action: {action}")
         return self.format(
             action=action,

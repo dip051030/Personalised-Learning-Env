@@ -49,11 +49,7 @@ def lesson_decision_node(state: LearningState) -> str:
     """
     Decide lesson style based on user grade and topic.
     """
-    if state.user.grade <= 6:
-        style = "kid_friendly"
-    elif state.user.grade >= 10:
-        style = "exam_ready"
-    elif "practice" in state.current_resource.topic:
+    if "practice" in state.current_resource.topic:
         style = "exercise_heavy"
     else:
         style = "general_concept"
