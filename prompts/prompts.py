@@ -12,7 +12,9 @@ logging.basicConfig(
 from pydantic import BaseModel
 
 from models.llm_models import get_gemini_model, get_groq_model
-from schemas import UserInfo, LearningResource, LearningState, ContentResponse
+from schemas import UserInfo, LearningResource, LearningState, ContentResponse, EnrichedLearningResource, RouteSelector
+
+
 # from nodes import user_info_node, learning_resource_node, content_generation, content_improviser_node
 
 
@@ -70,7 +72,6 @@ Example output:
 
 class EnrichContent(PromptTemplate):
     def __init__(self):
-        logging.info("Initializing EnrichContent Template")
         super().__init__(
             template="""You're a curriculum enrichment agent, your job is {action}. Based on this structured topic:
 {current_resources_data}
@@ -85,6 +86,8 @@ Return only a single valid JSON object. Do not explain your process.
 """,
             input_variables=["current_resources_data", "action"]
         )
+        logging.info("Initializing EnrichContent Template")
+
     def format_prompt(self, action: str, current_resources_data: dict) -> str:
         logging.info("Formatting EnrichContent prompt")
         return self.format(
@@ -95,7 +98,6 @@ Return only a single valid JSON object. Do not explain your process.
 class ContentGenerationTemplate(PromptTemplate):
     """
     Prompt to generate markdown educational content ONLY.
-
     The model must return ONLY the Markdown content as a plain string.
     No JSON, no metadata, no explanations outside the content.
     """
@@ -114,7 +116,7 @@ User Info:
 Learning Resource:
 {resource_data}
 
-style:
+Style:
 {style}
 
 Instructions:
@@ -124,20 +126,22 @@ Instructions:
 - Use headings, bullet points, and code blocks as needed.
 - Ensure the content is educational and engaging.
 - Tailor it to the user's grade level and interests.
-- Return ONLY the markdown content text and dont introduce yourself or provide any other information.
+- Return ONLY the markdown content text and don't introduce yourself or provide any other information.
 - Do NOT return JSON, metadata, or extra commentary.
+
+IMPORTANT: Output ONLY the markdown lesson content. Do NOT include any explanations, JSON, or extra text before or after the markdown.
 """
             ),
-            input_variables=["action", "user_data", "resource_data", 'style']
+            input_variables=["action", "user_data", "resource_data", "style"]
         )
 
-    def format_prompt(self, action: str, user_data: dict, resource_data: dict, style:str) -> str:
+    def format_prompt(self, action: str, user_data: dict, resource_data: dict, style: str) -> str:
         logging.info(f"Formatting ContentGenerationTemplate prompt for action: {action}")
         return self.format(
             action=action,
             user_data=json.dumps(user_data, indent=2),
             resource_data=json.dumps(resource_data, indent=2),
-            style = style
+            style=style
         )
 
 
@@ -221,9 +225,8 @@ Based on the {current_resources} decide whether to generate a blog or a lesson a
         )
 
     def format_prompt(self, current_resources: dict) -> str:
-        logging.info(f"Formatting RouteSelectorNode prompt for action: {action}")
+        logging.info(f"Formatting RouteSelectorNode prompt for action.")
         return self.format(
-            action=action,
             current_resources=json.dumps(current_resources, indent=2)
         )
 
@@ -252,8 +255,8 @@ prompt_blog_generation = BlogGenerationPrompt()
 
 user_summary = prompt_user | get_gemini_model(UserInfo)
 # user_content_generation = prompt_content_model(UserInfo)
-enriched_content = prompt_enrichment | get_gemini_model(EnrichContent)
-route_selector = prompt_route_selector | get_gemini_model(RouteSelectorNode)
-content_generation = prompt_content_generation | get_gemini_model(LearningResource)
-blog_generation = prompt_blog_generation | get_gemini_model(LearningResource)
+enriched_content = prompt_enrichment | get_gemini_model(EnrichedLearningResource)
+route_selector = prompt_route_selector | get_gemini_model(RouteSelector)
+content_generation = prompt_content_generation | get_gemini_model(ContentResponse)
+blog_generation = prompt_blog_generation | get_gemini_model(ContentResponse)
 content_improviser = get_groq_model()

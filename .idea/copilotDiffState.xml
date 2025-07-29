@@ -30,15 +30,6 @@
             </PendingDiffInfo>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/models/llm_models.py">
-          <value>
-            <PendingDiffInfo>
-              <option name="filePath" value="$PROJECT_DIR$/models/llm_models.py" />
-              <option name="originalContent" value="import logging&#10;logging.basicConfig(&#10;    level=logging.INFO,&#10;    format='%(asctime)s %(levelname)s %(message)s',&#10;    datefmt='%Y-%m-%d %H:%M:%S'&#10;)&#10;from langchain_google_genai import ChatGoogleGenerativeAI&#10;from langchain_openai import ChatOpenAI&#10;from langchain_groq import  ChatGroq&#10;from keys.apis import set_env&#10;from schemas import UserInfo&#10;&#10;def get_gemini_model(output_schema):&#10;    logging.info(&quot;Initializing Gemini model with structured output.&quot;)&#10;    return ChatGoogleGenerativeAI(&#10;        model='gemini-2.0-flash',&#10;        api_key=set_env('GOOGLE_API_KEY'),&#10;        temperature=1,&#10;    ).with_structured_output(output_schema)&#10;&#10;def get_groq_model():&#10;    logging.info(&quot;Initializing Groq model.&quot;)&#10;    return ChatGroq(&#10;        model='meta-llama/llama-4-scout-17b-16e-instruct',&#10;        api_key=set_env('GROQ_API_KEY'),&#10;        temperature=0.5&#10;    )&#10;&#10;def get_openai_model():&#10;    logging.info(&quot;Initializing OpenAI model.&quot;)&#10;    return ChatOpenAI(&#10;        model='gpt-4o',&#10;        temperature=0.5,&#10;        api_key=set_env('OPENAI_API_KEY')&#10;    )" />
-              <option name="updatedContent" value="import logging&#10;logging.basicConfig(&#10;    level=logging.INFO,&#10;    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',&#10;    datefmt='%Y-%m-%d %H:%M:%S'&#10;)&#10;from langchain_google_genai import ChatGoogleGenerativeAI&#10;from langchain_openai import ChatOpenAI&#10;from langchain_groq import  ChatGroq&#10;from keys.apis import set_env&#10;from schemas import UserInfo&#10;&#10;def get_gemini_model(output_schema):&#10;    logging.info(&quot;Initializing Gemini model with structured output.&quot;)&#10;    return ChatGoogleGenerativeAI(&#10;        model='gemini-2.0-flash',&#10;        api_key=set_env('GOOGLE_API_KEY'),&#10;        temperature=1,&#10;    ).with_structured_output(output_schema)&#10;&#10;def get_groq_model():&#10;    logging.info(&quot;Initializing Groq model.&quot;)&#10;    return ChatGroq(&#10;        model='meta-llama/llama-4-scout-17b-16e-instruct',&#10;        api_key=set_env('GROQ_API_KEY'),&#10;        temperature=0.5&#10;    )&#10;&#10;def get_openai_model():&#10;    logging.info(&quot;Initializing OpenAI model.&quot;)&#10;    return ChatOpenAI(&#10;        model='gpt-4o',&#10;        temperature=0.5,&#10;        api_key=set_env('OPENAI_API_KEY')&#10;    )" />
-            </PendingDiffInfo>
-          </value>
-        </entry>
       </map>
     </option>
   </component>
