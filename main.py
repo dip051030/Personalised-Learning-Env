@@ -21,7 +21,7 @@ user_data = {
         "subject": "physics",
         "grade": 12,
         "unit": "Mechanics",
-        "topic_id": '',
+        "topic_id": "",
         "topic": "period of pendulum",
         "description": "",
         "elaboration": "",
@@ -30,7 +30,7 @@ user_data = {
         "references": ""
     },
     "progress": [],
-    "next_action": "select_resource",
+    "next_action": {"next_node": "lesson_selection"},  # <-- THIS IS THE FIX
     "history": []
 }
 

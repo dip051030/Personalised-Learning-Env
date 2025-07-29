@@ -21,15 +21,6 @@
             </PendingDiffInfo>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/main.py">
-          <value>
-            <PendingDiffInfo>
-              <option name="filePath" value="$PROJECT_DIR$/main.py" />
-              <option name="originalContent" value="import json&#10;import logging&#10;from nodes import graph_run&#10;&#10;&#10;logging.basicConfig(&#10;    level=logging.INFO,&#10;    format='%(asctime)s %(levelname)s %(message)s',&#10;    datefmt='%Y-%m-%d %H:%M:%S'&#10;)&#10;&#10;user_data = {&#10;    &quot;user&quot;: {&#10;        &quot;username&quot;: &quot;anonymous&quot;,&#10;        &quot;age&quot;: 18,&#10;        &quot;grade&quot;: 19,&#10;        &quot;id&quot;: 1,&#10;        &quot;is_active&quot;: True&#10;    },&#10;    &quot;current_resource&quot;: {&#10;        &quot;subject&quot;: &quot;physics&quot;,&#10;        &quot;grade&quot;: 12,&#10;        &quot;unit&quot;: &quot;Mechanics&quot;,&#10;        &quot;topic_id&quot;: '',&#10;        &quot;topic&quot;: &quot;period of pendulum&quot;,&#10;        &quot;description&quot;: &quot;&quot;,&#10;        &quot;elaboration&quot;: &quot;&quot;,&#10;        &quot;keywords&quot;: [],&#10;        &quot;hours&quot;: 1,&#10;        &quot;references&quot;: &quot;&quot;&#10;    },&#10;    &quot;progress&quot;: [],&#10;    &quot;next_action&quot;: &quot;select_resource&quot;,&#10;    &quot;history&quot;: []&#10;}&#10;&#10;output = graph_run(user_data)&#10;logging.info(f&quot;Graph output: {output}&quot;)" />
-              <option name="updatedContent" value="import json&#10;import logging&#10;from nodes import graph_run&#10;&#10;&#10;logging.basicConfig(&#10;    level=logging.INFO,&#10;    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',&#10;    datefmt='%Y-%m-%d %H:%M:%S'&#10;)&#10;&#10;user_data = {&#10;    &quot;user&quot;: {&#10;        &quot;username&quot;: &quot;anonymous&quot;,&#10;        &quot;age&quot;: 18,&#10;        &quot;grade&quot;: 19,&#10;        &quot;id&quot;: 1,&#10;        &quot;is_active&quot;: True&#10;    },&#10;    &quot;current_resource&quot;: {&#10;        &quot;subject&quot;: &quot;physics&quot;,&#10;        &quot;grade&quot;: 12,&#10;        &quot;unit&quot;: &quot;Mechanics&quot;,&#10;        &quot;topic_id&quot;: '',&#10;        &quot;topic&quot;: &quot;period of pendulum&quot;,&#10;        &quot;description&quot;: &quot;&quot;,&#10;        &quot;elaboration&quot;: &quot;&quot;,&#10;        &quot;keywords&quot;: [],&#10;        &quot;hours&quot;: 1,&#10;        &quot;references&quot;: &quot;&quot;&#10;    },&#10;    &quot;progress&quot;: [],&#10;    &quot;next_action&quot;: &quot;select_resource&quot;,&#10;    &quot;history&quot;: []&#10;}&#10;&#10;output = graph_run(user_data)&#10;logging.info(f&quot;Graph output: {output}&quot;)" />
-            </PendingDiffInfo>
-          </value>
-        </entry>
       </map>
     </option>
   </component>

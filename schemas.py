@@ -205,7 +205,7 @@ class FeedBack(BaseModel):
         from_attributes = True
 
 class RouteSelector(BaseModel):
-    next_node: RouteSelectorNode = Field(default="lesson_selection", description="Should return lesson_selection or blog_selection")
+    next_node: str
 
 class LearningState(BaseModel):
     """Tracks the session state of a user's learning journey across all nodes."""
@@ -218,7 +218,7 @@ class LearningState(BaseModel):
     related_examples: Optional[List[str]] = None
     content_type: ContentType = ContentType.LESSON
     content: Optional[ContentResponse] = None
-    next_action: Optional[RouteSelector]
+    next_action: Optional[RouteSelector] = Field(default="lesson_selection", description="Should return lesson_selection or blog_selection")
     history: List[HistoryEntry] = []
     # feedback: Optional[FeedBack] = {}
 
