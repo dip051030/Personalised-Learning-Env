@@ -6,9 +6,8 @@ logging.basicConfig(
 )
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
-from langchain_groq import  ChatGroq
+from langchain_groq import ChatGroq
 from keys.apis import set_env
-from schemas import UserInfo
 
 def get_gemini_model(output_schema):
     logging.info("Initializing Gemini model with structured output.")
