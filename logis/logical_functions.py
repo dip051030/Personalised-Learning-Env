@@ -1,4 +1,5 @@
 import logging
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
@@ -63,17 +64,17 @@ def parse_chromadb_metadata(metadata: dict) -> LearningResource:
     Convert ChromaDB metadata dict to a LearningResource model.
     """
     return LearningResource(
-        subject=ResourceSubject(metadata["subject"].lower()),
-        grade=metadata["grade"],
-        unit=metadata["unit"],
-        topic_id=metadata["topic_id"],
-        topic=metadata["topic_title"],
-        description=metadata["description"],
-        elaboration=metadata.get("elaboration"),
-        keywords=metadata["keywords"],
-        hours=metadata["hours"],
-        references=metadata["references"]
-    )
+    subject=ResourceSubject(metadata.get('subject', 'unknown').lower()),
+    grade=metadata.get("grade"),
+    unit=metadata.get("unit"),
+    topic_id=metadata.get("topic_id"),
+    topic=metadata.get("topic_title"),
+    description=metadata.get("description", ""),
+    keywords=metadata.get("keywords").split(","),
+    hours=metadata.get("hours"),
+    references=metadata.get("references"),
+    elaboration=metadata.get("elaboration", "")
+)
 
 def blog_decision_node(state: LearningState) -> str:
     """

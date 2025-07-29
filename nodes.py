@@ -2,6 +2,7 @@ from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.graph import StateGraph, START, END
 from langsmith import expect
 from pydantic_core import ValidationError
+from setuptools.namespaces import flatten
 from sympy.stats import Expectation
 import logging
 
@@ -44,10 +45,10 @@ def enrich_content(state: LearningState) -> LearningState:
     logging.info("Entering enrich_content node")
     if state.current_resource is not None:
         try:
-            retrieved_content = retrieve_and_search(state=state)
+            retrieved_content = retrieve_and_search(state=state).get('metadatas', [])
             # print(state.current_resource)
-            # print('RETRIEVED CONTENT', retrieved_content)
-            logging.info(f"Retrieved content: {retrieved_content}")
+            retrieved_content = list(flatten(retrieved_content))[0]
+            print('RETRIEVED CONTENT', retrieved_content)
             response= enriched_content.invoke({
                 "action": "content_enrichment",
                 "current_resources_data": parse_chromadb_metadata(retrieved_content).model_dump()
@@ -57,6 +58,7 @@ def enrich_content(state: LearningState) -> LearningState:
             state.current_resource = state.current_resource.model_validate(resource_data)
             logging.info(f"Learning resource processed: {state.current_resource}")
         except Exception as e:
+            print('METADATA:     ', parse_chromadb_metadata(retrieved_content).model_dump())
             logging.error(f"Error processing learning resource data: {e}")
 
     return state

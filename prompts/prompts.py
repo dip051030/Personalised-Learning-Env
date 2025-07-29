@@ -1,5 +1,5 @@
 from langchain_core.messages import SystemMessage
-from langchain_core.prompts import PromptTemplate
+from langchain.prompts import PromptTemplate
 import json
 import logging
 
@@ -69,19 +69,10 @@ Example output:
 # -----------------------------------------------------------------------------------------
 
 class EnrichContent(PromptTemplate):
-    """
-    A simplified prompt template for enriching a learning resource.
-    The model is expected to:
-    - Expand and clarify fields like 'description' and 'elaboration'
-    - Generate summaries and student-friendly explanations
-    - Maintain the same keys as input (structured JSON output)
-    """
-
     def __init__(self):
         logging.info("Initializing EnrichContent Template")
         super().__init__(
-            template=(
-                """You're a curriculum enrichment agent. Based on this structured topic:
+            template="""You're a curriculum enrichment agent, your job is {action}. Based on this structured topic:
 {current_resources_data}
 
 Your task:
@@ -91,21 +82,15 @@ Your task:
 - Keep original keys. Maintain consistent structure.
 
 Return only a single valid JSON object. Do not explain your process.
-"""
-            ),
-            input_variables=["current_resources_data"]
+""",
+            input_variables=["current_resources_data", "action"]
         )
-
-    def format_prompt(self, current_resource_data: dict) -> str:
-        """
-        Converts the provided topic data dictionary into a JSON-formatted
-        string to insert into the prompt.
-        """
+    def format_prompt(self, action: str, current_resources_data: dict) -> str:
         logging.info("Formatting EnrichContent prompt")
         return self.format(
-            current_resource_data=json.dumps(current_resource_data, indent=2)
+            action=action,
+            current_resources_data=json.dumps(current_resources_data, indent=2)
         )
-
 
 class ContentGenerationTemplate(PromptTemplate):
     """

@@ -34,7 +34,9 @@ def build_chroma_db_collection(filename: str, collection_name: str = 'lessons'):
             "keywords": lesson.get("keywords"),
             "references": lesson.get("references"),
             "hours": lesson.get("hours"),
-            "type": lesson.get("type")
+            "type": lesson.get("type"),
+            'description': lesson.get('description', ''),
+            'elaboration': lesson.get('elaboration', '')
         }
         
         for lesson in lessons

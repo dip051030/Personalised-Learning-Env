@@ -149,8 +149,9 @@ class LearningResource(BaseModel):
     topic: str
     description: str
     elaboration: Optional[str] = None
-    keywords: List[str]
+    keywords: List[str] = []
     hours: int
+    # type: ContentType = ContentType.LESSON
     references: str
 
     class Config:
