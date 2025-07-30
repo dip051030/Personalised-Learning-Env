@@ -101,6 +101,7 @@ def generate_lesson_content(state: LearningState) -> LearningState:
             # print(f'Generated Content: {resource_data}')
             state.content = ContentResponse(content = resource_data)
             logging.info(f"Lesson content has been generated!")
+            print(f'Generated Content: {state.content}')
         except Exception as e:
             logging.error(f"Error generating lesson content: {e}")
     return state
@@ -197,6 +198,26 @@ Feedback:
             logging.error(f"Error collecting feedback: {e}")
     return state
 
+
+def find_content_gap_node(state: LearningState) -> LearningState:
+    """
+    Node to find content gaps based on user feedback.
+    This is a placeholder for future implementation.
+    """
+    logging.info("Entering find_content_gap_node")
+    # Placeholder logic for finding content gaps
+    if state.feedback is not None and state.content is not None:
+        logging.info(f"Finding content gaps based on feedback: {state.feedback}")
+        data  = content_feedback.invoke({
+            'content' : state.content,
+            'feedback': state.feedback.model_dump(),
+        })
+
+        response = data.content if hasattr(data, "content") else data
+        state.feedback = state.feedback.model_validate(response)
+        logging.info(f"Feedback received: {state.feedback}")
+    return state
+
 builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)
 builder.add_node("learning_resource", enrich_content)
@@ -205,6 +226,7 @@ builder.add_node("content_generation", generate_lesson_content)
 builder.add_node("blog_generation", generate_blog_content)
 builder.add_node("content_improviser", content_improviser_node)
 builder.add_node("collect_feedback", collect_feedback_node)
+builder.add_node("find_content_gap", find_content_gap_node)
 
 builder.set_entry_point("user_info")
 builder.add_edge("user_info", "learning_resource")
@@ -220,7 +242,8 @@ builder.add_conditional_edges(
 builder.add_edge("content_generation", "content_improviser")
 builder.add_edge("blog_generation", "content_improviser")
 builder.add_edge("content_improviser", 'collect_feedback')
-builder.add_edge("collect_feedback", END)
+builder.add_edge("collect_feedback", "find_content_gap")
+builder.add_edge("find_content_gap", END)
 
 graph = builder.compile()
 

@@ -255,6 +255,64 @@ Example output:
 }
 """)
 
+from langchain_core.prompts import PromptTemplate
+
+class ContentGapGenerationPrompt(PromptTemplate):
+    """
+    Prompt to identify content gaps in educational material based on feedback and the content itself.
+    The LLM should return a JSON object matching the FeedBack class, with:
+      - rating: integer (1-5)
+      - comments: summary of feedback and identified gaps
+      - needed: boolean (True if improvement is needed)
+      - gaps: list of specific content gaps (optional, for next model)
+    """
+
+    def __init__(self):
+        super().__init__(
+            template=(
+"""You are an expert educational content reviewer.
+
+Your task is to analyze the following learning content and the feedback provided, and identify any content gaps, missing explanations, unclear sections, or areas for improvement.
+
+CONTENT:
+{content}
+
+FEEDBACK:
+{feedback}
+
+Instructions:
+- Carefully read both the content and the feedback.
+- Identify and list all content gaps, missing details, or unclear explanations.
+- If the feedback already mentions gaps, include them. If you find additional gaps, add those too.
+- Return a JSON object with the following fields ONLY:
+  - "rating": integer from 1 to 5 (overall quality)
+  - "comments": a short summary of the main feedback and gaps
+  - "needed": true if improvement is needed, false if not
+  - "gaps": a list of specific content gaps or improvement points
+
+Example output:
+{{
+  "rating": 3,
+  "comments": "The content is generally clear but lacks real-world examples and visual aids. Some sections are too brief.",
+  "needed": true,
+  "gaps": [
+    "No real-world examples provided.",
+    "Missing diagrams or visual explanations.",
+    "The explanation of the formula derivation is too brief."
+  ]
+}}
+- Do NOT include any extra text or explanation outside the JSON.
+"""
+            ),
+            input_variables=["content", "feedback"]
+        )
+
+    def format_prompt(self, content: str, feedback: dict) -> str:
+        return self.format(
+            content=content,
+            feedback=feedback
+        )
+
 
 prompt_user = UserSummaryTemplate()
 prompt_enrichment = EnrichContent()
@@ -263,12 +321,13 @@ prompt_content_improviser = CONTENT_IMPROVISE_SYSTEM_PROMPT
 prompt_feedback = CONTENT_FEEDBACK_SYSTEM_PROMPT
 prompt_route_selector = RouteSelectorNode()
 prompt_blog_generation = BlogGenerationPrompt()
+prompt_gap_finder = ContentGapGenerationPrompt()
 
 user_summary = prompt_user | get_gemini_model(UserInfo)
-# user_content_generation = prompt_content_model(UserInfo)
 enriched_content = prompt_enrichment | get_gemini_model(EnrichedLearningResource)
 route_selector = prompt_route_selector | get_gemini_model(RouteSelector)
 content_generation = prompt_content_generation | get_gemini_model(ContentResponse)
 blog_generation = prompt_blog_generation | get_gemini_model(ContentResponse)
+gap_finder = prompt_gap_finder | get_gemini_model(FeedBack)
 content_improviser =get_groq_model()
 content_feedback = get_groq_model()

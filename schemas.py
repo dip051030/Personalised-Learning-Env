@@ -201,6 +201,7 @@ class FeedBack(BaseModel):
     rating: int = 1 # 1-5 scale
     comments: Optional[str] = None
     needed : bool = Field(default=True, description="True if feedback is needed else False")
+    gaps: Optional[List[str]] = Field(default=[], description="List of gaps in the content that need to be addressed")
 
     class Config:
         from_attributes = True

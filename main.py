@@ -30,7 +30,7 @@ user_data = {
         "references": ""
     },
     "progress": [],
-    "next_action": {"next_node": "lesson_selection"},
+    "next_action": {"next_node": "lesson_blog"},
     "history": []
 }
 
