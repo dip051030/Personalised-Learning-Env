@@ -98,6 +98,7 @@ def generate_lesson_content(state: LearningState) -> LearningState:
                 "style": logical_response
             })
             resource_data = response.content if hasattr(response, "content") else response
+            state.content = ContentResponse(content=resource_data)
             print(f'Generated Content: {resource_data}')
             logging.info(f"Lesson content has been generated!")
         except Exception as e:
@@ -120,6 +121,9 @@ def generate_blog_content(state: LearningState) -> LearningState:
                 "resource_data": state.enriched_resource.model_dump(),
                 "style": logical_response
             })
+            resource_data = response.content if hasattr(response, "content") else response
+            print(f'Generated Content: {resource_data}')
+            state.content = ContentResponse(content=resource_data)
             logging.info(f"Blog content has been generated!")
         except Exception as e:
             logging.error(f"Error generating blog content: {e}")
@@ -144,7 +148,7 @@ Unpolished Learning Resource:
 
             response = content_improviser(messages)
             generated_markdown = response.content if hasattr(response, "content") else str(response)
-            state.content.content = ContentResponse(content=generated_markdown)
+            state.content = ContentResponse(content=generated_markdown)
             logging.info(f"Improvised content has been generated!")
         except Exception as e:
             logging.error(f"Error improvising content: {e}")

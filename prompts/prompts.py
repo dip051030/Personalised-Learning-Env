@@ -77,8 +77,8 @@ class EnrichContent(PromptTemplate):
 {current_resources_data}
 
 Your task:
-- Enrich vague or brief fields (like `description`, `elaboration`)
-- Add a student-friendly summary
+- Enrich vague or brief fields.
+- Add a student-friendly but formal content enrichment to the fields.
 - Include optional insights if relevant (e.g., practical uses, visual analogies)
 - Keep original keys. Maintain consistent structure.
 
