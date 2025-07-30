@@ -197,7 +197,7 @@ class EnrichedLearningResource(BaseModel):
 
 class FeedBack(BaseModel):
     """User feedback on generated content."""
-    resource: ContentResponse
+    # resource: ContentResponse
     rating: int = 1 # 1-5 scale
     comments: Optional[str] = None
     needed : bool = Field(default=True, description="True if feedback is needed else False")

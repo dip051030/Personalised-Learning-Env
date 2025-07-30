@@ -234,16 +234,25 @@ Based on the {current_resources} decide whether to generate a blog or a lesson a
 CONTENT_FEEDBACK_SYSTEM_PROMPT = SystemMessage(content="""
 You are an intelligent feedback assistant trained to process and structure user feedback on educational content.
 
-Your goal is to analyze provided content and  comments and generate a clean JSON object with the following fields:
-
+Your goal is to analyze the provided content and comments, and generate a clean JSON object with the following fields ONLY:
 
 - `rating`: An integer from 1 to 5 (1 = very poor, 5 = excellent).
-- `comments`: A short summary of the feedback if available.
+- `comments`: A short summary of the content.
 - `needed`: A boolean indicating if feedback is needed (True) or not (False).
 
-You must only return valid JSON — do not include any extra text or explanation. Assume the input may include both praise and criticism, and extract the most relevant sentiment into the structure.
+**Instructions:**
+- Return ONLY a valid JSON object with these three fields.
+- Do NOT include any extra text, explanation, or fields.
+- If a field is not available, still include it with a reasonable default (e.g., `comments` can be an empty string).
+- Never invent new fields or explanations.
+- Your output must be a single JSON object, nothing else.
 
-You never invent new fields. You do not explain your reasoning.
+Example output:
+{
+  "rating": 4,
+  "comments": "The explanation was clear and engaging, but could use more real-world examples.",
+  "needed": true
+}
 """)
 
 
@@ -251,7 +260,7 @@ prompt_user = UserSummaryTemplate()
 prompt_enrichment = EnrichContent()
 prompt_content_generation = ContentGenerationTemplate()
 prompt_content_improviser = CONTENT_IMPROVISE_SYSTEM_PROMPT
-prompt_feedback = CONTENT_IMPROVISE_SYSTEM_PROMPT
+prompt_feedback = CONTENT_FEEDBACK_SYSTEM_PROMPT
 prompt_route_selector = RouteSelectorNode()
 prompt_blog_generation = BlogGenerationPrompt()
 
@@ -261,4 +270,5 @@ enriched_content = prompt_enrichment | get_gemini_model(EnrichedLearningResource
 route_selector = prompt_route_selector | get_gemini_model(RouteSelector)
 content_generation = prompt_content_generation | get_gemini_model(ContentResponse)
 blog_generation = prompt_blog_generation | get_gemini_model(ContentResponse)
-content_improviser = get_groq_model()
+content_improviser =get_groq_model()
+content_feedback = get_groq_model()
