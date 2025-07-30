@@ -237,7 +237,7 @@ You are an intelligent feedback assistant trained to process and structure user 
 Your goal is to analyze the provided content and comments, and generate a clean JSON object with the following fields ONLY:
 
 - `rating`: An integer from 1 to 5 (1 = very poor, 5 = excellent).
-- `comments`: A short summary of the content.
+- `comments`: A short criticised summary of the content.
 - `needed`: A boolean indicating if feedback is needed (True) or not (False).
 
 **Instructions:**

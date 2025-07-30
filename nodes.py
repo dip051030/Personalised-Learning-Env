@@ -7,7 +7,7 @@ from logis.logical_functions import lesson_decision_node, blog_decision_node, pa
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
     CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback
-from schemas import LearningState, ContentResponse, EnrichedLearningResource
+from schemas import LearningState, ContentResponse, EnrichedLearningResource, FeedBack
 import json
 import logging
 
@@ -169,6 +169,8 @@ def collect_feedback_node(state:LearningState) -> LearningState:
     logging.info("Entering collect_feedback_node")
     if state.content is not None:
         try:
+            logging.info(f"Collecting feedback for content")
+
             messages = [
                 prompt_feedback,
                 HumanMessage(content=f"""
@@ -181,12 +183,14 @@ Feedback:
 """)
             ]
             response = content_feedback(messages)
-            logging.info(f"Collecting feedback for content")
-            print()
-            logging.info(f"Response: {response}")
-            print()
-            print()
-            print()
+            logging.info(f"Feedback has been collected!")
+            feedback_data = response.content if hasattr(response, "content") else response
+            state.feedback = FeedBack.model_validate({
+                "rating": feedback_data.get("rating", 1),
+                "comments": feedback_data.get("comments", ""),
+                "needed": feedback_data.get("needed", True)
+            })
+            logging.info(f"Feedback processed!")
         except Exception as e:
             logging.error(f"Error collecting feedback: {e}")
     return state
