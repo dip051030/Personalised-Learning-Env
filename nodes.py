@@ -99,7 +99,7 @@ def generate_lesson_content(state: LearningState) -> LearningState:
             })
             resource_data = response.content if hasattr(response, "content") else response
             # print(f'Generated Content: {resource_data}')
-            state.content = ContentResponse.model_validate({'content': resource_data})
+            state.content = ContentResponse(content = resource_data)
             logging.info(f"Lesson content has been generated!")
         except Exception as e:
             logging.error(f"Error generating lesson content: {e}")
@@ -122,8 +122,7 @@ def generate_blog_content(state: LearningState) -> LearningState:
                 "style": logical_response
             })
             resource_data = response.content if hasattr(response, "content") else response
-            # print(f'Generated Content: {resource_data}')
-            state.content = ContentResponse.model_validate({'content': resource_data})
+            state.content = ContentResponse(content=resource_data)
             logging.info(f"Blog content has been generated!")
         except Exception as e:
             logging.error(f"Error generating blog content: {e}")
@@ -152,9 +151,9 @@ Feedback:
 """)
             ]
 
-            response = content_improviser(messages)
-            generated_markdown = response.content if hasattr(response, "content") else str(response)
-            state.content = ContentResponse.model_validate({'content': generated_markdown})
+            response = content_improviser.invoke(messages)
+            feedback = response.content if hasattr(response, "content") else str(response)
+            state.content = ContentResponse(content=feedback)
             print(f'Feedback: {state.feedback}')
             logging.info(f"Improvised content has been generated!")
         except Exception as e:
@@ -182,14 +181,17 @@ Feedback:
 
 """)
             ]
-            response = content_feedback(messages)
+            response = content_feedback.invoke(messages)
             logging.info(f"Feedback has been collected!")
             feedback_data = response.content if hasattr(response, "content") else response
+            feedback_data = json.loads(feedback_data) if isinstance(feedback_data, str) else feedback_data
+            print('FEEDBACK DATA:', type(feedback_data))
             state.feedback = FeedBack.model_validate({
                 "rating": feedback_data.get("rating", 1),
                 "comments": feedback_data.get("comments", ""),
                 "needed": feedback_data.get("needed", True)
             })
+            print('State FEEDBACK: ', state.feedback)
             logging.info(f"Feedback processed!")
         except Exception as e:
             logging.error(f"Error collecting feedback: {e}")

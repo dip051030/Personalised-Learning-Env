@@ -45,7 +45,7 @@ def get_openai_model():
     """
     logging.info("Initializing OpenAI model.")
     return ChatOpenAI(
-        model='gpt-4o',
+        model='gpt-3.5-turbo',
         temperature=0.5,
         api_key=set_env('OPENAI_API_KEY')
     )
