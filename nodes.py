@@ -122,8 +122,8 @@ def generate_blog_content(state: LearningState) -> LearningState:
                 "style": logical_response
             })
             resource_data = response.content if hasattr(response, "content") else response
-            print(f'Generated Content: {resource_data}')
-            state.content = ContentResponse(content=resource_data)
+            # print(f'Generated Content: {resource_data}')
+            state.content = ContentResponse(content=resouce_data)
             logging.info(f"Blog content has been generated!")
         except Exception as e:
             logging.error(f"Error generating blog content: {e}")
@@ -143,12 +143,19 @@ def content_improviser_node(state: LearningState) -> LearningState:
                 HumanMessage(content=f"""
 Unpolished Learning Resource:
 {state.content.model_dump()}
+
+Please improve the content by making it more engaging, informative, and suitable for the target audience.
+
+Feedback:
+{state.feedback}
+
 """)
             ]
 
             response = content_improviser(messages)
             generated_markdown = response.content if hasattr(response, "content") else str(response)
             state.content = ContentResponse(content=generated_markdown)
+            print(f'Feedback: {state.feedback}')
             logging.info(f"Improvised content has been generated!")
         except Exception as e:
             logging.error(f"Error improvising content: {e}")
@@ -166,7 +173,7 @@ def collect_feedback_node(state:LearningState) -> LearningState:
                 CONTENT_FEEDBACK_SYSTEM_PROMPT,
                 HumanMessage(content=f"""
 Feedback:
-{state.content.content}
+{state.feedback}
 
 """)
             ]

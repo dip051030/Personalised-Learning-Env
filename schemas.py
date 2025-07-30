@@ -197,7 +197,7 @@ class EnrichedLearningResource(BaseModel):
 
 class FeedBack(BaseModel):
     """User feedback on generated content."""
-    resource: Optional[ContentResponse] = ''
+    resource: ContentResponse
     rating: int = 1 # 1-5 scale
     comments: Optional[str] = None
 
@@ -220,7 +220,7 @@ class LearningState(BaseModel):
     content: Optional[ContentResponse] = None
     next_action: Optional[RouteSelector] = Field(default="lesson_selection", description="Should return lesson_selection or blog_selection")
     history: List[HistoryEntry] = []
-    # feedback: Optional[FeedBack] = {}
+    feedback: Optional[FeedBack] = None
 
     class Config:
         from_attributes = True
