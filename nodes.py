@@ -6,7 +6,7 @@ from logis.logical_functions import lesson_decision_node, blog_decision_node, pa
     retrieve_and_search
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
-    CONTENT_FEEDBACK_SYSTEM_PROMPT
+    CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback
 from schemas import LearningState, ContentResponse, EnrichedLearningResource
 import json
 import logging
@@ -123,7 +123,7 @@ def generate_blog_content(state: LearningState) -> LearningState:
             })
             resource_data = response.content if hasattr(response, "content") else response
             # print(f'Generated Content: {resource_data}')
-            state.content = ContentResponse(content=resouce_data)
+            state.content = ContentResponse(content=resource_data)
             logging.info(f"Blog content has been generated!")
         except Exception as e:
             logging.error(f"Error generating blog content: {e}")
@@ -139,7 +139,7 @@ def content_improviser_node(state: LearningState) -> LearningState:
     if state.content is not None:
         try:
             messages = [
-                CONTENT_IMPROVISE_SYSTEM_PROMPT,
+                prompt_content_improviser,
                 HumanMessage(content=f"""
 Unpolished Learning Resource:
 {state.content.model_dump()}
@@ -170,8 +170,11 @@ def collect_feedback_node(state:LearningState) -> LearningState:
     if state.content is not None:
         try:
             messages = [
-                CONTENT_FEEDBACK_SYSTEM_PROMPT,
+                prompt_feedback,
                 HumanMessage(content=f"""
+Unpolished Learning Resource:
+{state.content.model_dump()}
+                
 Feedback:
 {state.feedback}
 

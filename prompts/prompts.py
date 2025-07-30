@@ -236,9 +236,10 @@ You are an intelligent feedback assistant trained to process and structure user 
 
 Your goal is to analyze provided content and  comments and generate a clean JSON object with the following fields:
 
-- `resource`: A generated content.
+
 - `rating`: An integer from 1 to 5 (1 = very poor, 5 = excellent).
 - `comments`: A short summary of the feedback if available.
+- `needed`: A boolean indicating if feedback is needed (True) or not (False).
 
 You must only return valid JSON — do not include any extra text or explanation. Assume the input may include both praise and criticism, and extract the most relevant sentiment into the structure.
 
@@ -250,6 +251,7 @@ prompt_user = UserSummaryTemplate()
 prompt_enrichment = EnrichContent()
 prompt_content_generation = ContentGenerationTemplate()
 prompt_content_improviser = CONTENT_IMPROVISE_SYSTEM_PROMPT
+prompt_feedback = CONTENT_IMPROVISE_SYSTEM_PROMPT
 prompt_route_selector = RouteSelectorNode()
 prompt_blog_generation = BlogGenerationPrompt()
 
