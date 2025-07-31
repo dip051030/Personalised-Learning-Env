@@ -47,17 +47,17 @@ def parse_chromadb_metadata(metadata: dict) -> LearningResource:
     Returns a LearningResource instance.
     """
     return LearningResource(
-    subject=ResourceSubject(metadata.get('subject', 'unknown').lower()),
-    grade=metadata.get("grade"),
-    unit=metadata.get("unit"),
-    topic_id=metadata.get("topic_id"),
-    topic=metadata.get("topic_title"),
-    description=metadata.get("description", ""),
-    keywords=metadata.get("keywords").split(","),
-    hours=metadata.get("hours"),
-    references=metadata.get("references"),
-    elaboration=metadata.get("elaboration", "")
-)
+        subject=ResourceSubject(metadata.get('subject', 'unknown').lower()),
+        grade=metadata.get("grade"),
+        unit=metadata.get("unit"),
+        topic_id=metadata.get("topic_id"),
+        topic=metadata.get("topic_title"),
+        description=metadata.get("description", ""),
+        keywords=metadata.get("keywords").split(","),
+        hours=metadata.get("hours"),
+        references=metadata.get("references"),
+        elaboration=metadata.get("elaboration", "")
+    )
 
 
 def blog_decision_node(state: LearningState) -> str:

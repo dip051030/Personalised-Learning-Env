@@ -11,27 +11,34 @@ logging.basicConfig(
 
 user_data = {
     "user": {
-        "username": "anonymous",
-        "age": 18,
-        "grade": 19,
-        "id": 1,
-        "is_active": True
+        "username": "student_01",
+        "age": 17,
+        "grade": 12,
+        "id": 101,
+        "is_active": True,
+        "user_info": "A motivated grade 12 student interested in physics."
     },
     "current_resource": {
         "subject": "physics",
         "grade": 12,
         "unit": "Mechanics",
-        "topic_id": "",
-        "topic": "period of pendulum",
-        "description": "",
-        "elaboration": "",
-        "keywords": [],
-        "hours": 1,
-        "references": ""
+        "topic_id": "6.4",
+        "topic": "Centripetal force",
+        "description": "Define and calculate centripetal force for systems like satellites in orbit or vehicles on curved roads.",
+        "elaboration": "Define and calculate centripetal force for systems like satellites in orbit or vehicles on curved roads.",
+        "keywords": ["centripetal force", "circular motion", "satellite orbits"],
+        "hours": 9,
+        "references": "Page 46"
     },
     "progress": [],
     "next_action": {"next_node": "lesson_blog"},
-    "history": []
+    "history": [],
+    "enriched_resource": None,
+    "topic_data": None,
+    "related_examples": None,
+    "content_type": "lesson",
+    "content": None,
+    "feedback": None
 }
 
 def main():

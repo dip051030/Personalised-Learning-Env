@@ -239,11 +239,12 @@ Your goal is to analyze the provided content and comments, and generate a clean 
 - `rating`: An integer from 1 to 5 (1 = very poor, 5 = excellent).
 - `comments`: A short criticised summary of the content.
 - `needed`: A boolean indicating if feedback is needed (True) or not (False).
+- `gaps`: A list of specific content gaps or areas for improvement (optional, can be empty).
 
 **Instructions:**
-- Return ONLY a valid JSON object with these three fields.
+- Return ONLY a valid JSON object with these four fields.
 - Do NOT include any extra text, explanation, or fields.
-- If a field is not available, still include it with a reasonable default (e.g., `comments` can be an empty string).
+- If a field is not available, still include it with a reasonable default (e.g., `comments` can be an empty string, `gaps` can be an empty list).
 - Never invent new fields or explanations.
 - Your output must be a single JSON object, nothing else.
 
@@ -251,11 +252,13 @@ Example output:
 {
   "rating": 4,
   "comments": "The explanation was clear and engaging, but could use more real-world examples.",
-  "needed": true
+  "needed": true,
+  "gaps": [
+    "Missing real-world applications of the concept.",
+    "Could include more visual aids."
+  ]
 }
 """)
-
-from langchain_core.prompts import PromptTemplate
 
 class ContentGapGenerationPrompt(PromptTemplate):
     """
@@ -330,4 +333,4 @@ content_generation = prompt_content_generation | get_gemini_model(ContentRespons
 blog_generation = prompt_blog_generation | get_gemini_model(ContentResponse)
 gap_finder = prompt_gap_finder | get_gemini_model(FeedBack)
 content_improviser =get_groq_model()
-content_feedback = get_groq_model()
+content_feedback = get_openai_model(FeedBack)

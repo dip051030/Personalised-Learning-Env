@@ -37,15 +37,16 @@ def get_groq_model():
         temperature=0.5
     )
 
-def get_openai_model():
+def get_openai_model(output_schema):
     """
     Initialize and return an OpenAI model for text generation.
     Returns:
         ChatOpenAI instance.
     """
-    logging.info("Initializing OpenAI model.")
+    logging.info("Initializing 2.5 Flash model.")
     return ChatOpenAI(
-        model='gpt-3.5-turbo',
+        model='openai/gpt-4.1',
         temperature=0.5,
-        api_key=set_env('OPENAI_API_KEY')
-    )
+        api_key=set_env('OPENAI_API_KEY'),
+        base_url="https://openrouter.ai/api/v1"
+    ).with_structured_output(output_schema)

@@ -6,7 +6,7 @@ from logis.logical_functions import lesson_decision_node, blog_decision_node, pa
     retrieve_and_search
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
-    CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback
+    CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback, gap_finder
 from schemas import LearningState, ContentResponse, EnrichedLearningResource, FeedBack
 import json
 import logging
@@ -190,12 +190,14 @@ Feedback:
             state.feedback = FeedBack.model_validate({
                 "rating": feedback_data.get("rating", 1),
                 "comments": feedback_data.get("comments", ""),
-                "needed": feedback_data.get("needed", True)
+                "needed": feedback_data.get("needed", True),
+                "gaps": feedback_data.get("gaps", [])
             })
             print('State FEEDBACK: ', state.feedback)
             logging.info(f"Feedback processed!")
         except Exception as e:
             logging.error(f"Error collecting feedback: {e}")
+            print('FEEDBACK DATA:', feedback_data)
     return state
 
 
@@ -208,13 +210,14 @@ def find_content_gap_node(state: LearningState) -> LearningState:
     # Placeholder logic for finding content gaps
     if state.feedback is not None and state.content is not None:
         logging.info(f"Finding content gaps based on feedback: {state.feedback}")
-        data  = content_feedback.invoke({
+        data  = gap_finder.invoke({
             'content' : state.content,
             'feedback': state.feedback.model_dump(),
         })
 
         response = data.content if hasattr(data, "content") else data
-        state.feedback = state.feedback.model_validate(response)
+        print(f'Gaps : {response}')
+        # state.feedback = state.feedback.model_validate(response)
         logging.info(f"Feedback received: {state.feedback}")
     return state
 
