@@ -7,9 +7,10 @@ from logis.logical_functions import lesson_decision_node, blog_decision_node, pa
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
     CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback, gap_finder
-from schemas import LearningState, ContentResponse, EnrichedLearningResource, FeedBack
+from schemas import LearningState, ContentResponse, EnrichedLearningResource, FeedBack, RouteSelector
 import json
 import logging
+import os
 
 logging.basicConfig(
     level=logging.INFO,
@@ -73,9 +74,11 @@ def route_selector_node(state: LearningState) -> LearningState:
         try:
             logging.info(f"Selecting the route for resource: {state.current_resource}")
             response = route_selector.invoke({
-                'current_resources' : state.enriched_resource.model_dump()
+                'current_resources': state.enriched_resource.model_dump()
             })
-            state.next_action = response.content if hasattr(response, "content") else response
+            # Set next_action as a RouteSelector model
+            next_action_str = response.content if hasattr(response, "content") else response
+            state.next_action = RouteSelector(next_node=next_action_str)
             logging.info(f"Route selection response: {state.next_action}")
         except Exception as e:
             logging.error(f"Error selecting route: {e}")
@@ -216,19 +219,44 @@ def find_content_gap_node(state: LearningState) -> LearningState:
         logging.info(f"Feedback received: {state.feedback}")
     return state
 
-def update_state(state: LearningState) -> str:
+def update_state(state: LearningState) -> LearningState:
     try:
-        response = update_content_count(state.count)
+        if not hasattr(state, "count"):
+            state.count = 0
+        response = update_content_count(state)
         if response == 'Update required':
             state.count += 1
             logging.info(f"State updated: {state.count}")
-            return 'content_improviser'
         else:
             logging.info(f"No update required, current count: {state.count}")
-            return 'END'
-
     except Exception as e:
         logging.error(f"Error updating state: {e}")
+    return state
+
+
+def save_learning_state_to_json(state, file_path):
+    """
+    Save the details of the LearningState object to a JSON file.
+    If the file does not exist, it will be created.
+    Args:
+        state: LearningState object (should have .model_dump() or .dict() method)
+        file_path: Path to the JSON file
+    """
+    try:
+        # Use model_dump if available (Pydantic v2), else fallback to dict
+        if hasattr(state, 'model_dump'):
+            state_data = state.model_dump()
+        elif hasattr(state, 'dict'):
+            state_data = state.dict()
+        else:
+            raise ValueError("State object does not support serialization.")
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(state_data, f, indent=4, ensure_ascii=False)
+        logging.info(f"LearningState saved to {file_path}")
+    except Exception as e:
+        logging.error(f"Failed to save LearningState to {file_path}: {e}")
 
 
 builder = StateGraph(LearningState)
@@ -240,13 +268,18 @@ builder.add_node("blog_generation", generate_blog_content)
 builder.add_node("content_improviser", content_improviser_node)
 builder.add_node("collect_feedback", collect_feedback_node)
 builder.add_node("find_content_gap", find_content_gap_node)
+builder.add_node("update_state", update_state)
 
 builder.set_entry_point("user_info")
 builder.add_edge("user_info", "learning_resource")
 builder.add_edge("learning_resource", "route_selector")
 builder.add_conditional_edges(
     "route_selector",
-    lambda state: "blog_generation" if state.next_action == "blog" else "content_generation",
+    lambda state: (
+        state.next_action.next_node
+        if hasattr(state.next_action, "next_node") and state.next_action.next_node in ["blog_generation", "content_generation"]
+        else "content_generation"  # Default branch if next_action is missing or invalid
+    ),
     {
         "blog_generation": "blog_generation",
         "content_generation": "content_generation"
@@ -256,7 +289,15 @@ builder.add_edge("content_generation", "content_improviser")
 builder.add_edge("blog_generation", "content_improviser")
 builder.add_edge("content_improviser", 'collect_feedback')
 builder.add_edge("collect_feedback", "find_content_gap")
-builder.add_edge("find_content_gap", END)
+builder.add_edge("find_content_gap", "update_state")
+builder.add_conditional_edges(
+    "update_state",
+    lambda state: "content_improviser" if getattr(state, "count", 0) < 2 else "END",
+    {
+        "content_improviser": "content_improviser",
+        "END": END
+    }
+)
 
 graph = builder.compile()
 
