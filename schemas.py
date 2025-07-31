@@ -223,6 +223,7 @@ class LearningState(BaseModel):
     next_action: Optional[RouteSelector] = Field(default="lesson_selection", description="Should return lesson_selection or blog_selection")
     history: List[HistoryEntry] = []
     feedback: Optional[FeedBack] = None
+    count: int = 0  # Counter to track number of nodes visited
 
     class Config:
         from_attributes = True

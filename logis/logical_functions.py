@@ -72,3 +72,18 @@ def blog_decision_node(state: LearningState) -> str:
     else:
         style = "storytelling"
     return style
+
+def update_content_count(state: LearningState) -> str:
+    """
+    Update the content count in the learning state.
+    Returns a string indicating the updated content type.
+    """
+    try:
+        if state.count < 2:
+            logging.info(f"Current state count: {state.count}")
+            return 'Update required'
+        else:
+            return 'No update required'
+        logging.info("Updating state")
+    except Exception as e:
+        logging.error(f"Error updating state count: {e}")

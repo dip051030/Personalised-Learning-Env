@@ -37,16 +37,16 @@ def get_groq_model():
         temperature=0.5
     )
 
-def get_openai_model(output_schema):
+def get_deepseek_model(output_schema):
     """
     Initialize and return an OpenAI model for text generation.
     Returns:
         ChatOpenAI instance.
     """
-    logging.info("Initializing 2.5 Flash model.")
+    logging.info("Initializing DeepSeek Model!.")
     return ChatOpenAI(
-        model='openai/gpt-4.1',
+        model='deepseek/deepseek-r1-0528-qwen3-8b:free',
         temperature=0.5,
-        api_key=set_env('OPENAI_API_KEY'),
+        api_key=set_env('DEEPSEEK_API_KEY'),
         base_url="https://openrouter.ai/api/v1"
     ).with_structured_output(output_schema)

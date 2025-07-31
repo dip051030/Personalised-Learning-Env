@@ -3,7 +3,7 @@ from langgraph.graph import StateGraph, END
 from langchain_core.messages import HumanMessage
 
 from logis.logical_functions import lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
-    retrieve_and_search
+    retrieve_and_search, update_content_count
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
     CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback, gap_finder
@@ -187,12 +187,7 @@ Feedback:
             feedback_data = response.content if hasattr(response, "content") else response
             feedback_data = json.loads(feedback_data) if isinstance(feedback_data, str) else feedback_data
             print('FEEDBACK DATA:', type(feedback_data))
-            state.feedback = FeedBack.model_validate({
-                "rating": feedback_data.get("rating", 1),
-                "comments": feedback_data.get("comments", ""),
-                "needed": feedback_data.get("needed", True),
-                "gaps": feedback_data.get("gaps", [])
-            })
+            state.feedback = FeedBack.model_validate(feedback_data)
             print('State FEEDBACK: ', state.feedback)
             logging.info(f"Feedback processed!")
         except Exception as e:
@@ -220,6 +215,21 @@ def find_content_gap_node(state: LearningState) -> LearningState:
         # state.feedback = state.feedback.model_validate(response)
         logging.info(f"Feedback received: {state.feedback}")
     return state
+
+def update_state(state: LearningState) -> str:
+    try:
+        response = update_content_count(state.count)
+        if response == 'Update required':
+            state.count += 1
+            logging.info(f"State updated: {state.count}")
+            return 'content_improviser'
+        else:
+            logging.info(f"No update required, current count: {state.count}")
+            return 'END'
+
+    except Exception as e:
+        logging.error(f"Error updating state: {e}")
+
 
 builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)

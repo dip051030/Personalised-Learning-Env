@@ -11,7 +11,7 @@ logging.basicConfig(
 
 from pydantic import BaseModel
 
-from models.llm_models import get_gemini_model, get_groq_model, get_openai_model
+from models.llm_models import get_gemini_model, get_groq_model, get_deepseek_model
 from schemas import UserInfo, LearningResource, LearningState, ContentResponse, EnrichedLearningResource, RouteSelector, FeedBack
 
 
@@ -333,4 +333,4 @@ content_generation = prompt_content_generation | get_gemini_model(ContentRespons
 blog_generation = prompt_blog_generation | get_gemini_model(ContentResponse)
 gap_finder = prompt_gap_finder | get_gemini_model(FeedBack)
 content_improviser =get_groq_model()
-content_feedback = get_openai_model(FeedBack)
+content_feedback = get_deepseek_model(FeedBack)
