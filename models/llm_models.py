@@ -45,7 +45,7 @@ def get_deepseek_model(output_schema):
     """
     logging.info("Initializing DeepSeek Model!.")
     return ChatOpenAI(
-        model='deepseek/deepseek-r1-0528-qwen3-8b:free',
+        model='tngtech/deepseek-r1t2-chimera:free',
         temperature=0.5,
         api_key=set_env('DEEPSEEK_API_KEY'),
         base_url="https://openrouter.ai/api/v1"

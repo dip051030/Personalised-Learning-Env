@@ -6,7 +6,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
-from schemas import LearningResource, ResourceSubject, LearningState, ContentResponse, FeedBack
+from schemas import LearningResource, ResourceSubject, LearningState, ContentResponse, FeedBack, ContentType
 from db.vector_db import build_chroma_db_collection
 from sentence_transformers import SentenceTransformer
 
@@ -31,14 +31,32 @@ def retrieve_and_search(state: LearningState) -> dict:
 
 def lesson_decision_node(state: LearningState) -> str:
     """
-    Decide lesson style based on user grade and topic.
+    Decide lesson style based on curriculum metadata, topic type, and phrasing.
     Returns a string indicating the lesson style.
     """
-    if "practice" in state.current_resource.topic:
-        style = "exercise_heavy"
+    topic = state.current_resource.topic.lower()
+    unit = state.current_resource.unit.lower()
+    desc = state.current_resource.description.lower()
+
+    if "evaluation" in unit:
+        style = "evaluation_component"
+    elif "practical" in state.current_resource.topic_id or "activity" in topic or "experiment" in desc:
+        style = "experimental"
+    elif any(keyword in topic for keyword in ["derive", "calculate", "problem", "solve", "formula"]):
+        style = "problem_solving"
+    elif any(keyword in desc for keyword in ["used in", "applied in", "application", "real-world"]):
+        style = "application_based"
+    elif "revision" in topic or "summary" in topic:
+        style = "revision_summary"
+    elif "quiz" in topic or state.content_type == ContentType.QUIZ:
+        style = "interactive_quiz"
+    elif "enrich" in topic or "context" in desc:
+        style = "enrichment"
     else:
-        style = "general_concept"
+        style = "conceptual_focus"
+
     return style
+
 
 
 def parse_chromadb_metadata(metadata: dict) -> LearningResource:

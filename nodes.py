@@ -195,6 +195,8 @@ Unpolished Learning Resource:
             feedback_data = json.loads(feedback_data) if isinstance(feedback_data, str) else feedback_data
             state.feedback = FeedBack.model_validate(feedback_data)
             logging.info(f"Feedback processed and updated: {state.feedback}")
+            # Log rating and gaps for debugging
+            logging.info(f"Feedback rating: {state.feedback.rating}, gaps: {state.feedback.gaps}")
         except Exception as e:
             logging.error(f"Error collecting feedback: {e}")
     return state
@@ -218,6 +220,8 @@ def find_content_gap_node(state: LearningState) -> LearningState:
         updated_feedback = FeedBack.model_validate(json.loads(response) if isinstance(response, str) else response)
         state.feedback = updated_feedback
         logging.info(f"Feedback received and updated: {state.feedback}")
+        # Log rating and gaps for debugging
+        logging.info(f"GapFinder rating: {state.feedback.rating}, gaps: {state.feedback.gaps}")
     return state
 
 def update_state(state: LearningState) -> LearningState:
