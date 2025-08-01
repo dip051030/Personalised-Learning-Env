@@ -159,8 +159,10 @@ Focus on:
 - Including occasional motivational nudges or thoughtful questions (1-2 per passage) that invite reflection and curiosity without overwhelming the reader.  
 - Avoiding unnecessary repetition or filler language.  
 - Explaining *why* topics matter, not just *what* they are.  
-- Maintaining concise, clear language suitable for motivated learners who want efficient and deep understanding.  
-
+- Maintaining concise, clear language suitable for motivated learners who want efficient and deep understanding.
+- Be sure to generate highly engaging content that resonates with the reader's interests and learning style.
+- The rating should be more than what it was before, so you can improve the content.
+- Use the gaps to generate a more engaging and informative content for the user.
 **Important:**  
 - Return ONLY the markdown content.  
 - DO NOT return JSON, metadata, or any extra explanations.  

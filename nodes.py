@@ -175,35 +175,28 @@ Feedback (including gaps):
 def collect_feedback_node(state:LearningState) -> LearningState:
     """
     Node to collect feedback on generated content.
+    Always uses the latest content and updates state.feedback with new feedback.
     """
     logging.info("Entering collect_feedback_node")
-    feedback_data = None  # Ensure variable is always defined
+    feedback_data = None
     if state.content is not None:
         try:
-            logging.info(f"Collecting feedback for content")
-
+            logging.info("Collecting feedback for content")
             messages = [
                 prompt_feedback,
                 HumanMessage(content=f"""
 Unpolished Learning Resource:
 {state.content.content}
-                
-Feedback:
-{state.feedback}
-
 """)
             ]
             response = content_feedback.invoke(messages)
-            logging.info(f"Feedback has been collected!")
+            logging.info("Feedback has been collected!")
             feedback_data = response.content if hasattr(response, "content") else response
             feedback_data = json.loads(feedback_data) if isinstance(feedback_data, str) else feedback_data
-            print('FEEDBACK DATA:', type(feedback_data))
             state.feedback = FeedBack.model_validate(feedback_data)
-            print('State FEEDBACK: ', state.feedback)
-            logging.info(f"Feedback processed!")
+            logging.info(f"Feedback processed and updated: {state.feedback}")
         except Exception as e:
             logging.error(f"Error collecting feedback: {e}")
-            print('FEEDBACK DATA:', feedback_data)
     return state
 
 

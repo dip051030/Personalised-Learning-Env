@@ -79,7 +79,7 @@ def update_content_count(state: LearningState) -> str:
     Returns a string indicating if an update is required.
     """
     try:
-        if state.count < 2:
+        if state.count < 4:
             logging.info(f"Current state count: {state.count}")
             return 'Update required'
         else:
