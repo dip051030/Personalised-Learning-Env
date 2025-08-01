@@ -9,18 +9,8 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
-from pydantic import BaseModel
-
 from models.llm_models import get_gemini_model, get_groq_model, get_deepseek_model
 from schemas import UserInfo, LearningResource, LearningState, ContentResponse, EnrichedLearningResource, RouteSelector, FeedBack
-
-
-# from nodes import user_info_node, learning_resource_node, content_generation, content_improviser_node
-
-
-# ---------------------------------------------------------------------------------
-# 🧠 UserSummaryTemplate: Prompt to turn raw user data into natural-language JSON
-# ---------------------------------------------------------------------------------
 
 class UserSummaryTemplate(PromptTemplate):
     """
