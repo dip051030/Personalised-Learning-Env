@@ -97,16 +97,17 @@ Return only a single valid JSON object. Do not explain your process.
 
 class ContentGenerationTemplate(PromptTemplate):
     """
-    Prompt to generate markdown educational content ONLY.
+    Dynamic prompt to generate markdown educational content ONLY.
     The model must return ONLY the Markdown content as a plain string.
     No JSON, no metadata, no explanations outside the content.
+    The structure and content adapt to user input (class, topic, curriculum, etc.).
     """
 
     def __init__(self):
         logging.info("Initializing ContentGenerationTemplate")
         super().__init__(
             template=(
-"""You are an educational content generator.
+"""You are an expert educational content generator.
 
 Task: {action}
 
@@ -120,14 +121,32 @@ Style:
 {style}
 
 Instructions:
-- Generate a clear, structured markdown lesson/explanation.
-- Explain concepts in a way that feels like a friendly tutor.
-- Focus on the subject and topic provided.
-- Use headings, bullet points, and code blocks as needed.
-- Ensure the content is educational and engaging.
-- Tailor it to the user's grade level and interests.
-- Return ONLY the markdown content text and don't introduce yourself or provide any other information.
-- Do NOT return JSON, metadata, or extra commentary.
+- Generate a clear, structured markdown lesson or explanation for the topic and class provided.
+- Use the following structure, adapting each section to the user's class, curriculum, and interests:
+
+# Topic Title: [Use the topic from the action or user_data]
+
+## Introduction
+Briefly define and introduce the topic, tailored to the user's grade/class and curriculum.
+
+## Real-Life Application
+Give practical, relatable examples relevant to the user's context (e.g., local curriculum, age group).
+
+## Formula & Explanation
+Present any key equations, variable definitions, and derivations as appropriate for the user's level.
+
+## Curriculum Relevance
+Explain how this topic fits into the user's curriculum (e.g., NEB Class 12, CBSE Class 10, etc.).
+
+## Frequently Asked Questions
+List 2-3 common questions students at this level might ask, and answer them clearly.
+
+## Summary
+Summarize the lesson in 2-3 concise lines.
+
+---
+
+**Tags**: [Include class, subject, topic, curriculum, and any relevant keywords from user_data, resource_data, or style]
 
 IMPORTANT: Output ONLY the markdown lesson content. Do NOT include any explanations, JSON, or extra text before or after the markdown.
 """

@@ -17,19 +17,19 @@ user_data = {
         "grade": 12,
         "id": 101,
         "is_active": True,
-        "user_info": "A motivated grade 12 student interested in physics."
+        "user_info": "A motivated grade 11 student interested in physics."
     },
     "current_resource": {
         "subject": "physics",
-        "grade": 12,
-        "unit": "Mechanics",
-        "topic_id": "6.4",
-        "topic": "Centripetal force",
-        "description": "Define and calculate centripetal force for systems like satellites in orbit or vehicles on curved roads.",
-        "elaboration": "Define and calculate centripetal force for systems like satellites in orbit or vehicles on curved roads.",
-        "keywords": ["centripetal force", "circular motion", "satellite orbits"],
-        "hours": 9,
-        "references": "Page 46"
+        "grade": 11,
+        "unit": "",
+        "topic_id": "",
+        "topic": "Magnetism",
+        "description": "",
+        "elaboration": "",
+        "keywords": [],
+        "hours": 7,
+        "references": ""
     },
     "progress": [],
     "next_action": {"next_node": "lesson_blog"},
