@@ -1,9 +1,11 @@
+from langsmith import expect
 from more_itertools import flatten
 from langgraph.graph import StateGraph, END
 from langchain_core.messages import HumanMessage
 
 from logis.logical_functions import lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
     retrieve_and_search, update_content_count
+from models.external_tools_apis import serp_api_tool
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
     CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback, gap_finder
@@ -41,31 +43,56 @@ def user_info_node(state: LearningState) -> LearningState:
     return state
 
 
+# def enrich_content(state: LearningState) -> LearningState:
+#     """
+#     Node to enrich the current learning resource using LLM enrichment.
+#     Updates the state with an enriched resource.
+#     """
+#     logging.info("Entering enrich_content node")
+#     if state.current_resource is not None:
+#         try:
+#             retrieved = retrieve_and_search(state=state)
+#             if not retrieved:
+#                 logging.error("No content retrieved from vector DB.")
+#                 return state
+#             retrieved_content = retrieved.get('metadatas', [])
+#             if not retrieved_content:
+#                 logging.error("No metadatas found in retrieved content.")
+#                 return state
+#             retrieved_content = list(flatten(retrieved_content))[0]
+#             print('RETRIEVED CONTENT', retrieved_content)
+#             response = enriched_content.invoke({
+#                 "action": "content_enrichment",
+#                 "current_resources_data": parse_chromadb_metadata(retrieved_content).model_dump()
+#             })
+#             resource_data = response.content if hasattr(response, "content") else response
+#             state.enriched_resource = EnrichedLearningResource.model_validate(resource_data)
+#             logging.info(f"Learning resource processed: {state.enriched_resource}")
+#         except Exception as e:
+#             logging.error(f"Error processing learning resource data: {e}")
+#     return state
+
+
 def enrich_content(state: LearningState) -> LearningState:
     """
     Node to enrich the current learning resource using LLM enrichment.
     Updates the state with an enriched resource.
     """
     logging.info("Entering enrich_content node")
-    if state.current_resource is not None:
+    if state.content is not None:
         try:
-            retrieved = retrieve_and_search(state=state)
-            if not retrieved:
-                logging.error("No content retrieved from vector DB.")
-                return state
-            retrieved_content = retrieved.get('metadatas', [])
-            if not retrieved_content:
-                logging.error("No metadatas found in retrieved content.")
-                return state
-            retrieved_content = list(flatten(retrieved_content))[0]
-            print('RETRIEVED CONTENT', retrieved_content)
+            retrieved_data = retrieve_and_search(state=state)
+            scrapped_data = serp_api_tool(query=state.current_resource.topic)
+
             response = enriched_content.invoke({
                 "action": "content_enrichment",
-                "current_resources_data": parse_chromadb_metadata(retrieved_content).model_dump()
+                'titles': [_ for _ in scrapped_data.get('titles', '')],
+                'snippets' : [_ for _ in scrapped_data.get('snippets', '')],
+                "current_resources_data": parse_chromadb_metadata(retrieved_data).model_dump()
             })
             resource_data = response.content if hasattr(response, "content") else response
             state.enriched_resource = EnrichedLearningResource.model_validate(resource_data)
-            logging.info(f"Learning resource processed: {state.enriched_resource}")
+            logging.info(f"Learning resource processed!")
         except Exception as e:
             logging.error(f"Error processing learning resource data: {e}")
     return state
