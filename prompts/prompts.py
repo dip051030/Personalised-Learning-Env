@@ -123,7 +123,7 @@ Style:
 Instructions:
 - Generate a clear, structured markdown lesson or explanation for the topic and class provided.
 - Use the following structure, adapting each section to the user's class, curriculum, and interests:
-
+- Follow the metadata strictly.
 # Topic Title: [Use the topic from the action or user_data]
 
 ## Introduction
