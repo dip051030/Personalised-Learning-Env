@@ -48,8 +48,24 @@ def main():
     """
     output = graph_run(user_data)
     logging.info(f"Graph has given an output! {output}")
+    # If output is not a LearningState, convert it
+    from schemas import LearningState
+    if not isinstance(output, LearningState):
+        try:
+            output = LearningState.model_validate(output)
+        except Exception as e:
+            logging.error(f"Failed to convert output to LearningState: {e}")
+            print("Error: Output is not a valid LearningState object.")
+            return
     # Save the learning state to a JSON file
+    from utils.utils import save_learning_state_to_json, save_generated_content
     save_learning_state_to_json(output, "learning_state.json")
+    # Save the generated content to a separate file if available
+    if output.content and getattr(output.content, 'content', None):
+        save_generated_content(output.content.content, "generated_content.md")
+        print("Generated content saved to generated_content.md")
+    else:
+        print("No generated content to save.")
 
 if __name__ == "__main__":
     main()
