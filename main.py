@@ -47,7 +47,7 @@ def main():
     Entry point for running the learning graph with sample user data.
     """
     output = graph_run(user_data)
-    logging.info(f"Graph has given an output!")
+    logging.info(f"Graph has given an output! {output}")
     # Save the learning state to a JSON file
     save_learning_state_to_json(output, "learning_state.json")
 

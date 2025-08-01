@@ -143,10 +143,11 @@ def generate_blog_content(state: LearningState) -> LearningState:
 def content_improviser_node(state: LearningState) -> LearningState:
     """
     Node to improve generated content using the content improver LLM.
+    Uses the latest feedback (including gaps) to improve the content.
     Updates the state with improved content.
     """
     logging.info("Entering content_improviser_node")
-    if state.content is not None:
+    if state.content is not None and state.feedback is not None:
         try:
             messages = [
                 prompt_content_improviser,
@@ -156,17 +157,16 @@ Unpolished Learning Resource:
 
 Please improve the content by making it more engaging, informative, and suitable for the target audience.
 
-Feedback:
-{state.feedback}
+Feedback (including gaps):
+{state.feedback.model_dump()}
 
 """)
             ]
-
             response = content_improviser.invoke(messages)
-            feedback = response.content if hasattr(response, "content") else str(response)
-            state.content = ContentResponse(content=feedback)
-            print(f'Feedback: {state.feedback}')
-            logging.info(f"Improvised content has been generated!")
+            improved_content = response.content if hasattr(response, "content") else str(response)
+            # Update state.content with the newly generated improvised content
+            state.content = ContentResponse(content=improved_content)
+            logging.info(f"Improvised content has been generated and updated in state.content!")
         except Exception as e:
             logging.error(f"Error improvising content: {e}")
     return state
@@ -222,7 +222,8 @@ def find_content_gap_node(state: LearningState) -> LearningState:
         response = data.content if hasattr(data, "content") else data
         print(f'Gaps : {response}')
         # Update feedback with new gaps for the next improvise node
-        state.feedback = FeedBack.model_validate(json.loads(response) if isinstance(response, str) else response)
+        updated_feedback = FeedBack.model_validate(json.loads(response) if isinstance(response, str) else response)
+        state.feedback = updated_feedback
         logging.info(f"Feedback received and updated: {state.feedback}")
     return state
 
