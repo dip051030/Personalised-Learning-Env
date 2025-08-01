@@ -49,10 +49,17 @@ def enrich_content(state: LearningState) -> LearningState:
     logging.info("Entering enrich_content node")
     if state.current_resource is not None:
         try:
-            retrieved_content = retrieve_and_search(state=state).get('metadatas', [])
-            retrieved_content = list(flatten(retrieved_content) )[0]
+            retrieved = retrieve_and_search(state=state)
+            if not retrieved:
+                logging.error("No content retrieved from vector DB.")
+                return state
+            retrieved_content = retrieved.get('metadatas', [])
+            if not retrieved_content:
+                logging.error("No metadatas found in retrieved content.")
+                return state
+            retrieved_content = list(flatten(retrieved_content))[0]
             print('RETRIEVED CONTENT', retrieved_content)
-            response= enriched_content.invoke({
+            response = enriched_content.invoke({
                 "action": "content_enrichment",
                 "current_resources_data": parse_chromadb_metadata(retrieved_content).model_dump()
             })
@@ -170,6 +177,7 @@ def collect_feedback_node(state:LearningState) -> LearningState:
     Node to collect feedback on generated content.
     """
     logging.info("Entering collect_feedback_node")
+    feedback_data = None  # Ensure variable is always defined
     if state.content is not None:
         try:
             logging.info(f"Collecting feedback for content")
@@ -202,21 +210,20 @@ Feedback:
 def find_content_gap_node(state: LearningState) -> LearningState:
     """
     Node to find content gaps based on user feedback.
-    This is a placeholder for future implementation.
+    Updates the feedback in state with new gaps for the next improvise node.
     """
     logging.info("Entering find_content_gap_node")
-    # Placeholder logic for finding content gaps
     if state.feedback is not None and state.content is not None:
         logging.info(f"Finding content gaps based on feedback: {state.feedback}")
-        data  = gap_finder.invoke({
-            'content' : state.content,
+        data = gap_finder.invoke({
+            'content': state.content.content if hasattr(state.content, 'content') else str(state.content),
             'feedback': state.feedback.model_dump(),
         })
-
         response = data.content if hasattr(data, "content") else data
         print(f'Gaps : {response}')
-        # state.feedback = state.feedback.model_validate(response)
-        logging.info(f"Feedback received: {state.feedback}")
+        # Update feedback with new gaps for the next improvise node
+        state.feedback = FeedBack.model_validate(json.loads(response) if isinstance(response, str) else response)
+        logging.info(f"Feedback received and updated: {state.feedback}")
     return state
 
 def update_state(state: LearningState) -> LearningState:
