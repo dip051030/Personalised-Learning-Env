@@ -79,11 +79,11 @@ def enrich_content(state: LearningState) -> LearningState:
     Updates the state with an enriched resource.
     """
     logging.info("Entering enrich_content node")
-    if state.content is not None:
+    if state.current_resource is not None:
         try:
             retrieved_data = retrieve_and_search(state=state)
             scrapped_data = serp_api_tool(query=state.current_resource.topic)
-
+            logging.info(f"Scrapped Data: {scrapped_data}")
             response = enriched_content.invoke({
                 "action": "content_enrichment",
                 'titles': [_.get('titles', '') for _ in scrapped_data.get('organic_results', [])],

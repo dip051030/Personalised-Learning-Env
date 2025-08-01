@@ -19,44 +19,16 @@
         "hours": 7,
         "references": ""
     },
-    "enriched_resource": {
-        "subject": "physics",
-        "grade": 11,
-        "unit": "Electricity and Magnetism",
-        "topic_id": "19.4",
-        "topic": "Coulomb’s law",
-        "description": "Coulomb's Law describes the electrostatic interaction between electrically charged particles. This law allows us to calculate the force of attraction or repulsion between two point charges.",
-        "elaboration": "This law is fundamental to understanding how charges interact. Visualize it like gravity but with electrical charges instead of masses. The force is directly proportional to the product of the charges and inversely proportional to the square of the distance between them.",
-        "keywords": [
-            "Coulomb’s law",
-            "electrostatic force",
-            "charges",
-            "electric field",
-            "permittivity of free space"
-        ],
-        "hours": 5,
-        "references": "Page 37, Halliday & Resnick Physics, 10th Edition"
-    },
+    "enriched_resource": null,
     "progress": [],
     "topic_data": null,
     "related_examples": null,
     "content_type": "lesson",
-    "content": {
-        "content": "# Coulomb's Law: Unlocking the Secrets of Electrostatic Forces\n## Introduction\nImagine you're at a party, and someone brings out a bunch of balloons. You rub one against your hair, and suddenly it's stuck to your head! What's going on here? It's not magic; it's science, specifically Coulomb's Law. This fundamental principle in physics describes the electrostatic force between electrically charged objects. Understanding Coulomb's Law is crucial for grade 11 students, as it lays the foundation for more complex topics in electromagnetism. So, let's dive in and explore how this law works!\n\n## What is Coulomb's Law?\nCoulomb's Law tells us how strong the attraction or repulsion is between two charged objects, depending on their charges and the distance separating them. But why does this matter? Well, electrostatic forces are at play in many everyday technologies, such as:\n* Laser printers, which rely on electrostatic charges to attract toner to paper\n* Electrostatic air cleaners, which use charged particles to remove pollutants from the air\n* Even in our bodies, electrostatic forces govern how charged ions interact, which is essential for nerve impulses and muscle contractions\n\n## The Formula & Explanation\nThe formula for Coulomb's Law is:\n\nF = k * |q1 * q2| / r^2\n\nWhere:\n* F is the electrostatic force between the charges\n* k is Coulomb's constant (approximately 8.99 x 10^9 N⋅m^2/C^2)\n* q1 and q2 are the magnitudes of the charges\n* r is the distance between the charges\n\nLet's break it down:\n* The force is directly proportional to the product of the charges. This means that if you double the charge of one object, the force doubles.\n* The force is inversely proportional to the square of the distance between the charges. This means that if you double the distance between the objects, the force decreases to one-quarter of its original value.\n\n## Visualizing Electrostatic Forces\nTo better understand how electrostatic forces work, let's consider a few examples:\n\n### Example 1: Balloon and Hair\nWhen you rub a balloon against your hair, the balloon becomes negatively charged, and your hair becomes positively charged. The electrostatic force between the balloon and your hair causes the balloon to stick to your head.\n\n### Example 2: Charged Particles\nConsider two positively charged particles, q1 and q2, separated by a distance r. The electrostatic force between them can be represented by a vector pointing away from each particle, indicating repulsion.\n\n### Visual Representation\nImagine two charged particles with charges +q and -q, separated by a distance r. The electrostatic force between them can be represented by a vector pointing from the positive charge to the negative charge, indicating attraction.\n\n**[Diagram: A simple diagram showing the vector forces between two charged particles would go here]**\n\n## Vector Nature of Electrostatic Forces\nElectrostatic forces are vectors, which means they have both magnitude and direction. The direction of the force depends on the signs of the charges:\n* Like charges (positive-positive or negative-negative) repel each other.\n* Unlike charges (positive-negative or negative-positive) attract each other.\n\n## Historical Context\nCoulomb's Law was first discovered by French engineer and physicist Charles-Augustin de Coulomb in the 18th century. He used a torsion balance to measure the force between charged objects and published his findings in 1785.\n\n## Practice Problems\nNow it's your turn to apply Coulomb's Law! Try solving these problems:\n\n### Problem 1\nTwo charges, q1 = 2 μC and q2 = 3 μC, are separated by a distance of 0.5 m. What is the electrostatic force between them?\n\n**Step-by-Step Solution:**\n\n1. Convert the charges from μC to C: q1 = 2 x 10^-6 C, q2 = 3 x 10^-6 C\n2. Plug in the values into the formula: F = k * |q1 * q2| / r^2\n3. Calculate the force: F = (8.99 x 10^9 N⋅m^2/C^2) * |(2 x 10^-6 C) * (3 x 10^-6 C)| / (0.5 m)^2\n4. Simplify and solve: F = 0.215 N\n\n### Problem 2\nIf the distance between two charges is doubled, and the force decreases to 1/4 of its original value, what was the original distance between the charges?\n\n## Limitations and Assumptions\nCoulomb's Law assumes that the charges are point-like and that the distance between them is much larger than the size of the charges. It also assumes that the charges are in a vacuum. In reality, the law may not hold exactly in all situations, such as in the presence of other charged objects or in different materials.\n\n## Safety Considerations\nWhen working with electrostatic experiments, it's essential to take safety precautions to avoid shocks or other hazards. Make sure to ground yourself and the equipment, and use proper insulation to prevent electrical discharges.\n\n## Real-World Applications\nCoulomb's Law has numerous applications in emerging technologies, such as:\n* Electric vehicles: Electrostatic forces play a crucial role in the design of electric motors and batteries.\n* Renewable energy systems: Electrostatic forces are used in the development of more efficient solar panels and wind turbines.\n\n## Curriculum Relevance\nAs a grade 11 physics student, Coulomb's Law is a key component of your Electricity and Magnetism unit. It often appears in introductory electrostatics chapters and is essential for solving problems related to electric fields and forces. Understanding Coulomb's Law is necessary before moving on to Gauss's Law and electric potential.\n\n## Frequently Asked Questions\n1. **What is the difference between Coulomb's Law and Newton's Law of Gravitation?**\n * Both laws describe forces that act at a distance and follow an inverse square law. However, Coulomb's Law deals with electric charges, while Newton's Law deals with masses. Also, electrostatic forces can be attractive or repulsive, while gravitational forces are always attractive.\n2. **How does Coulomb's Law relate to real-life situations, like lightning or sparks?**\n * Electrostatic discharges, like lightning or sparks, occur when there is a buildup of charge between objects. Coulomb's Law helps us understand the forces at play in these situations and how they can be harnessed or prevented.\n\n## Reflect and Explore\n* Can you think of other everyday examples where Coulomb's Law is at work?\n* How do you think Coulomb's Law relates to emerging technologies, such as electric vehicles or renewable energy systems?\n\nBy mastering Coulomb's Law, you'll gain a deeper understanding of the fundamental forces that shape our world. Keep exploring, and soon you'll be unlocking the secrets of the universe!"
-    },
+    "content": null,
     "next_action": {
         "next_node": "lesson_blog"
     },
     "history": [],
-    "feedback": {
-        "rating": 4,
-        "comments": "The content provides a good introduction but is missing a diagram, has an incomplete practice problem solution, and could expand on historical context and real-world applications.",
-        "needed": true,
-        "gaps": [
-            "Missing diagram for vector forces between charged particles.",
-            "Incomplete solution for Practice Problem 2.",
-            "Could expand on historical context and real-world applications."
-        ]
-    },
+    "feedback": null,
     "count": 4
 }
