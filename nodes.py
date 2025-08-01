@@ -293,7 +293,7 @@ builder.add_edge("collect_feedback", "find_content_gap")
 builder.add_edge("find_content_gap", "update_state")
 builder.add_conditional_edges(
     "update_state",
-    lambda state: "content_improviser" if getattr(state, "count", 0) < 2 else "END",
+    lambda state: "content_improviser" if getattr(state, "count", 0) < 4 else "END",
     {
         "content_improviser": "content_improviser",
         "END": END

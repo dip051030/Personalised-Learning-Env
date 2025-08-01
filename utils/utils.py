@@ -25,3 +25,19 @@ def save_learning_state_to_json(state, file_path):
         logging.info(f"LearningState saved to {file_path}")
     except Exception as e:
         logging.error(f"Failed to save LearningState to {file_path}: {e}")
+
+def save_generated_content(content, file_path):
+    """
+    Save the generated content (string) to a separate file.
+    If the file does not exist, it will be created.
+    Args:
+        content: The generated content as a string.
+        file_path: Path to the file where content will be saved.
+    """
+    try:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        logging.info(f"Generated content saved to {file_path}")
+    except Exception as e:
+        logging.error(f"Failed to save generated content to {file_path}: {e}")
