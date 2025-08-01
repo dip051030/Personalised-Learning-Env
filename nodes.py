@@ -86,8 +86,8 @@ def enrich_content(state: LearningState) -> LearningState:
 
             response = enriched_content.invoke({
                 "action": "content_enrichment",
-                'titles': [_ for _ in scrapped_data.get('titles', '')],
-                'snippets' : [_ for _ in scrapped_data.get('snippets', '')],
+                'titles': [_.get('titles', '') for _ in scrapped_data.get('organic_results', [])],
+                'snippets' : [_.get('snippets', '') for _ in scrapped_data.get('organic_results', [])],
                 "current_resources_data": parse_chromadb_metadata(retrieved_data).model_dump()
             })
             resource_data = response.content if hasattr(response, "content") else response

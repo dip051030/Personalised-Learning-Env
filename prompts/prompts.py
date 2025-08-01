@@ -2,6 +2,7 @@ from langchain_core.messages import SystemMessage
 from langchain_core.prompts import PromptTemplate
 import json
 import logging
+from typing import List
 
 logging.basicConfig(
     level=logging.INFO,
@@ -63,26 +64,46 @@ Example output:
 class EnrichContent(PromptTemplate):
     def __init__(self):
         super().__init__(
-            template="""You're a curriculum enrichment agent, your job is {action}. Based on this structured topic:
+            template="""You're a curriculum enrichment agent. Your job is {action}.
+
+Use this structured resource data:
 {current_resources_data}
 
-Your task:
-- Enrich vague or brief fields.
-- Add a student-friendly but formal content enrichment to the fields.
-- Include optional insights if relevant (e.g., practical uses, visual analogies)
-- Keep original keys. Maintain consistent structure.
+Use these external search insights to enrich your response:
+Titles:
+{titles}
 
-Return only a single valid JSON object. Do not explain your process.
+Snippets:
+{snippets}
+
+Your task:
+- Enrich vague or brief fields using both the structured data and search snippets.
+- Add student-friendly but formal enhancements (visual analogies, applications, clarity).
+- Keep all original keys and structure.
+- Only enrich existing fields, don't create new sections.
+
+Return only a single valid JSON object. Do not explain anything else.
 """,
-            input_variables=["current_resources_data", "action"]
+            input_variables=["current_resources_data", "action", "titles", "snippets"]
         )
         logging.info("Initializing EnrichContent Template")
 
-    def format_prompt(self, action: str, current_resources_data: dict) -> str:
+
+    def format_prompt(
+        self,
+        action: str,
+        current_resources_data: dict,
+        titles: List[str] = None,
+        snippets: List[str] = None
+    ) -> str:
+
         logging.info("Formatting EnrichContent prompt")
+
         return self.format(
             action=action,
-            current_resources_data=json.dumps(current_resources_data, indent=2)
+            current_resources_data=json.dumps(current_resources_data, indent=2),
+            titles="\n".join(titles),
+            snippets="\n".join(snippets)
         )
 
 class ContentGenerationTemplate(PromptTemplate):
