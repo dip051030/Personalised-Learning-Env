@@ -15,14 +15,19 @@ def serp_api_tool(query: str) -> dict:
         if not api_key:
             raise ValueError("SERP_API_KEY is not set. Please set it in your environment variables.")
 
-        params = {
-            'q': query,
-            'api_key': api_key,
-            'engine': "google",
-            'num': 5
+        headers = {
+            'X-API-KEY': api_key,
+            'Content-Type': 'application/json'
         }
 
-        response = requests.get('https://serpapi.com/search', params=params)
+        params = {
+            'q': query,
+            'engine': "google",
+            'num': 10,
+            'gl': 'in',
+        }
+
+        response = requests.post('https://google.serper.dev/search', json=params, headers=headers)
         data = response.json()
 
     except Exception as e:

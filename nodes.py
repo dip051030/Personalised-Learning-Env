@@ -82,15 +82,16 @@ def enrich_content(state: LearningState) -> LearningState:
     if state.current_resource is not None:
         try:
             retrieved_data = retrieve_and_search(state=state)
-            scrapped_data = serp_api_tool(query=state.current_resource.topic)
+            scrapped_data = serp_api_tool(query=state.current_resource.topic + 'for grade ' + str(state.current_resource.grade))
             logging.info(f"Scrapped Data: {scrapped_data}")
             response = enriched_content.invoke({
                 "action": "content_enrichment",
-                'titles': [_.get('titles', '') for _ in scrapped_data.get('organic_results', [])],
-                'snippets' : [_.get('snippets', '') for _ in scrapped_data.get('organic_results', [])],
+                'titles': [_.get('title', '') for _ in scrapped_data.get('organic', [])],
+                'snippets' : [_.get('snippet', '') for _ in scrapped_data.get('organic', [])],
                 "current_resources_data": parse_chromadb_metadata(retrieved_data).model_dump()
             })
             resource_data = response.content if hasattr(response, "content") else response
+            print(f'ENRICHED RESOURCE DATA: {resource_data}')
             state.enriched_resource = EnrichedLearningResource.model_validate(resource_data)
             logging.info(f"Learning resource processed!")
         except Exception as e:
