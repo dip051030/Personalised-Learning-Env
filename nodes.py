@@ -77,26 +77,35 @@ def user_info_node(state: LearningState) -> LearningState:
 
 
 
+import asyncio
+
 def crawler_node(state: LearningState) -> LearningState:
     links = serper_api_results_parser(state=state)
     logging.info(f"Scrapped Links: {links}")
+    raw_data = None
     try:
         save_to_local(links, "./data/scrapped_data.json")
-        link_list = [_.get('link') for _ in links.get('organic', [])]
-        raw_data = crawl_and_extract_json(link_list)
-        logging.info(f"Raw Data has been extracted!")
+        link_list = [item.get('link') for item in links.get('organic', []) if 'link' in item]
+        if not link_list:
+            logging.warning("No valid links found for crawling.")
+            return state
+        loop = asyncio.get_event_loop()
+        raw_data = loop.run_until_complete(crawl_and_extract_json(link_list))
+        logging.info("Raw Data has been extracted!")
     except Exception as e:
         logging.error(f"Error extracting raw data: {e}")
+        return state
 
     if raw_data:
         try:
-            # Save the raw data to a local file
             save_to_local(raw_data, "./data/raw_data.json")
-            logging.info("Raw data saved successfully.")
+            state.topic_data = raw_data
+            logging.info("Raw data saved and state updated successfully.")
         except Exception as e:
             logging.error(f"Error saving raw data: {e}")
     else:
         logging.warning("No raw data extracted from the links.")
+    return state
 
 
 def enrich_content(state: LearningState) -> LearningState:
