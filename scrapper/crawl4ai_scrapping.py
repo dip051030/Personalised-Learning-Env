@@ -1,22 +1,27 @@
 import asyncio
 import logging
-from crawl4ai import (AsyncWebCrawler, BrowserConfig, CrawlerRunConfig, LLMExtractionStrategy, LLMConfig)
+from crawl4ai import (
+    AsyncWebCrawler,
+    BrowserConfig,
+    CrawlerRunConfig,
+    LLMExtractionStrategy,
+    LLMConfig, CacheMode
+)
 from keys.apis import set_env
 
 logging.basicConfig(level=logging.INFO)
 
-
 async def crawl_and_extract_json(urls: list) -> list:
-    browser_cfg = BrowserConfig(headless=True)
-    run_cfg = CrawlerRunConfig()
+    browser_cfg = BrowserConfig(headless=True, verbose=True)
+    run_config = CrawlerRunConfig(cache_mode=CacheMode.ENABLED)
 
-    api_key = set_env('GROQ_DEEPSEEK_API_KEY')
-    if not api_key:
+    api_token = set_env('GROQ_DEEPSEEK_API_KEY')
+    if not api_token:
         raise ValueError("Environment variable 'GROQ_DEEPSEEK_API_KEY' is not set or invalid.")
 
     llm_cfg = LLMConfig(
         provider='groq/deepseek-r1-distill-llama-70b',
-        api_key=api_key,
+        api_token=api_token,
         temperature=0
     )
 
@@ -40,13 +45,13 @@ async def crawl_and_extract_json(urls: list) -> list:
                 logging.info(f"Crawling -> {url}")
                 result = await crawler.arun(
                     url=url,
-                    config=run_cfg,
+                    config=run_config,
                     extraction_strategy=extraction_strategy
                 )
 
                 results.append({
                     'url': url,
-                    'extracted_json': result.json,
+                    'extracted_json': result.json(),  # <- FIXED
                     'status': 'success'
                 })
             except Exception as e:
@@ -56,4 +61,5 @@ async def crawl_and_extract_json(urls: list) -> list:
                     'error': str(e),
                     'status': 'failed'
                 })
+
     return results
