@@ -108,7 +108,7 @@ class LearningState(BaseModel):
     current_resource: Optional[LearningResource] = None
     enriched_resource: Optional[EnrichedLearningResource] = None
     progress: List[UserProgress] = []
-    topic_data: Optional[Dict] = None
+    topic_data: Optional[dict] = None
     related_examples: Optional[List[str]] = None
     content_type: ContentType = ContentType.LESSON
     content: Optional[ContentResponse] = None

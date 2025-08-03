@@ -337,6 +337,7 @@ builder.add_node("content_improviser", content_improviser_node)
 builder.add_node("collect_feedback", collect_feedback_node)
 builder.add_node("find_content_gap", find_content_gap_node)
 builder.add_node("update_state", update_state)
+builder.add_node("crawler", crawler_node)
 
 builder.set_entry_point("user_info")
 builder.add_edge("user_info", "learning_resource")
