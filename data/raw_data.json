@@ -1,0 +1,112 @@
+[
+    {
+        "url": "https://byjus.com/physics/magnet/",
+        "extracted_json": {
+            "title": null,
+            "grade_level": null,
+            "subject": null,
+            "main_concepts": null,
+            "summary": null
+        },
+        "status": "success"
+    },
+    {
+        "url": "https://byjus.com/physics/electricity-and-magnetism/",
+        "extracted_json": {
+            "title": null,
+            "grade_level": null,
+            "subject": null,
+            "main_concepts": null,
+            "summary": null
+        },
+        "status": "success"
+    },
+    {
+        "url": "https://www.vedantu.com/evs/magnetism",
+        "extracted_json": {
+            "title": null,
+            "grade_level": null,
+            "subject": null,
+            "main_concepts": null,
+            "summary": null
+        },
+        "status": "success"
+    },
+    {
+        "url": "https://byjus.com/physics/magnetic-field/",
+        "extracted_json": {
+            "title": null,
+            "grade_level": null,
+            "subject": null,
+            "main_concepts": null,
+            "summary": null
+        },
+        "status": "success"
+    },
+    {
+        "url": "https://byjus.com/physics/uses-of-magnets/",
+        "extracted_json": {
+            "title": null,
+            "grade_level": null,
+            "subject": null,
+            "main_concepts": null,
+            "summary": null
+        },
+        "status": "success"
+    },
+    {
+        "url": "https://byjus.com/physics/electromagnetism/",
+        "extracted_json": {
+            "title": null,
+            "grade_level": null,
+            "subject": null,
+            "main_concepts": null,
+            "summary": null
+        },
+        "status": "success"
+    },
+    {
+        "url": "https://byjus.com/physics/poles-of-magnets/",
+        "extracted_json": {
+            "title": null,
+            "grade_level": null,
+            "subject": null,
+            "main_concepts": null,
+            "summary": null
+        },
+        "status": "success"
+    },
+    {
+        "url": "https://byjus.com/jee/moving-charges-and-magnetism/",
+        "extracted_json": {
+            "title": null,
+            "grade_level": null,
+            "subject": null,
+            "main_concepts": null,
+            "summary": null
+        },
+        "status": "success"
+    },
+    {
+        "url": "https://byjus.com/chemistry/magnetic-properties-of-solids/",
+        "extracted_json": {
+            "title": null,
+            "grade_level": null,
+            "subject": null,
+            "main_concepts": null,
+            "summary": null
+        },
+        "status": "success"
+    },
+    {
+        "url": "https://byjus.com/physics/discovery-magnets/",
+        "extracted_json": {
+            "title": null,
+            "grade_level": null,
+            "subject": null,
+            "main_concepts": null,
+            "summary": null
+        },
+        "status": "success"
+    }
+]

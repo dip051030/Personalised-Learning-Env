@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import json
 from crawl4ai import (
     AsyncWebCrawler,
     BrowserConfig,
@@ -9,10 +10,28 @@ from crawl4ai import (
 )
 from keys.apis import set_env
 
+
+def safe_model_dump(obj):
+    if hasattr(obj, 'model_dump'):
+        return obj.model_dump()
+    elif hasattr(obj, '__dict__'):
+        return {
+            k: safe_model_dump(v)
+            for k, v in obj.__dict__.items()
+            if not isinstance(getattr(type(obj), k, None), property)
+        }
+    elif isinstance(obj, dict):
+        return {k: safe_model_dump(v) for k, v in obj.items()}
+    elif isinstance(obj, (list, tuple, set)):
+        return [safe_model_dump(i) for i in obj]
+    else:
+        return obj
+
+
 logging.basicConfig(level=logging.INFO)
 
 async def crawl_and_extract_json(urls: list) -> list:
-    browser_cfg = BrowserConfig(headless=True, verbose=True)
+    browser_cfg = BrowserConfig(headless=False, verbose=True)
     run_config = CrawlerRunConfig(cache_mode=CacheMode.ENABLED)
 
     api_token = set_env('GROQ_DEEPSEEK_API_KEY')
@@ -28,15 +47,23 @@ async def crawl_and_extract_json(urls: list) -> list:
     extraction_strategy = LLMExtractionStrategy(
         llm_config=llm_cfg,
         instruction="""
-        Extract the following fields from the webpage content:
-        - title
-        - grade_level
-        - subject
-        - main_concepts
-        - summary
-        Output strictly as JSON with these keys.
-        """
-    )
+From crawl content
+Strictly ignore:
+- any HTML tags
+- embedded CSS
+- navigation bars
+- sidebars, footers, cookie banners, subscription boxes
+- scripting or metadata
+
+Only return the clean content in this JSON format:
+{{
+  "title": "string",
+  "grade_level": "string or null",
+  "main_concepts": ["..."],
+  "summary": "..."
+  "keywords": ["..."]
+}0  
+""", input_format='markdown')
 
     results = []
     async with AsyncWebCrawler(config=browser_cfg) as crawler:
@@ -49,11 +76,19 @@ async def crawl_and_extract_json(urls: list) -> list:
                     extraction_strategy=extraction_strategy
                 )
 
+                raw = safe_model_dump(result)
                 results.append({
                     'url': url,
-                    'extracted_json': result.json(),  # <- FIXED
+                    'extracted_json': {
+                        "title": raw.get("title"),
+                        "grade_level": raw.get("grade_level"),
+                        "subject": raw.get("subject"),
+                        "main_concepts": raw.get("main_concepts"),
+                        "summary": raw.get("summary")
+                    },
                     'status': 'success'
                 })
+                print(results[0])
             except Exception as e:
                 logging.error(f"Error crawling {url}: {e}")
                 results.append({
