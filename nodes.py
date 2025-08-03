@@ -14,6 +14,9 @@ import json
 import logging
 import os
 
+from scrapper.crawl4ai_scrapping import crawl_and_extract_json
+from scrapper.save_to_local import serper_api_results_parser, save_to_local
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
@@ -71,6 +74,29 @@ def user_info_node(state: LearningState) -> LearningState:
 #         except Exception as e:
 #             logging.error(f"Error processing learning resource data: {e}")
 #     return state
+
+
+
+def crawler_node(state: LearningState) -> LearningState:
+    links = serper_api_results_parser(state=state)
+    logging.info(f"Scrapped Links: {links}")
+    try:
+        save_to_local(links, "./data/scrapped_data.json")
+        link_list = [_.get('link') for _ in links.get('organic', [])]
+        raw_data = crawl_and_extract_json(link_list)
+        logging.info(f"Raw Data has been extracted!")
+    except Exception as e:
+        logging.error(f"Error extracting raw data: {e}")
+
+    if raw_data:
+        try:
+            # Save the raw data to a local file
+            save_to_local(raw_data, "./data/raw_data.json")
+            logging.info("Raw data saved successfully.")
+        except Exception as e:
+            logging.error(f"Error saving raw data: {e}")
+    else:
+        logging.warning("No raw data extracted from the links.")
 
 
 def enrich_content(state: LearningState) -> LearningState:

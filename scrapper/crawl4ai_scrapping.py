@@ -6,7 +6,7 @@ from keys.apis import set_env
 logging.basicConfig(level=logging.INFO)
 
 
-async def crawl_and_extract_json(urls: list):
+async def crawl_and_extract_json(urls: list) -> list:
     browser_cfg = BrowserConfig(headless=True)
     run_cfg = CrawlerRunConfig()
 
