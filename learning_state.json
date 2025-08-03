@@ -2,7 +2,7 @@
     "user": {
         "username": "User's name is student_01",
         "age": "User is 17 years old",
-        "grade": "User is in grade 12",
+        "grade": "User is in Grade 12",
         "id": 101,
         "is_active": true,
         "user_info": "A motivated grade 11 student interested in physics."
