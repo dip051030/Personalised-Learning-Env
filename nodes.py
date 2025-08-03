@@ -340,7 +340,8 @@ builder.add_node("update_state", update_state)
 builder.add_node("crawler", crawler_node)
 
 builder.set_entry_point("user_info")
-builder.add_edge("user_info", "learning_resource")
+builder.add_edge("user_info", "crawler")
+builder.add_edge("crawler", "learning_resource")
 builder.add_edge("learning_resource", "route_selector")
 builder.add_conditional_edges(
     "route_selector",
