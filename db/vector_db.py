@@ -60,7 +60,8 @@ def build_chroma_db_collection(filename: str, collection_name: str = 'lessons'):
         for lesson in lessons
     ]
 
-    client = chromadb.Client()
+    client = chromadb.PersistentClient(path = './local VDB/chromadb')
+    logging.info("Connecting to ChromaDB")
     collection = client.create_collection(name=collection_name)
     logging.info(f"Adding documents and embeddings to ChromaDB collection '{collection_name}'")
     collection.add(
@@ -71,3 +72,44 @@ def build_chroma_db_collection(filename: str, collection_name: str = 'lessons'):
     )
     logging.info(f"ChromaDB collection '{collection_name}' built successfully")
     return collection, model
+
+
+def save_scraped_data_to_vdb(
+    scraped_file: str = "./data/raw_data.json",
+    vdb_path: str = "./local VDB/chromadb",
+    collection_name: str = "scraped_data"
+):
+    """
+    Save scraped data from a JSON file to ChromaDB vector database.
+
+    Args:
+        scraped_file (str): Path to the scraped data JSON file.
+        vdb_path (str): Path to the ChromaDB persistent directory.
+        collection_name (str): Name of the ChromaDB collection.
+    """
+    logging.info(f"Loading scraped data from {scraped_file}")
+    with open(scraped_file, "r", encoding="utf-8") as f:
+        scraped_data = json.load(f)
+
+
+    valid_items = [item for item in scraped_data if item.get("content")]
+
+    if not valid_items:
+        logging.warning("No valid scraped items with content found.")
+        return
+
+    texts = [item["content"] for item in valid_items]
+    model = SentenceTransformer("all-MiniLM-L6-v2")
+    embeddings = model.encode(texts, show_progress_bar=True).tolist()
+
+    client = chromadb.PersistentClient(path=vdb_path)
+    collection = client.get_or_create_collection(collection_name)
+
+    for idx, (item, embedding) in enumerate(zip(valid_items, embeddings)):
+        collection.add(
+            ids=[f"scraped_{idx}"],
+            embeddings=[embedding],
+            metadatas=[item],
+            documents=[item["content"]]
+        )
+    logging.info(f"Added {len(valid_items)} scraped items to ChromaDB collection '{collection_name}'")

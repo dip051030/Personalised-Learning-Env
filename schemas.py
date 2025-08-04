@@ -103,12 +103,12 @@ class RouteSelector(BaseModel):
     next_node: str
 
 class WebCrawlerConfig(BaseModel):
-    url: HttpUrl = Field(..., description="URL of the scraped page.")
-    title: str = Field(..., description="Title of the web page.")
-    headings: List[str] = Field(default_factory=list, description="Headings (H1-H6) in order of appearance.")
-    paragraphs: List[str] = Field(default_factory=list, description="Visible body text paragraphs not urls.")
-    content: str = Field(..., description="Concatenated raw plain text from the page.")
-    word_count: int = Field(default=0, description="Total word count of the content.")
+    url: HttpUrl = Field(..., description="Original source URL of the educational web page.")
+    title: Optional[str] = Field(None, description="Main H1 title of the page. Must be clearly visible and educational. Return null if not found.")
+    headings: List[str] = Field(default_factory=list, description="Ordered list of H2–H4 section or sub-section headings from the main article body only.")
+    main_findings: List[str] = Field(default_factory=list, description="List of core educational statements (facts, definitions, laws, etc.) extracted from visible content. No hallucinated or inferred info.")
+    content: Optional[str] = Field(None, description="Full combined educational content as one plain block, preserving original phrasing and order. Join all main_findings.")
+    word_count: int = Field(default=0, description="Word count of the `content` field. Must be >= 50 to be considered useful.")
 
 
 class LearningState(BaseModel):

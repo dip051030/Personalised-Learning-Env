@@ -12,38 +12,14 @@
             "Uses of Magnets",
             "Frequently Asked Questions – FAQs"
         ],
-        "paragraphs": [
+        "main_findings": [
             "A magnet is defined as an object which is capable of producing magnetic field and attracting unlike poles and repelling like poles.",
-            "The following are the basic properties of a magnet:",
-            "When a magnet is dipped in iron filings, we can observe that the iron filings cling to the end of the magnet as the attraction is maximum at the ends of the magnet. These ends are known as [poles of the magnets].",
             "Magnetic poles always exist in pairs.",
-            "Whenever a magnet is suspended freely in mid-air, it always points towards the north-south direction. Pole pointing towards geographic north is known as the North Pole, and the pole pointing towards geographic south is known as the South Pole.",
             "Like poles repel while unlike poles attract.",
-            "The magnetic force between the two magnets is greater when the distance between these magnets is lesser.",
-            "There are three types of magnets, and they are as follows:",
-            "Permanent magnet",
-            "Temporary magnet",
-            "Electromagnets",
-            "Following are the ways to demagnetize the permanent magnets:",
-            "Exposing magnets to extreme temperatures.",
-            "The magnetic attraction between the magnet’s atoms gets loosened when they are hammered.",
-            "Stroking one magnet with another will reduce the magnetic strength.",
-            "There are four types of permanent magnets:",
-            "Ceramic or ferrite",
-            "Alnico",
-            "Samarium Cobalt (SmCo)",
-            "Neodymium Iron Boron (NIB)",
-            "Temporary magnets can be magnetized in the presence of a [magnetic field](https://byjus.com/physics/magnetic-field/). When the magnetic field is removed, these materials lose their magnetic property.",
-            "Iron nails and paper clips are examples of the temporary magnet.",
-            "Electromagnets consist of a coil of wire wrapped around the metal core made from iron. When this material is exposed to an electric current, a magnetic field is generated, making the material behave like a magnet.",
-            "The strength of the magnetic field can be controlled by controlling the electric current.",
-            "Following are the uses of magnets:",
-            "Magnets are used for constructing magnetic needles and mariner’s compasses.",
-            "Permanent magnets find applications in generators, electric accelerators, and electric motors.",
-            "Electromagnets find application in speakers, electric bells, and electric cranes.",
-            "Magnets are used to separate iron filling from other solid mixtures."
+            "The magnetic force between the two magnets is greater when the distance between these magnets is lesser."
         ],
-        "word_count": 346,
+        "content": "A magnet is defined as an object which is capable of producing magnetic field and attracting unlike poles and repelling like poles. Properties of Magnet The following are the basic properties of a magnet: ... (rest of the content)",
+        "word_count": 52,
         "status": "success"
     },
     {
@@ -60,25 +36,37 @@
             "Difference Between Electricity and Magnetism",
             "Frequently Asked Questions – FAQs"
         ],
-        "paragraphs": [
-            "Electricity is the presence and motion of charged particles. How does energy travel through copper wire and through space? What is electric current, electromotive force, and what makes a landing light turn on or a hydraulic pump motor run?",
-            "All matter is composed of molecules. All molecules are made up of atoms, which are themselves made up of electrons, protons, and neutrons.",
-            "Static electricity is usually caused when non-conductive materials such as rubber, plastic or glass are rubbed together, causing a transfer of electrons, which then results in an imbalance of charges between the two materials.",
-            "When a material has a large number of free electrons available, a greater current can be conducted in the material.",
-            "Elements such as gold, copper, and silver possess many free electrons and make good conductors.",
-            "Good examples of these are glass, ceramic, and plastic. Under normal conditions, atoms in these materials do not produce free electrons.",
+        "main_findings": [
+            "Electricity is the presence and motion of charged particles.",
             "Magnetism is a concept introduced in physics to help you understand one of the fundamental interactions in nature, the interaction between moving charges.",
-            "Like the gravitational force and the electrostatic force, the magnetic force is an interaction at a distance."
+            "The major difference between electricity and magnetism is their presence. Electricity can be present in a static charge, while magnetism's presence is only felt when there are moving charges as a result of electricity."
         ],
-        "word_count": 192,
+        "content": "Electricity and Magnetism... Electric current must begin with the nature of matter. All matter is composed of molecules. All molecules are made up of atoms, which are themselves made up of electrons, protons, and neutrons. ... Magnetic fields, like gravitational fields, cannot be seen or touched. We can feel the pull of the Earth's gravitational field on ourselves and the objects around us, but we do not experience magnetic fields in such a direct way.",
+        "word_count": 66,
         "status": "success"
     },
     {
-        "url": "https://www.vedantu.com/evs/magnetism",
+        "url": "https://www.vedantu.com/english-superstar?&utm_source=mau&utm_medium=seoSideBanner&utm_campaign=pagelanding&utm_term=vel_english_superstar&couponCode=",
         "title": null,
-        "headings": [],
-        "paragraphs": [],
-        "word_count": 0,
+        "headings": [
+            "Parts of the Microscope and Their Uses",
+            "Amoeba",
+            "Beaker Chemistry - What it is and How it is Used",
+            "How Do Plants Grow?",
+            "Water Cycle",
+            "What are Leguminous Plants?"
+        ],
+        "main_findings": [
+            "Here is the content from...",
+            "Parts of the Microscope and Their Uses: ...",
+            "Amoeba: ...",
+            "Beaker Chemistry - What it is and How it is Used: ...",
+            "How Do Plants Grow?: ...",
+            "Water Cycle: ...",
+            "What are Leguminous Plants?: ..."
+        ],
+        "content": null,
+        "word_count": 40,
         "status": "success"
     },
     {
@@ -90,13 +78,13 @@
             "Define magnetic field",
             "Define magnetic flux density"
         ],
-        "paragraphs": [
-            "Magnetic flux lines are important because of the following reasons: * Magnetic field lines are the lines in a magnetic field the tangent of which at any point will give the field direction at that point and its density gives the magnitude of the field. * The magnetic field intensity depends on the number of magnetic field lines. The lines are higher at the poles, that is why the magnetic field at the poles is stronger.",
-            "The Earth's magnetic field is generated deep down the Earth's core. The flow of liquid iron at the centre of the Earth generates an electric current that produces magnetic fields. Charged metals passing through these fields create electric currents of their own, so the cycle continues. This self-sustaining loop is known as the geodynamo.",
+        "main_findings": [
             "Magnetic Field is the region around a magnetic material or a moving electric charge within which the force of magnetism acts.",
-            "Magnetic Flux Density is the amount of magnetic flux in an area taken perpendicular to the magnetic flux's direction."
+            "The Earth's magnetic field is generated deep down the Earth's core.",
+            "Magnetic field intensity is a ratio of the MMF needed to create a certain flux density (B) within a particular material per unit length of that material."
         ],
-        "word_count": 170,
+        "content": "Magnetic Field is the region around a magnetic material or a moving electric charge within which the force of magnetism acts. What causes the Earth's magnetic field? The flow of liquid iron at the centre of the Earth generates an electric current that produces magnetic fields. Charged metals passing through these fields create electric currents of their own, so the cycle continues. This self-sustaining loop is known as the geodynamo.",
+        "word_count": 59,
         "status": "success"
     },
     {
@@ -105,21 +93,13 @@
         "headings": [
             "Various Applications and Uses of Magnets"
         ],
-        "paragraphs": [
-            "How are Magnets Useful? Magnets have been proving their worth every day with their incredible function by making the most strenuous tasks easier. With the various uses of magnets in daily life, we can do heavy lifting which is not humanly possible to do every day. Magnets play an important role in various devices which can be a small toy or a heavy 100-ton device to pick up heavy metals.",
-            "We might be using computers in our day-to-day lives but never wondered about the presence of a magnet inside it. Magnetic elements on a hard disk help to represent computer data, which is later ‘read’ by the computer to extract information.",
-            "Magnets are used inside TVs, sound speakers and radios. The small coil of wire and a magnet inside a speaker transforms the electronic signal to sound vibrations.",
-            "Magnets are used inside a generator to transform mechanical energy into [electrical energy](https://byjus.com/physics/electrical-energy-and-power/). In contrast, other kinds of motors use magnets to change electrical energy to mechanical energy.",
-            "Electrically charged magnets can help cranes to move large metal pieces.",
-            "Magnets are used in filtering machines that separate metallic ores from crushed rocks.",
-            "It is also used in food processing industries for separating small metallic pieces from grains etc.",
-            "Magnets are used in MRI machines which are used to create an image of the bone structure, organs, and tissues. Even magnets are used to cure cancer.",
-            "At home, you use magnets when you stick a paper on the refrigerator in order to remember something. Attaching a magnetic bottle opener to the fridge can come in handy.",
-            "We often use pocket a compass to find out directions when we are on a trek. The pocket compass uses a magnetic needle to point north.",
-            "The dark strip on the back of debit and credit cards is magnetic and is used to store data like computers’ hard drives.",
-            "Magnets can help collect all the nails which are scattered on the ground after a repair job."
+        "main_findings": [
+            "Magnets have been proving their worth every day with their incredible function by making the most strenuous tasks easier.",
+            "With the various uses of magnets in daily life, we can do heavy lifting which is not humanly possible to do every day.",
+            "Magnets play an important role in various devices which can be a small toy or a heavy 100-ton device to pick up heavy metals."
         ],
-        "word_count": 329,
+        "content": "Magnets have been proving their worth every day with their incredible function by making the most strenuous tasks easier. With the various uses of magnets in daily life, we can do heavy lifting which is not humanly possible to do every day. Magnets play an important role in various devices which can be a small toy or a heavy 100-ton device to pick up heavy metals.",
+        "word_count": 66,
         "status": "success"
     },
     {
@@ -135,55 +115,49 @@
             "Applications of Electromagnetism",
             "Frequently Asked Questions – FAQs"
         ],
-        "paragraphs": [
-            "The electromagnetic force is a type of physical interaction that occurs between electrically charged particles. It acts between charged particles and is the combination of all magnetic and electrical forces.",
-            "Electromagnetism is a process where a magnetic field is created by introducing the current in the conductor[Right-hand Rule].",
-            "A few properties of electromagnetic waves are: Electromagnetic waves are propagated by oscillating electric and magnetic waves at right angles to each other.",
-            "In industries, starting from small instruments to large power equipment, electromagnetism is used at least at one stage of their work."
+        "main_findings": [
+            "The electromagnetic force is a type of physical interaction that occurs between electrically charged particles.",
+            "It acts between charged particles and is the combination of all magnetic and electrical forces.",
+            "Electromagnetism serves as a fundamental working principle for many of the home appliances in household applications.",
+            "The Maglev trains or high-speed trains work on the principle of electromagnetism.",
+            "Electromagnetic radiations are used in the communication system to transfer data from the source to the receiver."
         ],
-        "word_count": 92,
+        "content": "Electromagnetism is a branch of Physics, that deals with the electromagnetic force that occurs between electrically charged particles. The electromagnetic force is one of the four fundamental forces and exhibits electromagnetic fields such as magnetic fields, electric fields, and light. It is the basic reason electrons are bound to the nucleus and are responsible for the complete structure of the nucleus. ... (rest of the content)",
+        "word_count": 75,
         "status": "success"
     },
     {
         "url": "https://byjus.com/physics/poles-of-magnets/",
-        "title": "What Is a Magnetic Pole?",
+        "title": "Poles of Magnets",
         "headings": [
             "What Is a Magnetic Pole?",
             "Magnetic Field Lines",
             "Properties of Magnetic Field Lines"
         ],
-        "paragraphs": [
-            "The areas of magnets that have magnetic strength are called “poles.” When we have more than one magnet poles repel, pull or attract each other. Opposite poles always attract each other while like poles repel each other. These acts of attraction and repulsion are known as magnetism. And, the magnetic space around a magnet is known as magnetism.",
-            "Unless the magnets come marked with “N” or “S,” the poles look the same. Following are a few ways through which you can identify which is which:",
-            "There are two magnetic poles in a bar magnet. Take a bar magnet and place it on a paper on a plane surface like a table or the ground. Sprinkle some iron filings on and around the magnet. You will see a pattern that is formed, as shown in the image given below.",
+        "main_findings": [
+            "The areas of magnets that have magnetic strength are called “poles.”",
+            "Opposite poles always attract each other while like poles repel each other.",
             "For all magnets, the point at which all magnetic field lines converge is the south pole and the point from which all magnetic field lines diverge will be the magnetic north pole."
         ],
-        "word_count": 156,
+        "content": "The areas of magnets that have magnetic strength are called “poles.” When we have more than one magnet poles repel, pull or attract each other. Opposite poles always attract each other while like poles repel each other. These acts of attraction and repulsion are known as magnetism. And, the magnetic space around a magnet is known as magnetism. ... For all magnets, the point at which all magnetic field lines converge is the south pole and the point from which all magnetic field lines diverge will be the magnetic north pole.",
+        "word_count": 55,
         "status": "success"
     },
     {
         "url": "https://byjus.com/",
         "title": "Moving Charges and Magnetism",
         "headings": [
-            "Video Lessons",
-            "Most Important Topics for JEE – Moving Charges and Magnetism",
-            "Top 15 Most Important Questions – Moving Charges and Magnetism",
             "Force on a Current Carrying Conductor in a Magnetic Field",
             "Biot-Savart's Law",
-            "Important and PY JEE Questions – Moving Charges and Magnetism",
-            "Ampere’s Circuital Law"
+            "Ampere's Circuital Law"
         ],
-        "paragraphs": [
-            "Here is the content from...",
-            "Video Lessons Rapid Revision !",
-            "Most Important Topics for JEE – Moving Charges and Magnetism !",
-            "Top 15 Most Important Questions – Moving Charges and Magnetism !",
-            "Force on a Current Carrying Conductor in a Magnetic Field !",
-            "Biot-Savart's Law !",
-            "Important and PY JEE Questions – Moving Charges and Magnetism !",
-            "Ampere’s Circuital Law !"
+        "main_findings": [
+            "The magnetic effect of an electric current is the phenomenon where a current flowing through a conductor sets up a magnetic field around it.",
+            "Laplace's law or Biot-Savart's law is used to determine the flux density of the magnetic field at a point due to the current element.",
+            "A solenoid is a cylindrical coil made of several turns of wire."
         ],
-        "word_count": 61,
+        "content": "The magnetic effect of an electric current... Laplace's law or Biot-Savart's law is used to determine the flux density of the magnetic field at a point due to the current element. A solenoid is a cylindrical coil made of several turns of wire.",
+        "word_count": 60,
         "status": "success"
     },
     {
@@ -194,35 +168,42 @@
             "Graph showing the variation of magnetic properties on changing with temperature",
             "Frequently Asked Questions – FAQs"
         ],
-        "paragraphs": [
-            "Every substance around us has some magnetic properties in it. Different types of materials show different properties in the presence of a magnetic field. The magnetic properties of a substance originate from the electrons present in the atoms or molecules.",
-            "These magnetic moments come from two types of motion of electrons: 1. The orbital movement around the nucleus of an atom. 2. When the electron spins around its own axis.",
+        "main_findings": [
+            "Every substance around us has some magnetic properties in it.",
+            "Different types of materials show different properties in the presence of a magnetic field.",
+            "The magnetic properties of a substance originate from the electrons present in the atoms or molecules.",
+            "Every electron in an atom behaves like a small magnet.",
+            "Electrons can also be referred to as small loops of current which retain their magnetic moment.",
             "On the basis of the magnetic properties solids can be classified as follows:",
-            "Properties | Description | Alignment of magnetic dipoles | Examples | Application",
-            "Diamagnetic | They are weakly repelled by the magnetic fields | All the electrons in the orbitals are paired and are completely filled. | NaCl, Benzene | Behaves like an insulator.",
-            "Paramagnetic | They are weakly attracted by the magnetic fields. | Contains at least one unpaired electron in the orbital. | O22+ | Electronic appliances",
-            "Ferromagnetic | Strongly attracted by the magnetic field.It can be magnetized permanently | Consists of unpaired electrons, all having the same direction | Cobalt, nickel, CrO2 | CrO2 Antiferromagnetic | Net magnetic moment is zero. | Dipole moments are arranged in a compensatory way | NiO, MnO, V23 | –",
-            "Ferrimagnetic | Possess small net magnetic moments | Unequal number of parallel and antiparallel arrangement of magnetic moments | Fe34 | –"
+            "Diamagnetic: They are weakly repelled by the magnetic fields",
+            "Paramagnetic: They are weakly attracted by the magnetic fields.",
+            "Ferromagnetic: Strongly attracted by the magnetic field. It can be magnetized permanently",
+            "Antiferromagnetic: Net magnetic moment is zero. Dipole moments are arranged in a compensatory way",
+            "Ferrimagnetic: Possess small net magnetic moments Unequal number of parallel and antiparallel arrangement of magnetic moments"
         ],
-        "word_count": 223,
+        "content": "Every substance around us has some magnetic properties in it. Different types of materials show different properties in the presence of a magnetic field. The magnetic properties of a substance originate from the electrons present in the atoms or molecules. Every electron in an atom behaves like a small magnet. Electrons can also be referred to as small loops of current which retain their magnetic moment. On the basis of the magnetic properties solids can be classified as follows: Diamagnetic: They are weakly repelled by the magnetic fields Paramagnetic: They are weakly attracted by the magnetic fields. Ferromagnetic: Strongly attracted by the magnetic field. It can be magnetized permanently Antiferromagnetic: Net magnetic moment is zero. Dipole moments are arranged in a compensatory way Ferrimagnetic: Possess small net magnetic moments Unequal number of parallel and antiparallel arrangement of magnetic moments",
+        "word_count": 139,
         "status": "success"
     },
     {
         "url": "https://byjus.com/physics/discovery-magnets/",
         "title": "Discovery of Magnets",
         "headings": [
-            "History of Magnets:",
+            "History of Magnets",
             "Magnets"
         ],
-        "paragraphs": [
-            "We see magnets all around us; refrigerator stickers, magnetic screws, and caps, magnetic playboards, pin holders, etc. Large-scale applications include the cranes that are used to carry scrap metals in industries and scrapyards. For centuries, the magnetic compass has been used by travellers for navigation.",
-            "According to Greek legend, magnetism was first discovered by a shepherd named Magnes, who lived in Magnesia, Greece. Magnes was herding his sheep through the mountains. Suddenly he noticed the ferrule of his stick and nails in his sandals got stuck to a rock. The iron in his stick and nails had become attracted to the magnetic rock.",
-            "Magnetite is one of the three natural occurring oxides of iron. It gets attracted to magnets and can be easily magnetized to form a permanent magnet. Naturally magnetized pieces of magnetite are called loadstone.",
-            "People from Ancient Egypt started using magnets to play tricks, by making objects of worship float in mid-air by proper positioning of magnets. The emperor from China used magnets to save his palace by constructing gates made of loadstone. The amours made of metal got attracted to the magnetic gates and prevented them from going any further.",
-            "In his book, De Magnete (1600), scientist William Gilbert mentioned techniques of artificially making magnets from steel. He used three techniques by which steel can be magnetized permanently: 1. Rub the steel needle with a block of loadstone in a particular direction starting from one end and ending at other. 2. Forging powdered iron at high temperatures under strong magnetic forces. 3. Leaving red-hot iron bars to cool in Earth’s magnetic field for twenty years.",
-            "In 1820, the concept of electromagnetism was discovered by Hans Christian Orsted, who observed a deflection in the compass needle from the magnetic north when the electric current from the battery he was powering his set up with was switched on and off."
+        "main_findings": [
+            "Magnetism was first discovered by a shepherd named Magnes, who lived in Magnesia, Greece.",
+            "The stone was named magnetite, after the name of the shepherd or the country it was found in.",
+            "It gets attracted to magnets and can be easily magnetized to form a permanent magnet.",
+            "Naturally magnetized pieces of magnetite are called loadstone.",
+            "People from Ancient Egypt started using magnets to play tricks, by making objects of worship float in mid-air by proper positioning of magnets.",
+            "The emperor from China used magnets to save his palace by constructing gates made of loadstone.",
+            "William Gilbert mentioned techniques of artificially making magnets from steel.",
+            "Hans Christian Orsted discovered electromagnetism."
         ],
-        "word_count": 312,
+        "content": "Magnetism was first discovered by a shepherd named Magnes, who lived in Magnesia, Greece. The stone was named magnetite, after the name of the shepherd or the country it was found in. It gets attracted to magnets and can be easily magnetized to form a permanent magnet. Naturally magnetized pieces of magnetite are called loadstone. People from Ancient Egypt started using magnets to play tricks, by making objects of worship float in mid-air by proper positioning of magnets. The emperor from China used magnets to save his palace by constructing gates made of loadstone. William Gilbert mentioned techniques of artificially making magnets from steel. Hans Christian Orsted discovered electromagnetism.",
+        "word_count": 109,
         "status": "success"
     }
 ]

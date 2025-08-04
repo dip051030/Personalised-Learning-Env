@@ -156,11 +156,12 @@ async def crawl_and_extract_json(urls: list) -> list:
                         "url": extracted.get("url", url),
                         "title": extracted.get("title"),
                         "headings": extracted.get("headings", []),
-                        "paragraphs": extracted.get("paragraphs", []),
-                        "word_count": extracted.get("word_count", len(" ".join(extracted.get("paragraphs", [])).split())),
+                        "main_findings": extracted.get("main_findings", []),
+                        "content": extracted.get("content"),
+                        "word_count": extracted.get("word_count",
+                                                    len(" ".join(extracted.get("main_findings", [])).split())),
                         "status": "success"
                     })
-
                     extraction_strategy.show_usage()
 
             except Exception as e:
@@ -169,7 +170,8 @@ async def crawl_and_extract_json(urls: list) -> list:
                     "url": url,
                     "title": None,
                     "headings": [],
-                    "paragraphs": [],
+                    "main_findings": [],
+                    "content": None,
                     "word_count": 0,
                     "status": "failed"
                 })
