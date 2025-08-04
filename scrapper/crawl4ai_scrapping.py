@@ -36,52 +36,57 @@ async def crawl_and_extract_json(urls: list) -> list:
     extraction_strategy = LLMExtractionStrategy(
         llm_config=llm_cfg,
         instruction="""
-        You are an intelligent extractor designed to process educational web pages and return clean, structured JSON content. Follow the schema and rules **exactly**. Do **not** generate, hallucinate, rewrite, or summarize. Only extract visible, factual educational content.
+        You are an intelligent educational content extractor. You must output a clean, valid JSON object **exactly** following the schema and rules below. If data is not present on the page, return empty lists or nulls — but you must still return a full valid JSON object.
+
+        DO NOT skip the output. DO NOT return natural language. DO NOT explain anything.
 
         ---
 
-        JSON Output Schema:
+        STRICT JSON Output Schema:
         {
-          "url": "<original URL>",
-          "title": "<main educational article title or H1>",
-          "headings": ["<H2–H4 section and sub-section headings>"],
-          "main_findings": ["<concise, factual educational points or definitions stated clearly on the page>"],
-          "content": "<single combined text of all educational findings, preserving original phrasing and order>"
+          "url": "<original URL>",  // always required
+          "title": "<main article H1 title or null>",  
+          "headings": ["<H2–H4 section/sub-section headings>"],  
+          "main_findings": ["<key educational facts, definitions, or concepts in full sentences>"],  
+          "content": "<single combined block of all main findings in original order or null if none>",  
+          "keywords": ["<list of core nouns or terms from headings and findings or []>"]
         }
 
         ---
 
-        Extraction Rules:
+        Rules:
 
-        Include:
-        - The H1 title from the main article body (not the website name)
-        - All H2–H4 headings in visible order, from the main body only
-        - Educational facts, definitions, explanations, laws, formulas — as individual sentences under `main_findings`
-        - Bullet lists **only if** items are full sentences and convey educational meaning
-        - For `content`, concatenate all `main_findings` in order, preserving exact wording
+        Must Include:
+        - Main article title (`<h1>` tag or first major visible title)
+        - All `<h2>`, `<h3>`, and `<h4>` tags from the **main content body only**
+        - Individual full-sentence educational statements — laws, definitions, examples, formulas, etc.
+        - Bullet points **only if** each is a full sentence with factual educational info
+        - Join all findings in `content` (preserve exact sentence order and original phrasing)
+        - Extract `keywords` by identifying repeated or important terms in `headings` + `main_findings`
 
-        Exclude:
-        - Any HTML, CSS, JavaScript, or styling elements
-        - Page structure content (headers, footers, navbars, sidebars, menus)
-        - Ads, cookie notices, related articles, timestamps, author bios, comments
-        - Social media buttons, links, external references, or promotional content
-        - Code blocks, UI labels, subscription forms, quotes, and placeholder text (e.g., "Click here to...")
-        - Incomplete fragments, layout-only text, or decorative headings
+        Must Exclude:
+        - Website name, branding, menus, footers, navbars, cookie banners, popups, forms, ads
+        - Code blocks, timestamps, author bios, comments, vague filler, layout-only text
+        - External links, social media, UI elements, inline styles, HTML/CSS/JS
 
         ---
 
         Output Guidelines:
-        - If a field like `headings` or `main_findings` is not present, return it as an empty list: []
-        - If `title` or `content` is missing, return it as: null
-        - Always include the exact original `url` as received
-        - Output must be **valid, strict JSON** — no markdown, no explanation, no freeform text
-        - JSON must be fully parseable for machine learning and curriculum ingestion pipelines
+        - If any field is missing from the page, return:
+          - `null` for title or content
+          - `[]` for headings, main_findings, or keywords
+        - The `"url"` field is always required and must match the input
+        - Output must be **strictly valid JSON** — no markdown, no commentary, no extra text
 
         ---
 
-        Your Role:
-        You are a non-generative extractor. You must not invent, paraphrase, summarize, or infer any content. Only return **visible**, **factual**, and **educational** material that appears on the webpage. Maintain high precision and consistency — this data will power curriculum tools, knowledge graphs, and AI tutors.
-        """,
+        YOUR ROLE:
+        You are a **non-generative extractor** — not a writer. Never summarize, paraphrase, or invent.
+        Your goal is to extract clean, structured data for curriculum systems and AI tutors.
+
+        ALWAYS return full JSON — even if data is minimal.
+        """
+        ,
     input_format='markdown',
         schema=WebCrawlerConfig.model_json_schema()
     )

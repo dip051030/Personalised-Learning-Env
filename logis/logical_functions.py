@@ -10,22 +10,46 @@ from schemas import LearningResource, ResourceSubject, LearningState, ContentRes
 from db.vector_db import build_chroma_db_collection
 from sentence_transformers import SentenceTransformer
 
-def retrieve_and_search(state: LearningState) -> dict:
+
+def search_both_collections(state : LearningState,
+                            vdb_path="./local VDB/chromadb",
+                            lessons_collection="lessons",
+                            scraped_collection="scraped_data",
+                            n_results=1):
     """
-    Retrieve and search for resources based on the current state.
-    Returns the top matching resource from the ChromaDB collection.
+    Search both the lessons and scraped_data collections for the most similar items to the query.
+    Returns results from both collections.
     """
     try:
-        if state.current_resource is not None:
-            collection, model = build_chroma_db_collection('class_11_physics.json', collection_name='lessons')
-            query_embedding = model.encode([state.current_resource.topic]).tolist()
-            results = collection.query(
-                query_embeddings=query_embedding,
-                n_results=1
-            )
-            return results
+        if state.current_resource is None:
+            return None
+
+        # Load the embedding model
+        model = SentenceTransformer("bge-base-en-v1.5")
+        query_text = state.current_resource.topic
+        query_embedding = model.encode([query_text]).tolist()
+
+        # Connect to ChromaDB
+        client = chromadb.PersistentClient(path=vdb_path)
+        lessons_col = client.get_or_create_collection(lessons_collection)
+        scraped_col = client.get_or_create_collection(scraped_collection)
+
+        # Query both collections
+        lessons_results = lessons_col.query(
+            query_embeddings=query_embedding,
+            n_results=n_results
+        )
+        scraped_results = scraped_col.query(
+            query_embeddings=query_embedding,
+            n_results=n_results
+        )
+
+        return {
+            "lessons_results": lessons_results,
+            "scraped_results": scraped_results
+        }
     except Exception as e:
-        logging.error(f"Error retrieving and searching resources: {e}")
+        logging.error(f"Error searching collections: {e}")
         return None
 
 

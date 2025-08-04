@@ -2,7 +2,7 @@ import chromadb
 from sentence_transformers import SentenceTransformer
 from db.loader import load_lesson_data
 import logging
-
+import json
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
@@ -35,7 +35,7 @@ def build_chroma_db_collection(filename: str, collection_name: str = 'lessons'):
     """
     logging.info(f"Building ChromaDB collection for {filename} with name '{collection_name}'")
     lessons = load_lesson_data(filename)
-    model = SentenceTransformer('all-MiniLM-L6-v2')
+    model = SentenceTransformer('bge-base-en-v1.5')
     documents = [
         f"{lesson.get('unit', '')} {lesson.get('topic_title', '')} {lesson.get('description', '')} {lesson.get('elaboration', '')}"
         for lesson in lessons
@@ -99,7 +99,7 @@ def save_scraped_data_to_vdb(
         return
 
     texts = [item["content"] for item in valid_items]
-    model = SentenceTransformer("all-MiniLM-L6-v2")
+    model = SentenceTransformer("bge-base-en-v1.5")
     embeddings = model.encode(texts, show_progress_bar=True).tolist()
 
     client = chromadb.PersistentClient(path=vdb_path)

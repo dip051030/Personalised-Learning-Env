@@ -4,7 +4,7 @@ from langgraph.graph import StateGraph, END
 from langchain_core.messages import HumanMessage
 
 from logis.logical_functions import lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
-    retrieve_and_search, update_content_count
+    retrieve_and_search, update_content_count, search_both_collections
 from models.external_tools_apis import serp_api_tool
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
@@ -116,13 +116,11 @@ def enrich_content(state: LearningState) -> LearningState:
     logging.info("Entering enrich_content node")
     if state.current_resource is not None:
         try:
-            retrieved_data = retrieve_and_search(state=state)
-            scrapped_data = serp_api_tool(query=state.current_resource.topic + 'for grade ' + str(state.current_resource.grade))
-            logging.info(f"Scrapped Data: {scrapped_data}")
+            serp_api_tool(query=state.current_resource.topic + 'for grade ' + str(state.current_resource.grade))
+            retrieved_data = search_both_collections(state=state)
+            logging.info(f"Data is being Scrapped..")
             response = enriched_content.invoke({
                 "action": "content_enrichment",
-                'titles': [_.get('title', '') for _ in scrapped_data.get('organic', [])],
-                'snippets' : [_.get('snippet', '') for _ in scrapped_data.get('organic', [])],
                 "current_resources_data": parse_chromadb_metadata(retrieved_data).model_dump()
             })
             resource_data = response.content if hasattr(response, "content") else response
