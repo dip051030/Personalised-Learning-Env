@@ -116,9 +116,7 @@ def enrich_content(state: LearningState) -> LearningState:
     logging.info("Entering enrich_content node")
     if state.current_resource is not None:
         try:
-            serp_api_tool(query=state.current_resource.topic + 'for grade ' + str(state.current_resource.grade))
             retrieved_data = search_both_collections(state=state)
-            logging.info(f"Data is being Scrapped..")
             response = enriched_content.invoke({
                 "action": "content_enrichment",
                 "current_resources_data": parse_chromadb_metadata(retrieved_data).model_dump()

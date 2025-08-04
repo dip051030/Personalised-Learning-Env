@@ -1,4 +1,5 @@
 import logging
+import chromadb
 
 logging.basicConfig(
     level=logging.INFO,
