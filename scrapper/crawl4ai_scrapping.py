@@ -6,6 +6,7 @@ from crawl4ai import (
     LLMExtractionStrategy,
     LLMConfig, CacheMode
 )
+from datetime import datetime
 import json
 from keys.apis import set_env
 from schemas import WebCrawlerConfig
@@ -53,35 +54,33 @@ async def crawl_and_extract_json(urls: list) -> list:
         Extraction Rules:
 
         Include:
-        - Main content title (usually from H1)
-        - All H2–H4 headings from the main article body only
-        - Main educational points (definitions, explanations, laws, formulas, factual sentences)
-        - Bullet lists **only** if they are full sentences and educational
-        - For `main_findings`, only extract visible, standalone informative sentences — not filler or layout text
-        - The final `content` field must be the joined version of all main findings in correct order
+        - The H1 title from the main article body (not the website name)
+        - All H2–H4 headings in visible order, from the main body only
+        - Educational facts, definitions, explanations, laws, formulas — as individual sentences under `main_findings`
+        - Bullet lists **only if** items are full sentences and convey educational meaning
+        - For `content`, concatenate all `main_findings` in order, preserving exact wording
 
         Exclude:
-        - HTML tags, CSS, scripts, styles
-        - Navigation bars, sidebars, footers, menus, headers
-        - Ads, cookie banners, related articles, timestamps, author bios, comment sections
-        - External links, social media elements, promotional blurbs
-        - Code blocks, embedded widgets, forms, or UI elements
-        - Any placeholder text like “Here is the content from...”
-        - Partial sentences, UI text, quotes, or vague phrases
+        - Any HTML, CSS, JavaScript, or styling elements
+        - Page structure content (headers, footers, navbars, sidebars, menus)
+        - Ads, cookie notices, related articles, timestamps, author bios, comments
+        - Social media buttons, links, external references, or promotional content
+        - Code blocks, UI labels, subscription forms, quotes, and placeholder text (e.g., "Click here to...")
+        - Incomplete fragments, layout-only text, or decorative headings
 
         ---
 
         Output Guidelines:
-        - If a field like "headings" or "main_findings" is not found, return it as an empty list []
-        - If "title" or "content" is missing, return as null
-        - Always return the original "url" as-is
-        - Output must be valid JSON (not markdown, not natural language)
-        - The JSON must be fully parseable for downstream ML or curriculum pipelines
+        - If a field like `headings` or `main_findings` is not present, return it as an empty list: []
+        - If `title` or `content` is missing, return it as: null
+        - Always include the exact original `url` as received
+        - Output must be **valid, strict JSON** — no markdown, no explanation, no freeform text
+        - JSON must be fully parseable for machine learning and curriculum ingestion pipelines
 
         ---
 
         Your Role:
-        You are a non-generative extractor — you do not invent or alter data. Only return factual, clean content that visibly exists on the page and fits the schema. This content will power curriculum systems, knowledge graphs, and educational AI agents. Be strict, accurate, and consistent.
+        You are a non-generative extractor. You must not invent, paraphrase, summarize, or infer any content. Only return **visible**, **factual**, and **educational** material that appears on the webpage. Maintain high precision and consistency — this data will power curriculum tools, knowledge graphs, and AI tutors.
         """,
     input_format='markdown',
         schema=WebCrawlerConfig.model_json_schema()
@@ -154,13 +153,22 @@ async def crawl_and_extract_json(urls: list) -> list:
 
                     results.append({
                         "url": extracted.get("url", url),
+                        "source": extracted.get("source", ""),  # e.g. "byjus.com"
+                        "subject": extracted.get("subject", ""),  # e.g. "Physics"
+                        "grade": extracted.get("grade", None),  # e.g. 11 (int) or None
+                        "unit": extracted.get("unit", ""),  # e.g. "Electricity and Magnetism"
+                        "topic_title": extracted.get("topic_title", None),  # optional, e.g. "Coulomb’s law"
                         "title": extracted.get("title"),
                         "headings": extracted.get("headings", []),
                         "main_findings": extracted.get("main_findings", []),
                         "content": extracted.get("content"),
-                        "word_count": extracted.get("word_count",
-                                                    len(" ".join(extracted.get("main_findings", [])).split())),
-                        "status": "success"
+                        "keywords": extracted.get("keywords", []),  # new field for keywords
+                        "word_count": extracted.get(
+                            "word_count",
+                            len(" ".join(extracted.get("main_findings", [])).split())
+                        ),
+                        "status": "success",
+                        "scraped_at": datetime.utcnow().isoformat() + "Z"
                     })
                     extraction_strategy.show_usage()
 
@@ -168,12 +176,19 @@ async def crawl_and_extract_json(urls: list) -> list:
                 logging.error(f"Error crawling {url}: {e}")
                 results.append({
                     "url": url,
+                    "source": "",
+                    "subject": "",
+                    "grade": None,
+                    "unit": "",
+                    "topic_title": None,
                     "title": None,
                     "headings": [],
                     "main_findings": [],
                     "content": None,
+                    "keywords": [],
                     "word_count": 0,
-                    "status": "failed"
+                    "status": "failed",
+                    "scraped_at": datetime.utcnow().isoformat() + "Z"
                 })
 
     return results

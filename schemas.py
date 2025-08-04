@@ -102,13 +102,30 @@ class FeedBack(BaseModel):
 class RouteSelector(BaseModel):
     next_node: str
 
+
+from typing import List, Optional
+from pydantic import BaseModel, Field, HttpUrl
+from datetime import datetime
+
+
 class WebCrawlerConfig(BaseModel):
-    url: HttpUrl = Field(..., description="Original source URL of the educational web page.")
-    title: Optional[str] = Field(None, description="Main H1 title of the page. Must be clearly visible and educational. Return null if not found.")
-    headings: List[str] = Field(default_factory=list, description="Ordered list of H2–H4 section or sub-section headings from the main article body only.")
-    main_findings: List[str] = Field(default_factory=list, description="List of core educational statements (facts, definitions, laws, etc.) extracted from visible content. No hallucinated or inferred info.")
-    content: Optional[str] = Field(None, description="Full combined educational content as one plain block, preserving original phrasing and order. Join all main_findings.")
-    word_count: int = Field(default=0, description="Word count of the `content` field. Must be >= 50 to be considered useful.")
+    url: HttpUrl = Field(..., description="Original URL of the scraped educational page.")
+    source: str = Field(..., description="Domain source of the page, e.g., 'byjus.com'.")
+
+    subject: str = Field(..., description="Aligned school subject (e.g., Physics, Chemistry).")
+    grade: int = Field(..., description="Grade level the content is aligned to (e.g., 11).")
+    unit: str = Field(..., description="Curriculum unit title (e.g., 'Electricity and Magnetism').")
+    topic_title: Optional[str] = Field(None, description="Optional topic title if entity matched.")
+
+    title: Optional[str] = Field(None, description="Main H1 title from the article body.")
+    headings: List[str] = Field(default_factory=list, description="H2–H4 headings extracted from body.")
+    main_findings: List[str] = Field(default_factory=list, description="Key factual or conceptual findings.")
+    content: Optional[str] = Field(None, description="Full clean text block, joined from findings or body.")
+    keywords: List[str] = Field(default_factory=list, description="Extracted or matched educational keywords.")
+
+    word_count: int = Field(ge=0, default=0, description="Total word count of the `content`.")
+    status: str = Field(..., description="Status of the scrape: success or failed.")
+    scraped_at: datetime = Field(..., description="Timestamp when this page was scraped.")
 
 
 class LearningState(BaseModel):
