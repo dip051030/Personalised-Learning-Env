@@ -41,15 +41,43 @@ async def crawl_and_extract_json(urls: list) -> list:
     )
 
     crawl_cfg = CrawlerRunConfig(
-        excluded_tags=['footer', 'nav', 'aside', 'script', 'style', 'link'],
-        excluded_selector='.ads .advertisement, .sponsored, .promo, .sidebar, .related-links, .comments,'
-                          ' .comment, .social-links, .share-buttons, .social-media, .footer-links,'
-                        ' .footer-info, .footer-text, .footer-logo, .footer-social, .footer-contact,'
-                        ' .footer-legal, .footer-privacy, .footer-terms, .footer-copyright,'
-                        ' .footer-disclaimer, .footer-sitemap, .footer-subscribe,'
-                        ' .footer-newsletter, .footer-contact-form, .footer-address'
-                        ' .footer-menu, .cookie-notice, .popup, .modal, .popup-overlay, .popup-content,'
-                        ' .popup-close, .popup-header, .popup-body, .popup-footer, .popup-buttons, .popup-link',
+        excluded_tags=[
+            'footer',
+            'nav',
+            'aside',
+            'script',
+            'style',
+            'link',
+            'form',
+            'noscript',
+            'iframe',
+            'svg',
+            'canvas',
+            'input',
+            'button',
+            'select',
+            'option',
+            'label',
+            'object',
+            'embed',
+            'video',
+            'audio'
+        ],
+        excluded_selector=
+            '.ads, .advertisement, .sponsored, .promo, .sidebar, .related-links, .comments, .comment, '
+            '.social-links, .share-buttons, .social-media, .footer, .footer-links, .footer-info, '
+            '.footer-text, .footer-logo, .footer-social, .footer-contact, .footer-legal, .footer-privacy, '
+            '.footer-terms, .footer-copyright, .footer-disclaimer, .footer-sitemap, '
+            '.footer-subscribe, .footer-newsletter, .footer-contact-form, .footer-address, '
+            '.footer-menu, .cookie-notice, .cookie-banner, .cookies, .popup, .modal, '
+            '.popup-overlay, .popup-content, .popup-close, .popup-header, .popup-body, '
+            '.popup-footer, .popup-buttons, .popup-link, .login, .signup, .login-form, '
+            '.register, .auth, .nav, .navbar, .navigation, .menu, .topbar, .toolbar, '
+            '.header, .masthead, .banner, .cta, .newsletter, .subscribe, .sticky, '
+            '.chatbot, .livechat, .intercom-launcher, .notifications, .alert, .announcement, '
+            '.breadcrumb, .pagination, .loader, .loading, .spinner, .hero, .widget, .widget-area, '
+            '.search-box, .search-form, .search-bar, .scroll-to-top, .back-to-top, .branding, '
+            '.related-posts, .related-articles, .more-articles, .external-links, .print-button',
         only_text = True,
         remove_forms=True,
         magic=True,
