@@ -34,13 +34,61 @@ async def crawl_and_extract_json(urls: list) -> list:
 
     extraction_strategy = LLMExtractionStrategy(
         llm_config=llm_cfg,
-        instruction='''Extract the main educational content from the webpage, ignoring all HTML tags, scripts, and styles.
-        Return the content in a structured JSON format according to the schema.''',
-        input_format='markdown',
+        instruction="""
+        You are an intelligent extractor designed to process educational web pages and return clean, structured JSON content. Follow the schema and rules **exactly**. Do **not** generate, hallucinate, rewrite, or summarize. Only extract visible, factual educational content.
+
+        ---
+
+        JSON Output Schema:
+        {
+          "url": "<original URL>",
+          "title": "<main educational article title or H1>",
+          "headings": ["<H2–H4 section and sub-section headings>"],
+          "main_findings": ["<concise, factual educational points or definitions stated clearly on the page>"],
+          "content": "<single combined text of all educational findings, preserving original phrasing and order>"
+        }
+
+        ---
+
+        Extraction Rules:
+
+        Include:
+        - Main content title (usually from H1)
+        - All H2–H4 headings from the main article body only
+        - Main educational points (definitions, explanations, laws, formulas, factual sentences)
+        - Bullet lists **only** if they are full sentences and educational
+        - For `main_findings`, only extract visible, standalone informative sentences — not filler or layout text
+        - The final `content` field must be the joined version of all main findings in correct order
+
+        Exclude:
+        - HTML tags, CSS, scripts, styles
+        - Navigation bars, sidebars, footers, menus, headers
+        - Ads, cookie banners, related articles, timestamps, author bios, comment sections
+        - External links, social media elements, promotional blurbs
+        - Code blocks, embedded widgets, forms, or UI elements
+        - Any placeholder text like “Here is the content from...”
+        - Partial sentences, UI text, quotes, or vague phrases
+
+        ---
+
+        Output Guidelines:
+        - If a field like "headings" or "main_findings" is not found, return it as an empty list []
+        - If "title" or "content" is missing, return as null
+        - Always return the original "url" as-is
+        - Output must be valid JSON (not markdown, not natural language)
+        - The JSON must be fully parseable for downstream ML or curriculum pipelines
+
+        ---
+
+        Your Role:
+        You are a non-generative extractor — you do not invent or alter data. Only return factual, clean content that visibly exists on the page and fits the schema. This content will power curriculum systems, knowledge graphs, and educational AI agents. Be strict, accurate, and consistent.
+        """,
+    input_format='markdown',
         schema=WebCrawlerConfig.model_json_schema()
     )
 
     crawl_cfg = CrawlerRunConfig(
+        magic=True,
         excluded_tags=[
             'footer',
             'nav',
@@ -80,7 +128,6 @@ async def crawl_and_extract_json(urls: list) -> list:
             '.related-posts, .related-articles, .more-articles, .external-links, .print-button',
         only_text = True,
         remove_forms=True,
-        magic=True,
         exclude_external_links=True,
         exclude_social_media_links=True,
         verbose=True,
@@ -101,10 +148,17 @@ async def crawl_and_extract_json(urls: list) -> list:
                 if result.success:
                     logging.info(f"Successfully crawled {url}")
 
+                    extracted_list = json.loads(result.extracted_content)
+
+                    extracted = extracted_list[0] if isinstance(extracted_list, list) else extracted_list
+
                     results.append({
-                        'url': url,
-                        'extracted_json': json.loads(result.extracted_content),
-                        'status': 'success'
+                        "url": extracted.get("url", url),
+                        "title": extracted.get("title"),
+                        "headings": extracted.get("headings", []),
+                        "paragraphs": extracted.get("paragraphs", []),
+                        "word_count": extracted.get("word_count", len(" ".join(extracted.get("paragraphs", [])).split())),
+                        "status": "success"
                     })
 
                     extraction_strategy.show_usage()
@@ -112,9 +166,12 @@ async def crawl_and_extract_json(urls: list) -> list:
             except Exception as e:
                 logging.error(f"Error crawling {url}: {e}")
                 results.append({
-                    'url': url,
-                    'error': str(e),
-                    'status': 'failed'
+                    "url": url,
+                    "title": None,
+                    "headings": [],
+                    "paragraphs": [],
+                    "word_count": 0,
+                    "status": "failed"
                 })
 
     return results

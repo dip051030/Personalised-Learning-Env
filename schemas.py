@@ -102,13 +102,13 @@ class FeedBack(BaseModel):
 class RouteSelector(BaseModel):
     next_node: str
 
-class WebCrawlerTextData(BaseModel):
+class WebCrawlerConfig(BaseModel):
     url: HttpUrl = Field(..., description="URL of the scraped page.")
     title: str = Field(..., description="Title of the web page.")
     headings: List[str] = Field(default_factory=list, description="Headings (H1-H6) in order of appearance.")
-    paragraphs: List[str] = Field(default_factory=list, description="Visible body text paragraphs.")
+    paragraphs: List[str] = Field(default_factory=list, description="Visible body text paragraphs not urls.")
     content: str = Field(..., description="Concatenated raw plain text from the page.")
-
+    word_count: int = Field(default=0, description="Total word count of the content.")
 
 
 class LearningState(BaseModel):
