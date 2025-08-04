@@ -1,6 +1,4 @@
-import asyncio
 import logging
-import json
 from crawl4ai import (
     AsyncWebCrawler,
     BrowserConfig,
@@ -8,87 +6,81 @@ from crawl4ai import (
     LLMExtractionStrategy,
     LLMConfig, CacheMode
 )
+import json
 from keys.apis import set_env
-
-
-def safe_model_dump(obj):
-    if hasattr(obj, 'model_dump'):
-        return obj.model_dump()
-    elif hasattr(obj, '__dict__'):
-        return {
-            k: safe_model_dump(v)
-            for k, v in obj.__dict__.items()
-            if not isinstance(getattr(type(obj), k, None), property)
-        }
-    elif isinstance(obj, dict):
-        return {k: safe_model_dump(v) for k, v in obj.items()}
-    elif isinstance(obj, (list, tuple, set)):
-        return [safe_model_dump(i) for i in obj]
-    else:
-        return obj
-
+from schemas import WebCrawlerConfig
 
 logging.basicConfig(level=logging.INFO)
 
 async def crawl_and_extract_json(urls: list) -> list:
-    browser_cfg = BrowserConfig(headless=False, verbose=True)
-    run_config = CrawlerRunConfig(cache_mode=CacheMode.ENABLED)
+
+    browser_cfg = BrowserConfig(
+        browser_type="firefox",
+        headless=False,
+        verbose=True,
+        light_mode=False
+    )
+
+
 
     api_token = set_env('GROQ_DEEPSEEK_API_KEY')
     if not api_token:
         raise ValueError("Environment variable 'GROQ_DEEPSEEK_API_KEY' is not set or invalid.")
 
     llm_cfg = LLMConfig(
-        provider='groq/deepseek-r1-distill-llama-70b',
-        api_token=api_token,
-        temperature=0
+        provider='ollama/llama3',
+        temperature=0,
     )
 
     extraction_strategy = LLMExtractionStrategy(
         llm_config=llm_cfg,
-        instruction="""
-From crawl content
-Strictly ignore:
-- any HTML tags
-- embedded CSS
-- navigation bars
-- sidebars, footers, cookie banners, subscription boxes
-- scripting or metadata
+        instruction='''Extract the main educational content from the webpage, ignoring all HTML tags, scripts, and styles.
+        Return the content in a structured JSON format according to the schema.''',
+        input_format='markdown',
+        schema=WebCrawlerConfig.model_json_schema()
+    )
 
-Only return the clean content in this JSON format:
-{{
-  "title": "string",
-  "grade_level": "string or null",
-  "main_concepts": ["..."],
-  "summary": "..."
-  "keywords": ["..."]
-}0  
-""", input_format='markdown')
+    crawl_cfg = CrawlerRunConfig(
+        excluded_tags=['footer', 'nav', 'aside', 'script', 'style', 'link'],
+        excluded_selector='.ads .advertisement, .sponsored, .promo, .sidebar, .related-links, .comments,'
+                          ' .comment, .social-links, .share-buttons, .social-media, .footer-links,'
+                        ' .footer-info, .footer-text, .footer-logo, .footer-social, .footer-contact,'
+                        ' .footer-legal, .footer-privacy, .footer-terms, .footer-copyright,'
+                        ' .footer-disclaimer, .footer-sitemap, .footer-subscribe,'
+                        ' .footer-newsletter, .footer-contact-form, .footer-address'
+                        ' .footer-menu, .cookie-notice, .popup, .modal, .popup-overlay, .popup-content,'
+                        ' .popup-close, .popup-header, .popup-body, .popup-footer, .popup-buttons, .popup-link',
+        only_text = True,
+        remove_forms=True,
+        magic=True,
+        exclude_external_links=True,
+        exclude_social_media_links=True,
+        verbose=True,
+        extraction_strategy=extraction_strategy,
+    )
 
     results = []
     async with AsyncWebCrawler(config=browser_cfg) as crawler:
         for url in urls:
             try:
                 logging.info(f"Crawling -> {url}")
+
                 result = await crawler.arun(
                     url=url,
-                    config=run_config,
-                    extraction_strategy=extraction_strategy
+                    config=crawl_cfg
                 )
 
-                raw = safe_model_dump(result)
-                results.append({
-                    'url': url,
-                    'extracted_json': {
-                        "title": raw.get("title"),
-                        "grade_level": raw.get("grade_level"),
-                        "subject": raw.get("subject"),
-                        "main_concepts": raw.get("main_concepts"),
-                        "summary": raw.get("summary")
-                    },
-                    'status': 'success'
-                })
-                print(results[0])
+                if result.success:
+                    logging.info(f"Successfully crawled {url}")
+
+                    results.append({
+                        'url': url,
+                        'extracted_json': json.loads(result.extracted_content),
+                        'status': 'success'
+                    })
+
+                    extraction_strategy.show_usage()
+
             except Exception as e:
                 logging.error(f"Error crawling {url}: {e}")
                 results.append({

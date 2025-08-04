@@ -103,6 +103,16 @@ class RouteSelector(BaseModel):
     next_node: str
 
 
+class WebCrawlerConfig(BaseModel):
+    title : str = Field(..., description="Title of the whole web page.")
+    description: str = Field(..., description="Description about the whole web page.")
+    keywords: List[str] = []
+    summary : str = Field(..., description="Summary of the whole web page.")
+    word_count: int = Field(..., description="Total number of words in the text.")
+    readability_score: Optional[float] = Field(None,description="Readability score of the content (e.g., Flesch-Kincaid).")
+    headings: List[str] = Field(default_factory=list, description="All headings (h1 to h6) in order.")
+    paragraphs: List[str] = Field(default_factory=list, description="Cleaned visible text paragraphs.")
+
 class LearningState(BaseModel):
     user: UserInfo
     current_resource: Optional[LearningResource] = None
