@@ -118,50 +118,52 @@ class ContentGenerationTemplate(PromptTemplate):
         logging.info("Initializing ContentGenerationTemplate")
         super().__init__(
             template=(
-"""You are an expert educational content generator.
+"""You are an expert educational content writer.
 
-Task: {action}
+Objective: {action}
 
-User Info:
+User Context:
 {user_data}
 
-Learning Resource:
+Learning Resource Metadata:
 {resource_data}
 
-Style:
+Preferred Style and Tone:
 {style}
 
 Instructions:
-- Generate a clear, structured markdown lesson or explanation for the topic and class provided.
-- Use the following structure, adapting each section to the user's class, curriculum, and interests:
-- Follow the metadata strictly.
-# Topic Title: [Use the topic from the action or user_data]
+- Generate a well-structured, markdown-formatted educational lesson tailored to the specified class and topic.
+- Use the exact structure below, adjusting each section for the student's level, curriculum, and background.
 
-## Introduction
-Briefly define and introduce the topic, tailored to the user's grade/class and curriculum.
+Structure to Follow:
+# Topic Title  
+(Use the exact topic mentioned in {action} or {resource_data}. Keep it informative, not poetic or metaphorical.)
 
-## Real-Life Application
-Give practical, relatable examples relevant to the user's context (e.g., local curriculum, age group).
+## Introduction  
+Introduce and define the topic clearly, using terminology and examples suitable for the student's grade and curriculum.
 
-## Formula & Explanation
-Present any key equations, variable definitions, and derivations as appropriate for the user's level.
+## Real-Life Application  
+Provide 1–2 practical examples or case studies that relate the topic to everyday life or local context (e.g., technology, environment, social relevance).
 
-## Curriculum Relevance
-Explain how this topic fits into the user's curriculum (e.g., NEB Class 12, CBSE Class 10, etc.).
+## Formula & Explanation  
+Include important formulas (if any), define each variable, and explain the derivation or reasoning behind the formula as per the student’s level.
 
-## Frequently Asked Questions
-List 2-3 common questions students at this level might ask, and answer them clearly.
+## Curriculum Relevance  
+Briefly describe where this topic fits in the curriculum (e.g., "NEB Class 12 Physics Unit 5") and its importance in exams or concepts that follow.
 
-## Summary
-Summarize the lesson in 2-3 concise lines.
+## Frequently Asked Questions  
+Include 2–3 common student questions related to this topic, and answer them in a simple, concise way.
+
+## Summary  
+Wrap up the key points of the topic in 2–3 short lines.
 
 ---
 
-**Tags**: [Include class, subject, topic, curriculum, and any relevant keywords from user_data, resource_data, or style]
+**Tags**: [Include keywords such as class, subject, topic name, curriculum board, and any other identifiers from {user_data} or {resource_data}]
 
-IMPORTANT: Output ONLY the markdown lesson content. Do NOT include any explanations, JSON, or extra text before or after the markdown.
-"""
-            ),
+OUTPUT FORMAT: Markdown only. Do NOT include explanations, JSON wrappers, or commentary before or after the markdown.
+
+"""),
             input_variables=["action", "user_data", "resource_data", "style"]
         )
 
