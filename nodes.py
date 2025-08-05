@@ -289,7 +289,7 @@ def find_content_gap_node(state: LearningState) -> LearningState:
         state.feedback = updated_feedback
         logging.info(f"Feedback received and updated: {state.feedback}")
         # Log rating and gaps for debugging
-        logging.info(f"GapFinder rating: {state.feedback.rating}, gaps: {state.feedback.gaps}")
+        logging.info(f"GapFinder rating: {state.feedback.rating}, gaps: {state.feedback.gaps}, ai_reliability_score: {state.feedback.ai_reliability_score}")
     return state
 
 def update_state(state: LearningState) -> LearningState:

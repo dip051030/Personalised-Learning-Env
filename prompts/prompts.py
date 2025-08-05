@@ -274,6 +274,7 @@ Your task is to analyze the provided content and comments, and generate a valid 
 - `comments`: A concise, critical summary of the content.
 - `needed`: A boolean indicating if feedback is needed (`true`) or not (`false`).
 - `gaps`: A list of specific content gaps or areas for improvement (may be empty).
+- `ai_reliability_score`: A float between 0 and 1 indicating the reliability of the AI-generated content.
 
 **Strict instructions:**
 - Output **only** a valid JSON object with these four fields, and nothing else.
@@ -290,7 +291,8 @@ Your task is to analyze the provided content and comments, and generate a valid 
   "gaps": [
     "Missing real-world applications of the concept.",
     "Could include more visual aids." 
-  ]
+  ],
+  'ai_reliability_score': 0.85
 }
 """)
 
@@ -326,17 +328,15 @@ Instructions:
   - "comments": a short summary of the main feedback and gaps
   - "needed": true if improvement is needed, false if not
   - "gaps": a list of specific content gaps or improvement points
+- "ai_reliability_score": a float between 0 and 1 indicating the reliability of the AI-generated content.
 
 Example output:
 {{
-  "rating": 3,
-  "comments": "The content is generally clear but lacks real-world examples and visual aids. Some sections are too brief.",
-  "needed": true,
-  "gaps": [
-    "No real-world examples provided.",
-    "Missing diagrams or visual explanations.",
-    "The explanation of the formula derivation is too brief."
-  ]
+"rating": 3,
+"comments": "The content is generally clear but lacks real-world examples and visual aids. Some sections are too brief.",
+"needed": true,
+"gaps": ["No real-world examples provided.", "Missing diagrams or visual explanations.", "The explanation of the formula derivation is too brief."],
+"ai_reliability_score": 0.75
 }}
 - Do NOT include any extra text or explanation outside the JSON.
 """

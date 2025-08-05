@@ -94,6 +94,7 @@ class FeedBack(BaseModel):
     comments: Optional[str] = None
     needed: bool = Field(default=True, description="True if feedback is needed else False")
     gaps: Optional[List[str]] = Field(default=[], description="List of gaps in the content that need to be addressed")
+    ai_reliability_score : Optional[float] = Field(default=0.0, description="AI reliability score for the content, between 0 and 1")
 
     class Config:
         from_attributes = True
