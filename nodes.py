@@ -123,7 +123,7 @@ def enrich_content(state: LearningState) -> LearningState:
             response = enriched_content.invoke({
                 "action": "content_enrichment",
                 "foundation_data": parse_chromadb_metadata(retrieved_data.get('lessons_results')),
-                'scrapped_data': parse_chromadb_metadata(retrieved_data.get('scrapped_results'))
+                'scrapped_data': retrieved_data.get('scrapped_results')
             })
             resource_data = response.content if hasattr(response, "content") else response
             state.enriched_resource = EnrichedLearningResource.model_validate(resource_data)

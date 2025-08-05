@@ -48,6 +48,7 @@ def build_chroma_db_collection(filename: str = 'lessons/class_12_physics.json', 
     ]
     logging.info(f"Encoding {len(documents)} documents for embeddings")
     embeddings = model.encode(documents, show_progress_bar=True).tolist()
+    logging.info(f"Encoded {len(embeddings)} embeddings FROM LOCAL DB!")
     ids = [str(lesson.get('topic_id', i)) for i, lesson in enumerate(lessons)]
     metadatas = [
         {
@@ -99,7 +100,7 @@ def save_scraped_data_to_vdb(
     logging.info(f"Encoding {len(scrapped_documents)} documents for embeddings")
     model = SentenceTransformer("Shashwat13333/bge-base-en-v1.5_v4")
     embeddings = model.encode(scrapped_documents, show_progress_bar=True).tolist()
-
+    logging.info(f"Encoded {len(embeddings)} embeddings OF SCRAPPED DATA!")
     scrapped_meta = [
         {
             "headings": item.get("headings", []),
