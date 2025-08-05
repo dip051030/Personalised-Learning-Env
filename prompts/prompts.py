@@ -84,25 +84,20 @@ Instructions:
 Output:
 Return a single, valid JSON object with the enriched resource. Do not include any explanations or extra text.
 """,
-            input_variables=["current_resources_data", "action", "titles", "snippets"]
+            input_variables=["action", "foundation_data", "scrapped_data"]
         )
-
 
     def format_prompt(
         self,
         action: str,
-        current_resources_data: dict,
-        titles: List[str] = None,
-        snippets: List[str] = None
+        foundation_data: dict,
+        scrapped_data: dict
     ) -> str:
-
         logging.info("Formatting EnrichContent prompt")
-
         return self.format(
             action=action,
-            current_resources_data=json.dumps(current_resources_data, indent=2),
-            titles="\n".join(titles),
-            snippets="\n".join(snippets)
+            foundation_data=json.dumps(foundation_data, indent=2),
+            scrapped_data=json.dumps(scrapped_data, indent=2)
         )
 
 class ContentGenerationTemplate(PromptTemplate):
