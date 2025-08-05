@@ -1,14 +1,15 @@
+import asyncio
 from langsmith import expect
 from more_itertools import flatten
 from langgraph.graph import StateGraph, END
 from langchain_core.messages import HumanMessage
-
 from logis.logical_functions import lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
     update_content_count, search_both_collections
 from models.external_tools_apis import serp_api_tool
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
-    CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback, gap_finder
+    CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback, gap_finder, \
+    content_seo_optimization
 from schemas import LearningState, ContentResponse, EnrichedLearningResource, FeedBack, RouteSelector
 import json
 import logging
@@ -74,10 +75,6 @@ def user_info_node(state: LearningState) -> LearningState:
 #         except Exception as e:
 #             logging.error(f"Error processing learning resource data: {e}")
 #     return state
-
-
-
-import asyncio
 
 def crawler_node(state: LearningState) -> LearningState:
     if os.path.exists('./data/raw_data.json'):
@@ -184,6 +181,28 @@ def generate_lesson_content(state: LearningState) -> LearningState:
             logging.error(f"Error generating lesson content: {e}")
     return state
 
+
+def seo_optimiser_node(state: LearningState) -> LearningState:
+    if state.content is not None:
+        try:
+            logging.info("Optimising the content for SEO")
+            messages = [
+                HumanMessage(
+                    content=f"""
+Generated Undiagnosed Learning Resource:
+{state.content.content}
+""",
+                )
+            ]
+            response = content_seo_optimization.invoke(messages)
+            resource_data = response.content if hasattr(response, "content") else response
+            state.content = ContentResponse(content=resource_data)
+            logging.info(f"Content has been optimised for SEO!")
+        except Exception as e:
+            logging.error(f"Error optimising content: {e}")
+
+
+    return state
 
 def generate_blog_content(state: LearningState) -> LearningState:
     """
@@ -343,6 +362,8 @@ builder.add_node("collect_feedback", collect_feedback_node)
 builder.add_node("find_content_gap", find_content_gap_node)
 builder.add_node("update_state", update_state)
 builder.add_node("crawler", crawler_node)
+builder.add_node("content_seo_optimization", seo_optimiser_node)
+builder.add_node("save_learning_state", save_learning_state_to_json)
 
 builder.set_entry_point("user_info")
 builder.add_edge("user_info", "crawler")
@@ -360,8 +381,9 @@ builder.add_conditional_edges(
         "content_generation": "content_generation"
     }
 )
-builder.add_edge("content_generation", "content_improviser")
-builder.add_edge("blog_generation", "content_improviser")
+builder.add_edge("content_generation", "content_seo_optimization")
+builder.add_edge("blog_generation", "content_seo_optimization")
+builder.add_edge("content_seo_optimization", "content_improviser")
 builder.add_edge("content_improviser", 'collect_feedback')
 builder.add_edge("collect_feedback", "find_content_gap")
 builder.add_edge("find_content_gap", "update_state")
