@@ -23,6 +23,7 @@ def search_both_collections(state : LearningState,
     """
     try:
         if state.current_resource is None:
+            logging.warning(f"[logical_functions.py:{search_both_collections.__code__.co_firstlineno}] WARNING No current_resource in state.")
             return None
 
 
@@ -48,12 +49,13 @@ def search_both_collections(state : LearningState,
             n_results=n_results
         )
 
+        logging.info(f"[logical_functions.py:{search_both_collections.__code__.co_firstlineno}] INFO Queried both collections for topic '{query_text}'.")
         return {
             "lessons_results": lessons_results,
             "scraped_results": scraped_results
         }
     except Exception as e:
-        logging.error(f"Error searching collections: {e}")
+        logging.error(f"[logical_functions.py:{search_both_collections.__code__.co_firstlineno}] ERROR Error searching collections: {e}")
         return None
 
 
@@ -126,10 +128,11 @@ def update_content_count(state: LearningState) -> str:
     """
     try:
         if state.count < 4:
-            logging.info(f"Current state count: {state.count}")
+            logging.info(f"[logical_functions.py:{update_content_count.__code__.co_firstlineno}] INFO Current state count: {state.count}")
             return 'Update required'
         else:
+            logging.info(f"[logical_functions.py:{update_content_count.__code__.co_firstlineno}] INFO No update required, current count: {state.count}")
             return 'No update required'
     except Exception as e:
-        logging.error(f"Error updating state count: {e}")
+        logging.error(f"[logical_functions.py:{update_content_count.__code__.co_firstlineno}] ERROR Error updating state count: {e}")
         return 'No update required'
