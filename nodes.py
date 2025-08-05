@@ -120,17 +120,18 @@ def enrich_content(state: LearningState) -> LearningState:
     if state.current_resource is not None:
         try:
             retrieved_data = search_both_collections(state=state)
-            medadata = retrieved_data.get('lessons_results').get('metadatas')
-            medadata = list(flatten(medadata))[0]
-            print('LOCAL DB=======> ', medadata)
+            local_medadata = retrieved_data.get('lessons_results').get('metadatas')
+            scrapped_metadata = retrieved_data.get('scraped_results').get('metadatas')
+            local_medadata = list(flatten(local_medadata))[0]
+            scrapped_metadata  = list(flatten(scrapped_metadata))[0]
             response = enriched_content.invoke({
                 "action": "content_enrichment",
-                "foundation_data": parse_chromadb_metadata(medadata).model_dump(),
-                'scrapped_data': retrieved_data.get('scrapped_results')
+                "foundation_data": parse_chromadb_metadata(local_medadata).model_dump(),
+                'scrapped_data': scrapped_metadata
             })
             resource_data = response.content if hasattr(response, "content") else response
             print('ENRICHED DATA=======> ', resource_data)
-            state.enriched_resource = EnrichedLearningResource.model_validate(medadata)
+            state.enriched_resource = EnrichedLearningResource.model_validate(resource_data)
             logging.info(f"Learning resource processed!")
         except Exception as e:
             print()

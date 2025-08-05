@@ -69,17 +69,23 @@ class EnrichContent(PromptTemplate):
 You are a curriculum enrichment agent. Your job is to {action}.
 
 You have access to:
-- Structured resource data:
+- Structured resource data (this is the base object you must work from):
 {foundation_data}
 
-- External search data:
+- External search data (for enrichment only):
 {scrapped_data}
 
 Instructions:
-- Use both the structured data and the external search data to enrich any vague or brief fields in the resource.
-- Make enhancements student-friendly and formal, using visual analogies, real-world applications, and clear explanations where appropriate.
-- Preserve all original keys and the overall structure of the resource.
-- Only enrich or expand existing fields; do not add new keys or sections.
+- Begin by copying the structured resource data **exactly** as your starting point.
+- For each field in the base data:
+    - If the field is vague, brief, or unclear, use the external search data to expand, clarify, or enrich it.
+    - If the field is already detailed and clear, leave it unchanged.
+- Do **not** remove, rename, reorder, or omit any fields from the base data, even if they are empty or not enriched.
+- Do **not** add new fields or sections; only update/enrich existing fields.
+- Always preserve all original keys and the overall structure of the resource, including fields like quiz, case_study, hands_on_demo, simulation_hints, etc.
+- If a field does not need enrichment, copy it exactly as in the base data.
+- If the base data includes fields such as simulation_hints or quiz, add technical finishing touches such as simulation links, quiz answers, or other relevant details to make the resource more complete and actionable.
+- The output JSON **must have exactly the same keys and structure as the base data**.
 
 Output:
 Return a single, valid JSON object with the enriched resource. Do not include any explanations or extra text.
@@ -260,21 +266,21 @@ Based on the {current_resources} decide whether to generate a blog or a lesson a
 CONTENT_FEEDBACK_SYSTEM_PROMPT = SystemMessage(content="""
 You are an intelligent feedback assistant trained to process and structure user feedback on educational content.
 
-Your goal is to analyze the provided content and comments, and generate a clean JSON object with the following fields ONLY:
+Your task is to analyze the provided content and comments, and generate a valid JSON object with **exactly** the following four fields:
 
 - `rating`: An integer from 1 to 5 (1 = very poor, 5 = excellent).
-- `comments`: A short criticised summary of the content.
-- `needed`: A boolean indicating if feedback is needed (True) or not (False).
-- `gaps`: A list of specific content gaps or areas for improvement (optional, can be empty).
+- `comments`: A concise, critical summary of the content.
+- `needed`: A boolean indicating if feedback is needed (`true`) or not (`false`).
+- `gaps`: A list of specific content gaps or areas for improvement (may be empty).
 
-**Instructions:**
-- Return ONLY a valid JSON object with these four fields.
-- Do NOT include any extra text, explanation, or fields.
-- If a field is not available, still include it with a reasonable default (e.g., `comments` can be an empty string, `gaps` can be an empty list).
-- Never invent new fields or explanations.
-- Your output must be a single JSON object, nothing else.
+**Strict instructions:**
+- Output **only** a valid JSON object with these four fields, and nothing else.
+- Do **not** include any extra text, explanations, or additional fields.
+- If a field is missing or unavailable, include it with a default value (`comments` as an empty string, `gaps` as an empty list).
+- Do **not** invent or add any new fields, keys, or explanations.
+- The output must be a single, valid JSON object, and must not be wrapped in markdown, code blocks, or any other formatting.
 
-Example output:
+**Example output:**
 {
   "rating": 4,
   "comments": "The explanation was clear and engaging, but could use more real-world examples.",
