@@ -1,8 +1,12 @@
+"""
+Vector database utilities for building and saving ChromaDB collections from lesson and scraped data.
+"""
 import chromadb
 from sentence_transformers import SentenceTransformer
 from db.loader import load_json_data
 import logging
 import json
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
@@ -25,6 +29,12 @@ def sanitize_metadata(metadata: dict) -> dict:
 def clean_metadata(metadata: dict) -> dict:
     """
     Remove keys with None values from metadata.
+
+    Args:
+        metadata (dict): Metadata dictionary.
+
+    Returns:
+        dict: Cleaned metadata dictionary.
     """
     return {k: v for k, v in metadata.items() if v is not None}
 

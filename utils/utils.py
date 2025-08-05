@@ -1,3 +1,6 @@
+"""
+Utility functions for saving learning state and generated content to files.
+"""
 import os
 import json
 import logging
@@ -25,9 +28,9 @@ def save_learning_state_to_json(state, file_path):
             os.makedirs(dir_name, exist_ok=True)
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(state_data, f, indent=4, ensure_ascii=False)
-        logging.info(f"LearningState saved to {file_path}")
+        logging.info(f"[utils.py:{save_learning_state_to_json.__code__.co_firstlineno}] INFO LearningState saved to {file_path}")
     except Exception as e:
-        logging.error(f"Failed to save LearningState to {file_path}: {e}")
+        logging.error(f"[utils.py:{save_learning_state_to_json.__code__.co_firstlineno}] ERROR Failed to save LearningState to {file_path}: {e}")
 
 def save_generated_content(content, file_path):
     """
@@ -44,6 +47,6 @@ def save_generated_content(content, file_path):
                 os.makedirs(dir_name, exist_ok=True)
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
-        logging.info(f"Generated content saved to {file_path}")
+        logging.info(f"[utils.py:{save_generated_content.__code__.co_firstlineno}] INFO Generated content saved to {file_path}")
     except Exception as e:
-        logging.error(f"Failed to save generated content to {file_path}: {e}")
+        logging.error(f"[utils.py:{save_generated_content.__code__.co_firstlineno}] ERROR Failed to save generated content to {file_path}: {e}")

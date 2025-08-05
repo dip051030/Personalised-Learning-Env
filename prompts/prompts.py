@@ -210,7 +210,7 @@ class BlogGenerationPrompt(PromptTemplate):
     """
     Template for generating educational blog posts.
     The LLM should:
-    - Translate academic topic into engaging blog format
+    - Translate an academic topic into an engaging blog format
     - Make it informative but also fun/relatable
     - Consider user's interests and the style logic
     """

@@ -1,3 +1,6 @@
+"""
+Educational content crawling and extraction utilities using crawl4ai and LLM strategies.
+"""
 import logging
 from crawl4ai import (
     AsyncWebCrawler,
@@ -14,14 +17,19 @@ from schemas import WebCrawlerConfig
 logging.basicConfig(level=logging.INFO)
 
 async def crawl_and_extract_json(urls: list) -> list:
-
+    """
+    Crawl a list of URLs and extract educational content as JSON objects.
+    Args:
+        urls (list): List of URLs to crawl.
+    Returns:
+        list: List of extracted JSON objects for each URL.
+    """
     browser_cfg = BrowserConfig(
         browser_type="firefox",
         headless=False,
         verbose=True,
         light_mode=False
     )
-
 
 
     api_token = set_env('GROQ_DEEPSEEK_API_KEY')

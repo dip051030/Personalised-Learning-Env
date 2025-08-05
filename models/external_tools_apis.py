@@ -1,8 +1,8 @@
 import requests
-from langsmith import expect
-from sqlalchemy.testing.plugin.plugin_base import logging
-
+import logging
 from keys.apis import set_env
+
+
 def serp_api_tool(query: str) -> dict:
     """
     Use SerpAPI to search for the given query and return the results.
