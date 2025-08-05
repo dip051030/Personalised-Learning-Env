@@ -6,9 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e8d9f642-a0ca-4850-83ea-1fa96df6f1b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/vector_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/vector_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/raw_data.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated_content.md" beforeDir="false" afterPath="$PROJECT_DIR$/generated_content.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learning_state.json" beforeDir="false" afterPath="$PROJECT_DIR$/learning_state.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/external_tools_apis.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/external_tools_apis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prompts/prompts.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts/prompts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/schemas.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +28,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -34,18 +39,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/dyane__4/DataspellProjects/PersonalisedLearningSystem&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/dyane__4/DataspellProjects/PersonalisedLearningSystem",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />

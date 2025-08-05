@@ -18,9 +18,9 @@ def serp_api_tool(query: str) -> dict:
             'Content-Type': 'application/json'
         }
         params = {
-            'q': query + ' site:byjus.com OR site:vedantu.com OR site:toppr.com OR site:learnfatafat.com',
+            'q': query + ' site:byjus.com OR site:toppr.com OR site:learnfatafat.com',
             'engine': "google",
-            'num': 10,
+            'num': 20,
             'gl': 'in'
         }
         response = requests.post('https://google.serper.dev/search', json=params, headers=headers)
