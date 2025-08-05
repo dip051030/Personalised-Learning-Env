@@ -197,24 +197,24 @@
         "status": "success",
         "scraped_at": "2025-08-04T18:09:23.906949Z"
     },
-    {
-        "url": "https://byjus.com/physics/electromagnetism/",
-        "source": "",
-        "subject": "",
-        "grade": null,
-        "unit": "",
-        "topic_title": null,
-        "title": null,
-        "headings": [],
-        "main_findings": [],
-        "content": [
-            "{\n    \"url\": \"https://byjus.com/physics/electromagnetism/\",\n    \"title\": null,\n    \"headings\": [\"What is Electromagnetic Force?\", \"What is Electromagnetism?\", \"Explanation of Electromagnetism with an Example\", \"Electromagnetic Induction\", \"Faraday's Law\", \"Properties of the Electromagnetic Wave\", \"Applications of Electromagnetism\", \"Frequently Asked Questions – FAQs\"],\n    \"main_findings\": [\"The electromagnetic force is a type of physical interaction that occurs between electrically charged particles.\", \"It acts between charged particles and is the combination of all magnetic and electrical forces.\", \"Electromagnetism serves as a fundamental working principle for many of the home appliances in household applications.\", ...],\n    \"content\": null,\n    \"keywords\": [\"electromagnetic force\", \"electromagnetism\", \"magnetic fields\", \"electric fields\", \"light\"]\n  }"
-        ],
-        "keywords": [],
-        "word_count": 0,
-        "status": "success",
-        "scraped_at": "2025-08-04T18:09:34.995899Z"
-    },
+        {
+            "url": "https://byjus.com/physics/electromagnetism/",
+            "source": "",
+            "subject": "",
+            "grade": null,
+            "unit": "",
+            "topic_title": null,
+            "title": null,
+            "headings": [],
+            "main_findings": [],
+            "content": [
+                "{\n    \"url\": \"https://byjus.com/physics/electromagnetism/\",\n    \"title\": null,\n    \"headings\": [\"What is Electromagnetic Force?\", \"What is Electromagnetism?\", \"Explanation of Electromagnetism with an Example\", \"Electromagnetic Induction\", \"Faraday's Law\", \"Properties of the Electromagnetic Wave\", \"Applications of Electromagnetism\", \"Frequently Asked Questions – FAQs\"],\n    \"main_findings\": [\"The electromagnetic force is a type of physical interaction that occurs between electrically charged particles.\", \"It acts between charged particles and is the combination of all magnetic and electrical forces.\", \"Electromagnetism serves as a fundamental working principle for many of the home appliances in household applications.\", ...],\n    \"content\": null,\n    \"keywords\": [\"electromagnetic force\", \"electromagnetism\", \"magnetic fields\", \"electric fields\", \"light\"]\n  }"
+            ],
+            "keywords": [],
+            "word_count": 0,
+            "status": "success",
+            "scraped_at": "2025-08-04T18:09:34.995899Z"
+        },
     {
         "url": "https://byjus.com/physics/discovery-magnets/",
         "source": "",

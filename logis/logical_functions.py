@@ -8,7 +8,7 @@ logging.basicConfig(
 )
 
 from schemas import LearningResource, ResourceSubject, LearningState, ContentResponse, FeedBack, ContentType
-from db.vector_db import build_chroma_db_collection
+from db.vector_db import build_chroma_db_collection, save_scraped_data_to_vdb
 from sentence_transformers import SentenceTransformer
 
 
@@ -25,10 +25,13 @@ def search_both_collections(state : LearningState,
         if state.current_resource is None:
             return None
 
+
+        build_chroma_db_collection()
+        save_scraped_data_to_vdb()
         # Load the embedding model
-        model = SentenceTransformer("bge-base-en-v1.5")
+        model = SentenceTransformer("Shashwat13333/bge-base-en-v1.5_v4")
         query_text = state.current_resource.topic
-        query_embedding = model.encode([query_text]).tolist()
+        query_embedding = model.encode(query_text).tolist()
 
         # Connect to ChromaDB
         client = chromadb.PersistentClient(path=vdb_path)
@@ -90,7 +93,7 @@ def parse_chromadb_metadata(metadata: dict) -> LearningResource:
     Returns a LearningResource instance.
     """
     return LearningResource(
-        subject=ResourceSubject(metadata.get('subject', 'unknown').lower()),
+        subject=ResourceSubject(metadata.get('subject').lower()),
         grade=metadata.get("grade"),
         unit=metadata.get("unit"),
         topic_id=metadata.get("topic_id"),

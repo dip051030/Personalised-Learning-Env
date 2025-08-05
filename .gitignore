@@ -1,3 +1,4 @@
 .env
 learning_state.json
 data/scrapped_data.json
+local VDB/chromadb

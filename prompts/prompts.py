@@ -63,30 +63,29 @@ Example output:
 
 class EnrichContent(PromptTemplate):
     def __init__(self):
+        logging.info("Initializing EnrichContent Template")
         super().__init__(
-            template="""You're a curriculum enrichment agent. Your job is {action}.
+            template="""
+You are a curriculum enrichment agent. Your job is to {action}.
 
-Use this structured resource data:
-{current_resources_data}
+You have access to:
+- Structured resource data:
+{foundation_data}
 
-Use these external search insights to enrich your response:
-Titles:
-{titles}
+- External search data:
+{scrapped_data}
 
-Snippets:
-{snippets}
+Instructions:
+- Use both the structured data and the external search data to enrich any vague or brief fields in the resource.
+- Make enhancements student-friendly and formal, using visual analogies, real-world applications, and clear explanations where appropriate.
+- Preserve all original keys and the overall structure of the resource.
+- Only enrich or expand existing fields; do not add new keys or sections.
 
-Your task:
-- Enrich vague or brief fields using both the structured data and search snippets.
-- Add student-friendly but formal enhancements (visual analogies, applications, clarity).
-- Keep all original keys and structure.
-- Only enrich existing fields, don't create new sections.
-
-Return only a single valid JSON object. Do not explain anything else.
+Output:
+Return a single, valid JSON object with the enriched resource. Do not include any explanations or extra text.
 """,
             input_variables=["current_resources_data", "action", "titles", "snippets"]
         )
-        logging.info("Initializing EnrichContent Template")
 
 
     def format_prompt(

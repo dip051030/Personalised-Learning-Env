@@ -1,6 +1,6 @@
 import chromadb
 from sentence_transformers import SentenceTransformer
-from db.loader import load_lesson_data
+from db.loader import load_json_data
 import logging
 import json
 logging.basicConfig(
@@ -22,7 +22,13 @@ def sanitize_metadata(metadata: dict) -> dict:
     return {k: (",".join(v) if isinstance(v, list) else v) for k, v in metadata.items()}
 
 
-def build_chroma_db_collection(filename: str, collection_name: str = 'lessons'):
+def clean_metadata(metadata: dict) -> dict:
+    """
+    Remove keys with None values from metadata.
+    """
+    return {k: v for k, v in metadata.items() if v is not None}
+
+def build_chroma_db_collection(filename: str = 'lessons/class_12_physics.json', collection_name: str = 'lessons'):
     """
     Build a ChromaDB collection from lesson data and return the collection and embedding model.
 
@@ -34,8 +40,8 @@ def build_chroma_db_collection(filename: str, collection_name: str = 'lessons'):
         tuple: (collection, embedding model)
     """
     logging.info(f"Building ChromaDB collection for {filename} with name '{collection_name}'")
-    lessons = load_lesson_data(filename)
-    model = SentenceTransformer('bge-base-en-v1.5')
+    lessons = load_json_data(filename)
+    model = SentenceTransformer('Shashwat13333/bge-base-en-v1.5_v4')
     documents = [
         f"{lesson.get('unit', '')} {lesson.get('topic_title', '')} {lesson.get('description', '')} {lesson.get('elaboration', '')}"
         for lesson in lessons
@@ -62,7 +68,7 @@ def build_chroma_db_collection(filename: str, collection_name: str = 'lessons'):
 
     client = chromadb.PersistentClient(path = './local VDB/chromadb')
     logging.info("Connecting to ChromaDB")
-    collection = client.create_collection(name=collection_name)
+    collection = client.get_or_create_collection(name=collection_name)
     logging.info(f"Adding documents and embeddings to ChromaDB collection '{collection_name}'")
     collection.add(
         documents=documents,
@@ -71,11 +77,10 @@ def build_chroma_db_collection(filename: str, collection_name: str = 'lessons'):
         metadatas= [sanitize_metadata(metadata) for metadata in metadatas]
     )
     logging.info(f"ChromaDB collection '{collection_name}' built successfully")
-    return collection, model
 
 
 def save_scraped_data_to_vdb(
-    scraped_file: str = "./data/raw_data.json",
+    scraped_file: str = "raw_data.json",
     vdb_path: str = "./local VDB/chromadb",
     collection_name: str = "scraped_data"
 ):
@@ -88,28 +93,28 @@ def save_scraped_data_to_vdb(
         collection_name (str): Name of the ChromaDB collection.
     """
     logging.info(f"Loading scraped data from {scraped_file}")
-    with open(scraped_file, "r", encoding="utf-8") as f:
-        scraped_data = json.load(f)
+    scrapped_data = load_json_data(scraped_file)
+    scrapped_documents = [f'{item.get('main_findings')} {item.get('keywords')} {item.get('headings')}' for item in scrapped_data]
 
+    logging.info(f"Encoding {len(scrapped_documents)} documents for embeddings")
+    model = SentenceTransformer("Shashwat13333/bge-base-en-v1.5_v4")
+    embeddings = model.encode(scrapped_documents, show_progress_bar=True).tolist()
 
-    valid_items = [item for item in scraped_data if item.get("content")]
-
-    if not valid_items:
-        logging.warning("No valid scraped items with content found.")
-        return
-
-    texts = [item["content"] for item in valid_items]
-    model = SentenceTransformer("bge-base-en-v1.5")
-    embeddings = model.encode(texts, show_progress_bar=True).tolist()
+    scrapped_meta = [
+        {
+            "headings": item.get("headings", []),
+            "main_findings": item.get("main_findings", []),
+            "keywords": item.get("keywords", []),
+        }
+        for item in scrapped_data
+    ]
 
     client = chromadb.PersistentClient(path=vdb_path)
     collection = client.get_or_create_collection(collection_name)
 
-    for idx, (item, embedding) in enumerate(zip(valid_items, embeddings)):
-        collection.add(
-            ids=[f"scraped_{idx}"],
-            embeddings=[embedding],
-            metadatas=[item],
-            documents=[item["content"]]
+    collection.add(
+        ids= [str(i) for i in range(1, len(scrapped_data) + 1)],
+        embeddings= embeddings,
+        documents=scrapped_documents,
+        metadatas=[sanitize_metadata(_) for _ in scrapped_meta]
         )
-    logging.info(f"Added {len(valid_items)} scraped items to ChromaDB collection '{collection_name}'")

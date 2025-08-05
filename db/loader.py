@@ -9,10 +9,10 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
-DATA_DIR = Path(__file__).parent.parent / "data" / "lessons"
+DATA_DIR = Path(__file__).parent.parent / "data"
 
 
-def load_lesson_data(filename: str) -> List[Dict[str, Any]]:
+def load_json_data(filename: str) -> List[Dict[str, Any]]:
     """
     Load lesson data from a JSON file in the lessons data directory.
 

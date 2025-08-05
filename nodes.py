@@ -4,7 +4,7 @@ from langgraph.graph import StateGraph, END
 from langchain_core.messages import HumanMessage
 
 from logis.logical_functions import lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
-    retrieve_and_search, update_content_count, search_both_collections
+    update_content_count, search_both_collections
 from models.external_tools_apis import serp_api_tool
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
@@ -80,6 +80,9 @@ def user_info_node(state: LearningState) -> LearningState:
 import asyncio
 
 def crawler_node(state: LearningState) -> LearningState:
+    if os.path.exists('./data/raw_data.json'):
+        logging.info("Raw data already exists, skipping crawling.")
+        return state
     links = serper_api_results_parser(state=state)
     logging.info(f"Scrapped Links: {links}")
     raw_data = None
@@ -119,10 +122,10 @@ def enrich_content(state: LearningState) -> LearningState:
             retrieved_data = search_both_collections(state=state)
             response = enriched_content.invoke({
                 "action": "content_enrichment",
-                "current_resources_data": parse_chromadb_metadata(retrieved_data).model_dump()
+                "foundation_data": parse_chromadb_metadata(retrieved_data.get('lessons_results')),
+                'scrapped_data': parse_chromadb_metadata(retrieved_data.get('scrapped_results'))
             })
             resource_data = response.content if hasattr(response, "content") else response
-            print(f'ENRICHED RESOURCE DATA: {resource_data}')
             state.enriched_resource = EnrichedLearningResource.model_validate(resource_data)
             logging.info(f"Learning resource processed!")
         except Exception as e:
