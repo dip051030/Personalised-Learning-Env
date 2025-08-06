@@ -10,7 +10,8 @@ from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
     CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback, gap_finder, \
     content_seo_optimization, prompt_post_validation, post_validation
-from schemas import LearningState, ContentResponse, EnrichedLearningResource, FeedBack, RouteSelector
+from schemas import LearningState, ContentResponse, EnrichedLearningResource, FeedBack, RouteSelector, \
+    PostValidationResult
 import json
 import logging
 import os
@@ -247,6 +248,8 @@ Please improve the content by making it more engaging, informative, and suitable
 Feedback (including gaps):
 {state.feedback.model_dump()}
 
+Post_Validation Result:
+{state.validation_result.model_dump()}
 """)
             ]
             response = content_improviser.invoke(messages)
@@ -317,7 +320,7 @@ def post_validator_node(state:LearningState) -> LearningState:
     Always uses the latest content and updates state.feedback with new feedback.
     """
     logging.info("Entering post_validator_node")
-    feedback_data = None
+    validation_result = None
     if state.content is not None:
         try:
             logging.info("Checking Validation!")
@@ -330,9 +333,9 @@ Learning Resource:
             ]
             response = post_validation.invoke(messages)
             logging.info("Validation has been given!")
-            feedback_data = response.content if hasattr(response, "content") else response
-            feedback_data = json.loads(feedback_data) if isinstance(feedback_data, str) else feedback_data
-            state.feedback = FeedBack.model_validate(feedback_data)
+            validation_result = response.content if hasattr(response, "content") else response
+            validation_result = json.loads(validation_result) if isinstance(validation_result, str) else validation_result
+            state.validation_result = PostValidationResult.model_validate(validation_result)
             logging.info(f"Validated and Updated: {state.feedback}")
         except Exception as e:
             logging.error(f"Error collecting validation: {e}")

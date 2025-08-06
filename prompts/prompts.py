@@ -206,7 +206,25 @@ Example opening you might use to improve a draft:
 
 Now, improve the following content:
 
+**Additional Instructions for Handling Validation Feedback:**
+
+You will also receive a post-validation report containing:  
+- `"is_valid"`: a boolean indicating if the content passed validation.  
+- `"violations"`: a list of clear descriptions of any issues or quality gaps found.
+
+**Use this report to guide your improvements strictly:**
+- Focus your improvements on addressing the exact violations listed.
+- Do NOT add new content beyond fixing the reported issues.
+- Do NOT change any content that is already valid.
+- Maintain the original factual accuracy and tone.
+- Improvements should be structural, clarity-based, and engaging — not rewriting facts or adding new facts.
+- If `"is_valid": true`, apply light polish only — no major changes.
+- Always preserve the original content’s meaning and key points.
+- Do not hallucinate, fabricate, or guess missing information.
+
+Please begin improving based on the above guidelines.
 """)
+
 
 class BlogGenerationPrompt(PromptTemplate):
     """
