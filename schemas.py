@@ -125,6 +125,9 @@ class WebCrawlerConfig(BaseModel):
     scraped_at: datetime = Field(..., description="Timestamp when this page was scraped.")
 
 
+class PostValidationResult(BaseModel):
+    is_valid: bool = Field(..., description="Indicates whether the SEO blog post passed all validation checks.")
+    violations: List[str] = Field(default_factory=list, description="List of descriptive violation messages if validation failed. Empty if valid.")
 
 
 class LearningState(BaseModel):

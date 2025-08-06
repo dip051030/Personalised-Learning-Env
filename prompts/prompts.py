@@ -460,4 +460,4 @@ gap_finder = prompt_gap_finder | get_gemini_model(FeedBack)
 content_seo_optimization = get_groq_model()
 content_improviser =get_groq_model()
 content_feedback = get_deepseek_model(FeedBack)
-post_validation =
+post_validation = get_deepseek_model()
