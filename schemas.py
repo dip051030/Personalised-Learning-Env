@@ -1,7 +1,9 @@
 from enum import Enum
-from typing import Optional, Union, List, Dict
+from typing import List, Optional, Union
 from pydantic import BaseModel, Field, HttpUrl
 from datetime import datetime
+
+
 
 
 class ResourceSubject(str, Enum):
@@ -103,12 +105,6 @@ class FeedBack(BaseModel):
 class RouteSelector(BaseModel):
     next_node: str
 
-
-from typing import List, Optional
-from pydantic import BaseModel, Field, HttpUrl
-from datetime import datetime
-
-
 class WebCrawlerConfig(BaseModel):
     url: HttpUrl = Field(..., description="Original URL of the scraped educational page.")
     source: str = Field(..., description="Domain source of the page, e.g., 'byjus.com'.")
@@ -127,6 +123,8 @@ class WebCrawlerConfig(BaseModel):
     word_count: int = Field(ge=0, default=0, description="Total word count of the `content`.")
     status: str = Field(..., description="Status of the scrape: success or failed.")
     scraped_at: datetime = Field(..., description="Timestamp when this page was scraped.")
+
+
 
 
 class LearningState(BaseModel):

@@ -9,7 +9,7 @@ from models.external_tools_apis import serp_api_tool
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
     CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback, gap_finder, \
-    content_seo_optimization
+    content_seo_optimization, prompt_post_validation, post_validation
 from schemas import LearningState, ContentResponse, EnrichedLearningResource, FeedBack, RouteSelector
 import json
 import logging
@@ -309,6 +309,33 @@ def find_content_gap_node(state: LearningState) -> LearningState:
         logging.info(f"Feedback received and updated: {state.feedback}")
         # Log rating and gaps for debugging
         logging.info(f"GapFinder rating: {state.feedback.rating}, gaps: {state.feedback.gaps}, ai_reliability_score: {state.feedback.ai_reliability_score}")
+    return state
+
+def post_validator_node(state:LearningState) -> LearningState:
+    """
+    Node to collect feedback on generated content.
+    Always uses the latest content and updates state.feedback with new feedback.
+    """
+    logging.info("Entering post_validator_node")
+    feedback_data = None
+    if state.content is not None:
+        try:
+            logging.info("Checking Validation!")
+            messages = [
+                prompt_post_validation,
+                HumanMessage(content=f"""
+Learning Resource:
+{state.content.content}
+""")
+            ]
+            response = post_validation.invoke(messages)
+            logging.info("Validation has been given!")
+            feedback_data = response.content if hasattr(response, "content") else response
+            feedback_data = json.loads(feedback_data) if isinstance(feedback_data, str) else feedback_data
+            state.feedback = FeedBack.model_validate(feedback_data)
+            logging.info(f"Validated and Updated: {state.feedback}")
+        except Exception as e:
+            logging.error(f"Error collecting validation: {e}")
     return state
 
 def update_state(state: LearningState) -> LearningState:
