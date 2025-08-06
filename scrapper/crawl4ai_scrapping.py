@@ -16,6 +16,7 @@ from schemas import WebCrawlerConfig
 
 logging.basicConfig(level=logging.INFO)
 
+
 async def crawl_and_extract_json(urls: list) -> list:
     """
     Crawl a list of URLs and extract educational content as JSON objects.
@@ -31,7 +32,6 @@ async def crawl_and_extract_json(urls: list) -> list:
         light_mode=False
     )
 
-
     api_token = set_env('GROQ_DEEPSEEK_API_KEY')
     if not api_token:
         raise ValueError("Environment variable 'GROQ_DEEPSEEK_API_KEY' is not set or invalid.")
@@ -44,58 +44,56 @@ async def crawl_and_extract_json(urls: list) -> list:
     extraction_strategy = LLMExtractionStrategy(
         llm_config=llm_cfg,
         instruction="""
-        You are an intelligent educational content extractor. You must output a clean, valid JSON object **exactly** following the schema and rules below. If data is not present on the page, return empty lists or nulls — but you must still return a full valid JSON object.
+You are an intelligent educational content extractor. You must output a clean, valid JSON object **exactly** following the schema and rules below. If data is not present on the page, return empty lists or nulls — but you must still return a full valid JSON object.
 
-        DO NOT skip the output. DO NOT return natural language. DO NOT explain anything.
+DO NOT skip the output. DO NOT return natural language. DO NOT explain anything.
 
-        ---
+---
 
-        STRICT JSON Output Schema:
-        {
-          "url": "<original URL>",  // always required
-          "title": "<main article H1 title or null>",  
-          "headings": ["<H2–H4 section/sub-section headings>"],  
-          "main_findings": ["<key educational facts, definitions, or concepts in full sentences>"],  
-          "content": "<single combined block of all main findings in original order or null if none>",  
-          "keywords": ["<list of core nouns or terms from headings and findings or []>"]
-        }
+STRICT JSON Output Schema:
+{
+  "url": "<original URL>",  // always required
+  "title": "<main article H1 title or null>",  
+  "headings": ["<H2–H4 section/sub-section headings>"],  
+  "main_findings": ["<key educational facts, definitions, or concepts in full sentences>"],  
+  "content": "<single combined block of all main findings in original order or null if none>",  
+  "keywords": ["<list of core nouns or terms from headings and findings or []>"]
+}
 
-        ---
+---
 
-        Rules:
+Rules:
 
-        Must Include:
-        - Main article title (`<h1>` tag or first major visible title)
-        - All `<h2>`, `<h3>`, and `<h4>` tags from the **main content body only**
-        - Individual full-sentence educational statements — laws, definitions, examples, formulas, etc.
-        - Bullet points **only if** each is a full sentence with factual educational info
-        - Join all findings in `content` (preserve exact sentence order and original phrasing)
-        - Extract `keywords` by identifying repeated or important terms in `headings` + `main_findings`
+Must Include:
+- Main article title (`<h1>` tag or first major visible title)
+- All `<h2>`, `<h3>`, and `<h4>` tags from the **main content body only**
+- Individual full-sentence educational statements — laws, definitions, examples, formulas, etc.
+- Bullet points **only if** each is a full sentence with factual educational info
+- Join all findings in `content` (preserve exact sentence order and original phrasing)
+- Extract `keywords` by identifying repeated or important terms in `headings` + `main_findings`
 
-        Must Exclude:
-        - Website name, branding, menus, footers, navbars, cookie banners, popups, forms, ads
-        - Code blocks, timestamps, author bios, comments, vague filler, layout-only text
-        - External links, social media, UI elements, inline styles, HTML/CSS/JS
+Must Exclude:
+- Website name, branding, menus, footers, navbars, cookie banners, popups, forms, ads
+- Code blocks, timestamps, author bios, comments, vague filler, layout-only text
+- External links, social media, UI elements, inline styles, HTML/CSS/JS
 
-        ---
+---
 
-        Output Guidelines:
-        - If any field is missing from the page, return:
-          - `null` for title or content
-          - `[]` for headings, main_findings, or keywords
-        - The `"url"` field is always required and must match the input
-        - Output must be **strictly valid JSON** — no markdown, no commentary, no extra text
+Output Guidelines:
+- If any field is missing from the page, return:
+  - `null` for title or content
+  - `[]` for headings, main_findings, or keywords
+- The `"url"` field is always required and must match the input
+- Output must be **strictly valid JSON** — no markdown, no commentary, no extra text
 
-        ---
+---
 
-        YOUR ROLE:
-        You are a **non-generative extractor** — not a writer. Never summarize, paraphrase, or invent.
-        Your goal is to extract clean, structured data for curriculum systems and AI tutors.
+YOUR ROLE:
+You are a **non-generative extractor** — not a writer. Never summarize, paraphrase, or invent.
+Your goal is to extract clean, structured data for curriculum systems and AI tutors.
 
-        ALWAYS return full JSON — even if data is minimal.
-        """
-        ,
-    input_format='markdown',
+ALWAYS return full JSON — even if data is minimal.""",
+        input_format='markdown',
         schema=WebCrawlerConfig.model_json_schema()
     )
 
@@ -124,21 +122,21 @@ async def crawl_and_extract_json(urls: list) -> list:
             'audio'
         ],
         excluded_selector=
-            '.ads, .advertisement, .sponsored, .promo, .sidebar, .related-links, .comments, .comment, '
-            '.social-links, .share-buttons, .social-media, .footer, .footer-links, .footer-info, '
-            '.footer-text, .footer-logo, .footer-social, .footer-contact, .footer-legal, .footer-privacy, '
-            '.footer-terms, .footer-copyright, .footer-disclaimer, .footer-sitemap, '
-            '.footer-subscribe, .footer-newsletter, .footer-contact-form, .footer-address, '
-            '.footer-menu, .cookie-notice, .cookie-banner, .cookies, .popup, .modal, '
-            '.popup-overlay, .popup-content, .popup-close, .popup-header, .popup-body, '
-            '.popup-footer, .popup-buttons, .popup-link, .login, .signup, .login-form, '
-            '.register, .auth, .nav, .navbar, .navigation, .menu, .topbar, .toolbar, '
-            '.header, .masthead, .banner, .cta, .newsletter, .subscribe, .sticky, '
-            '.chatbot, .livechat, .intercom-launcher, .notifications, .alert, .announcement, '
-            '.breadcrumb, .pagination, .loader, .loading, .spinner, .hero, .widget, .widget-area, '
-            '.search-box, .search-form, .search-bar, .scroll-to-top, .back-to-top, .branding, '
-            '.related-posts, .related-articles, .more-articles, .external-links, .print-button',
-        only_text = True,
+        '.ads, .advertisement, .sponsored, .promo, .sidebar, .related-links, .comments, .comment, '
+        '.social-links, .share-buttons, .social-media, .footer, .footer-links, .footer-info, '
+        '.footer-text, .footer-logo, .footer-social, .footer-contact, .footer-legal, .footer-privacy, '
+        '.footer-terms, .footer-copyright, .footer-disclaimer, .footer-sitemap, '
+        '.footer-subscribe, .footer-newsletter, .footer-contact-form, .footer-address, '
+        '.footer-menu, .cookie-notice, .cookie-banner, .cookies, .popup, .modal, '
+        '.popup-overlay, .popup-content, .popup-close, .popup-header, .popup-body, '
+        '.popup-footer, .popup-buttons, .popup-link, .login, .signup, .login-form, '
+        '.register, .auth, .nav, .navbar, .navigation, .menu, .topbar, .toolbar, '
+        '.header, .masthead, .banner, .cta, .newsletter, .subscribe, .sticky, '
+        '.chatbot, .livechat, .intercom-launcher, .notifications, .alert, .announcement, '
+        '.breadcrumb, .pagination, .loader, .loading, .spinner, .hero, .widget, .widget-area, '
+        '.search-box, .search-form, .search-bar, .scroll-to-top, .back-to-top, .branding, '
+        '.related-posts, .related-articles, .more-articles, .external-links, .print-button',
+        only_text=True,
         remove_forms=True,
         exclude_external_links=True,
         exclude_social_media_links=True,

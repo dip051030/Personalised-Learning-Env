@@ -126,7 +126,7 @@ class WebCrawlerConfig(BaseModel):
 
 
 class PostValidationResult(BaseModel):
-    is_valid: bool = Field(..., description="Indicates whether the SEO blog post passed all validation checks.")
+    is_valid: bool = Field(default=False, description="Indicates whether the SEO blog post passed all validation checks.")
     violations: List[str] = Field(default_factory=list, description="List of descriptive violation messages if validation failed. Empty if valid.")
 
 class LearningState(BaseModel):

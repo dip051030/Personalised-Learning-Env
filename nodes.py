@@ -394,6 +394,7 @@ builder.add_node("update_state", update_state)
 builder.add_node("crawler", crawler_node)
 builder.add_node("content_seo_optimization", seo_optimiser_node)
 builder.add_node("save_learning_state", save_learning_state_to_json)
+builder.add_node("post_validator", post_validator_node)
 
 builder.set_entry_point("user_info")
 builder.add_edge("user_info", "crawler")
@@ -416,7 +417,8 @@ builder.add_edge("blog_generation", "content_seo_optimization")
 builder.add_edge("content_seo_optimization", "content_improviser")
 builder.add_edge("content_improviser", 'collect_feedback')
 builder.add_edge("collect_feedback", "find_content_gap")
-builder.add_edge("find_content_gap", "update_state")
+builder.add_edge("find_content_gap", 'post_validator')
+builder.add_edge("post_validator", "update_state")
 builder.add_conditional_edges(
     "update_state",
     lambda state: "content_improviser" if getattr(state, "count", 0) < 4 else "END",
@@ -429,4 +431,4 @@ builder.add_conditional_edges(
 graph = builder.compile()
 
 def graph_run(user_data: dict):
-    return graph.invoke(LearningState.model_validate(user_data))
+    return graph.invoke(LearningState.model_validate(user_data), config = {'recursion_limit': 30})
