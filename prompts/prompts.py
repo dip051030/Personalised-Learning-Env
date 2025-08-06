@@ -11,7 +11,9 @@ logging.basicConfig(
 )
 
 from models.llm_models import get_gemini_model, get_groq_model, get_deepseek_model
-from schemas import UserInfo, LearningResource, LearningState, ContentResponse, EnrichedLearningResource, RouteSelector, FeedBack
+from schemas import UserInfo, LearningResource, LearningState, ContentResponse, EnrichedLearningResource, RouteSelector, \
+    FeedBack, PostValidationResult
+
 
 class UserSummaryTemplate(PromptTemplate):
     """
@@ -460,4 +462,4 @@ gap_finder = prompt_gap_finder | get_gemini_model(FeedBack)
 content_seo_optimization = get_groq_model()
 content_improviser =get_groq_model()
 content_feedback = get_deepseek_model(FeedBack)
-post_validation = get_deepseek_model()
+post_validation = get_deepseek_model(PostValidationResult)

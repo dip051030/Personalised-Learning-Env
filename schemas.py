@@ -129,7 +129,6 @@ class PostValidationResult(BaseModel):
     is_valid: bool = Field(..., description="Indicates whether the SEO blog post passed all validation checks.")
     violations: List[str] = Field(default_factory=list, description="List of descriptive violation messages if validation failed. Empty if valid.")
 
-
 class LearningState(BaseModel):
     user: UserInfo
     current_resource: Optional[LearningResource] = None
@@ -142,6 +141,7 @@ class LearningState(BaseModel):
     next_action: Optional[RouteSelector] = Field(default="lesson_selection", description="Should return lesson_selection or blog_selection")
     history: List[HistoryEntry] = []
     feedback: Optional[FeedBack] = None
+    validation_result: Optional[PostValidationResult] = None
     count: int = 0
 
     class Config:
