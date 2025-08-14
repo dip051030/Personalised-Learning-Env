@@ -396,7 +396,7 @@ STRUCTURE:
 SEO OPTIMIZATION:
 - Identify the primary keyword from the content (do not hallucinate keywords). Insert it naturally into at least one subheading if not already present.
 - Ensure headings/subheadings are keyword-friendly **without changing the wording of the content**.
-- Add **title_tag** (≤60 characters) based on the H1.
+- Add **title_tag** (≤60 characters) based on H1.
 - Add **meta_description** (≤155 characters) summarizing the blog content using the primary keyword.
 - Ensure the primary keyword appears in the first 25 words if it already exists naturally.
 - Do not add SEO fluff or extra summaries; only apply metadata and formatting changes.
