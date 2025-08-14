@@ -120,7 +120,8 @@ class ContentGenerationTemplate(PromptTemplate):
         logging.info("Initializing ContentGenerationTemplate")
         super().__init__(
             template=(
-"""You are an expert educational content writer.
+"""
+You are an expert curriculum-aligned educational content writer.
 
 Objective: {action}
 
@@ -134,37 +135,42 @@ Preferred Style and Tone:
 {style}
 
 Instructions:
-- Generate a well-structured, markdown-formatted educational lesson tailored to the specified class and topic.
-- Use the exact structure below, adjusting each section for the student's level, curriculum, and background.
+- Create a well-structured, markdown-formatted educational lesson strictly aligned with the provided curriculum details in {resource_data}.
+- Use the exact structure outlined below.
+- Ensure terminology, examples, and explanations match the student’s grade level, subject area, and curriculum board requirements.
+- Keep formatting consistent and clear for both human readability and machine parsing.
 
 Structure to Follow:
-# Topic Title  
-(Use the exact topic mentioned in {action} or {resource_data}. Keep it informative, not poetic or metaphorical.)
+
+# {Exact_Topic_Title}  
+(Use the exact topic from {action} or {resource_data}; do not use metaphorical or poetic titles.)
 
 ## Introduction  
-Introduce and define the topic clearly, using terminology and examples suitable for the student's grade and curriculum.
+Define the topic clearly and accurately, using curriculum-approved terminology.  
+Provide a brief conceptual overview suitable for the specified grade.
 
 ## Real-Life Application  
-Provide 1–2 practical examples or case studies that relate the topic to everyday life or local context (e.g., technology, environment, social relevance).
+Give 1–2 real-world examples or case studies relevant to the student’s context, curriculum, or local environment (technology, industry, health, environment, etc.).
 
 ## Formula & Explanation  
-Include important formulas (if any), define each variable, and explain the derivation or reasoning behind the formula as per the student’s level.
+- Present any relevant formulas in LaTeX format.  
+- Define each variable explicitly.  
+- Provide a step-by-step explanation or derivation at the appropriate grade level.
 
 ## Curriculum Relevance  
-Briefly describe where this topic fits in the curriculum (e.g., "NEB Class 12 Physics Unit 5") and its importance in exams or concepts that follow.
+State the curriculum alignment (e.g., "NEB Class 12 Physics – Unit 5: Magnetism").  
+Highlight the importance of the topic in exams and its connection to future lessons.
 
 ## Frequently Asked Questions  
-Include 2–3 common student questions related to this topic, and answer them in a simple, concise way.
+List 2–3 common student questions and answer them clearly and concisely.  
+Questions should reflect typical learning challenges in this topic.
 
 ## Summary  
-Wrap up the key points of the topic in 2–3 short lines.
+Provide 2–3 bullet points summarizing the most important concepts.
 
 ---
 
-**Tags**: [Include keywords such as class, subject, topic name, curriculum board, and any other identifiers from {user_data} or {resource_data}]
-
-OUTPUT FORMAT: Markdown only. Do NOT include explanations, JSON wrappers, or commentary before or after the markdown.
-
+**Tags**: [Include class, subject, unit, chapter, topic, curriculum board, and other identifiers from {user_data} or {resource_data}]
 """),
             input_variables=["action", "user_data", "resource_data", "style"]
         )
