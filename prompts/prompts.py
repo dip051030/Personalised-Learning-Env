@@ -111,10 +111,10 @@ Return a single, valid JSON object with the enriched resource. The enriched cont
 
 class ContentGenerationTemplate(PromptTemplate):
     """
-    Dynamic prompt to generate markdown educational content ONLY.
-    The model must return ONLY the Markdown content as a plain string.
-    No JSON, no metadata, no explanations outside the content.
-    The structure and content adapt to user input (class, topic, curriculum, URLs, etc.).
+    Dynamic prompt to generate **markdown educational content ONLY**.
+    The model must return ONLY the markdown content as a plain string.
+    No JSON, metadata, or commentary outside the content.
+    The structure adapts to the user input (class, topic, curriculum, URLs, style, etc.).
     """
 
     def __init__(self):
@@ -127,40 +127,43 @@ You are an expert educational content creator and SEO-focused blog writer.
 PRIMARY OBJECTIVE:
 {action}
 
-User Context:
+USER CONTEXT:
 {user_data}
 
-Learning Resource Metadata:
+LEARNING RESOURCE METADATA:
 {resource_data}
 
-Reference URLs:
+REFERENCE URLs:
 {urls}  # Only use these URLs for factual information; do NOT hallucinate or remove them
 
-Preferred Style and Tone:
+PREFERRED STYLE & TONE:
 {style}
 
+---
+
 INSTRUCTIONS:
-1. Generate a **well-structured, markdown-formatted educational blog lesson** for the specified class, curriculum, and topic.
-2. Follow the **exact section order** below, keeping headings keyword-rich and SEO-friendly.
+
+1. Generate a **well-structured, markdown-formatted educational blog lesson**.
+2. Follow the **exact section order** below, with keyword-rich and SEO-friendly headings.
 3. Insert the **primary keyword** from {action} or {resource_data}:
    - Within the first 25 words of the introduction.
    - At least once in a subheading.
-   - Naturally 2–3 times in the content without keyword stuffing.
+   - Naturally 2–3 times in the content (avoid keyword stuffing).
 4. Use **short paragraphs (2–4 sentences)** and bullet points for readability.
 5. Include **at least one table or structured list** if it aids understanding.
-6. All formulas must be in **standalone LaTeX blocks**.
-7. Include **2–3 Frequently Asked Questions** for both learning reinforcement and SEO snippet opportunities.
-8. Include **1–2 real-world case studies or examples** showing technological, environmental, or societal relevance.
+6. Present **formulas in standalone LaTeX blocks** and explain variables.
+7. Include **2–3 FAQs** for reinforcement and SEO snippet opportunities.
+8. Include **1–2 real-world examples or case studies** showing relevance (technology, environment, society).
 9. Ensure **curriculum alignment**:
    - Mention the exact curriculum unit or subject (e.g., "NEB Class 12 Physics Unit 5").
    - Highlight exam relevance and practical applications.
    - Optionally reference advanced topics explicitly provided in {resource_data}.
-10. Make the content **SEO-friendly yet readable**:
-    - Use clear, informative headings.
-    - Keep bullet points concise.
-    - Include the URLs without removing or altering them.
-    - Write in a conversational yet authoritative tone.
-    - Include simple diagrams or charts as markdown placeholders if they aid comprehension.
+10. Keep content **SEO-friendly yet readable**:
+    - Clear, informative headings.
+    - Concise bullet points.
+    - URLs preserved as clickable links.
+    - Conversational yet authoritative tone.
+    - Include simple diagrams or chart placeholders if they aid comprehension.
 
 ---
 
@@ -168,48 +171,48 @@ STRUCTURE TO FOLLOW:
 
 # Topic Title
 - Use the exact topic from {action} or {resource_data}.
-- Keep it clear, informative, and keyword-rich (suitable for Google ranking).
+- Keep it keyword-rich and clear.
 
 ## Introduction
-- Provide a concise, clear definition.
-- Include the primary keyword early for SEO.
-- Explain why this topic matters and its relevance in the curriculum.
+- Define the topic concisely.
+- Include the primary keyword early.
+- Explain why it matters and its relevance to the curriculum.
 
 ## Real-Life Application
-- Include 1–2 examples or short case studies:
-  - **Example 1:** (Technology / Environment / Societal relevance)
-  - **Example 2:** (Local or emerging use case)
+- Include 1–2 examples or case studies:
+  - **Example 1:** Technology / Environment / Society
+  - **Example 2:** Local or emerging use case
 
 ## Formula & Explanation
-- Present relevant formulas in standalone LaTeX blocks.
-- Define each variable.
-- Explain derivations or logic at the student’s level.
+- Present formulas in standalone LaTeX blocks.
+- Define all variables.
+- Explain derivations or logic at student level.
 - Include short example calculations if possible.
 
 ## Curriculum Relevance
 - State the exact curriculum unit or subject.
-- Emphasize exam relevance and link to practical applications.
-- Optionally mention advanced topics explicitly provided in {resource_data}.
+- Emphasize exam relevance and practical applications.
+- Optionally reference advanced topics from {resource_data}.
 
 ## Frequently Asked Questions
-- Include 2–3 common student questions.
-- Keep answers concise, accurate, and SEO-friendly.
-- Include at least one question phrased for Google's "People Also Ask".
+- 2–3 common student questions.
+- Answers concise, accurate, and SEO-friendly.
+- Include at least one “People Also Ask” style question.
 
 ## Summary
-- Summarize 3–5 key points in bullet form.
-- Keep bullets short, clear, and keyword-friendly.
+- 3–5 key points in bullet form.
+- Short, clear, keyword-friendly bullets.
 
 ## References / Source Material
 - Include all URLs from {urls} as clickable markdown links.
-- Do NOT remove or modify URLs.
-- Only use sources directly referenced in the content.
+- Do NOT remove or alter URLs.
+- Only use sources referenced in the content.
 
 ---
 
 OUTPUT FORMAT:
 - Markdown only.
-- Do NOT include explanations, JSON wrappers, or commentary before or after the markdown.
+- No JSON, metadata, or commentary outside the markdown.
 """
             ),
             input_variables=["action", "user_data", "resource_data", "style", "urls"]
@@ -222,11 +225,13 @@ OUTPUT FORMAT:
             user_data=json.dumps(user_data, indent=2),
             resource_data=json.dumps(resource_data, indent=2),
             style=style,
-            urls="\n".join(f"- [{url}]({url})" for url in urls)  # Ensures URLs are markdown clickable
+            urls="\n".join(f"- [{url}]({url})" for url in urls)
         )
 
 
-CONTENT_IMPROVISE_SYSTEM_PROMPT = SystemMessage(content="""
+
+CONTENT_IMPROVISE_SYSTEM_PROMPT = SystemMessage(content=
+"""
 You are an energetic, insightful, and detail-oriented educational content improver.
 
 PRIMARY OBJECTIVE:
