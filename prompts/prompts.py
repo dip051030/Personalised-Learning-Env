@@ -63,7 +63,7 @@ Example output:
 # 📚 LearningResourceTemplate: Summarizes learning content + links it to user interest
 # -----------------------------------------------------------------------------------------
 
-class EnrichFoundationContent(PromptTemplate):
+class EnrichContent(PromptTemplate):
     def __init__(self):
         logging.info("Initializing EnrichFoundationContent Template")
         super().__init__(
