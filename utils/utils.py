@@ -50,3 +50,11 @@ def save_generated_content(content, file_path):
         logging.info(f"[utils.py:{save_generated_content.__code__.co_firstlineno}] INFO Generated content saved to {file_path}")
     except Exception as e:
         logging.error(f"[utils.py:{save_generated_content.__code__.co_firstlineno}] ERROR Failed to save generated content to {file_path}: {e}")
+
+def read_from_local(file_path):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    logging.info(f"[utils.py:{read_from_local.__code__.co_firstlineno}] INFO Data read from {file_path}")
+    urls = [data.get('link', []) for k in data if 'link' in k]
+    return urls
+
