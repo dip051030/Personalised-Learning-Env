@@ -168,6 +168,7 @@ def generate_lesson_content(state: LearningState) -> LearningState:
         try:
             logical_response = lesson_decision_node(state=state)
             urls = read_from_local('./data/scrapped_data.json')
+            print(urls)
             logging.info(f"Logical response for lesson generation: {logical_response}")
             response = content_generation.invoke({
                 "action": "generate_lesson",

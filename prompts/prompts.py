@@ -134,7 +134,7 @@ LEARNING RESOURCE METADATA:
 {resource_data}
 
 REFERENCE URLs:
-{urls}  # Only use these URLs for factual information; do NOT hallucinate or remove them
+{urls}
 
 PREFERRED STYLE & TONE:
 {style}
@@ -158,7 +158,8 @@ INSTRUCTIONS:
    - Mention the exact curriculum unit or subject (e.g., "NEB Class 12 Physics Unit 5").
    - Highlight exam relevance and practical applications.
    - Optionally reference advanced topics explicitly provided in {resource_data}.
-10. Keep content **SEO-friendly yet readable**:
+10. Include the references as well.
+11. Keep content **SEO-friendly yet readable**:
     - Clear, informative headings.
     - Concise bullet points.
     - URLs preserved as clickable links.
@@ -171,7 +172,7 @@ STRUCTURE TO FOLLOW:
 
 # Topic Title
 - Use the exact topic from {action} or {resource_data}.
-- Keep it keyword-rich and clear.
+- Keep it keyword-rich and clear and google friendly.
 
 ## Introduction
 - Define the topic concisely.
@@ -201,14 +202,9 @@ STRUCTURE TO FOLLOW:
 
 ## Summary
 - 3–5 key points in bullet form.
-- Short, clear, keyword-friendly bullets.
-
-## References / Source Material
-- Include all URLs from {urls} as clickable markdown links.
-- Do NOT remove or alter URLs.
-- Only use sources referenced in the content.
-
----
+- Short, clear, keyword-friendly bullets.c
+ear
+4567890-=---
 
 OUTPUT FORMAT:
 - Markdown only.
