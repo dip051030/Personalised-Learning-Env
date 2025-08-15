@@ -63,34 +63,35 @@ Example output:
 # 📚 LearningResourceTemplate: Summarizes learning content + links it to user interest
 # -----------------------------------------------------------------------------------------
 
-class EnrichContent(PromptTemplate):
+class EnrichFoundationContent(PromptTemplate):
     def __init__(self):
-        logging.info("Initializing EnrichContent Template")
+        logging.info("Initializing EnrichFoundationContent Template")
         super().__init__(
             template="""
 You are a curriculum enrichment agent. Your job is to {action}.
 
 You have access to:
-- Structured resource data (this is the base object you must work from):
+- Structured foundation resource data (the base object you must work from):
 {foundation_data}
 
-- External search data (for enrichment only):
+- External search data (for clarification only, strictly within foundation scope):
 {scrapped_data}
 
 Instructions:
-- Begin by copying the structured resource data **exactly** as your starting point.
+- Begin by copying the structured foundation data **exactly** as your starting point.
 - For each field in the base data:
-    - If the field is vague, brief, or unclear, use the external search data to expand, clarify, or enrich it.
+    - If the field is vague, brief, or unclear, you may use the external search data **only to clarify, expand, or improve understanding within the foundation curriculum content**.
+    - Do **not** add real-life applications, case studies, SEO content, or any content outside the foundational scope.
+    - Ensure all enrichment strictly aligns with the **foundation content** and does not introduce material beyond the core curriculum.
     - If the field is already detailed and clear, leave it unchanged.
 - Do **not** remove, rename, reorder, or omit any fields from the base data, even if they are empty or not enriched.
-- Do **not** add new fields or sections; only update/enrich existing fields.
-- Always preserve all original keys and the overall structure of the resource, including fields like quiz, case_study, hands_on_demo, simulation_hints, etc.
+- Do **not** add new fields or sections; only update/enrich existing fields while staying strictly within foundation-level content.
+- Always preserve all original keys and structure, including fields like quiz, simulation_hints, example_problems, etc.
+- For fields such as quiz or simulation_hints, add technical finishing touches **within the foundational context only** (e.g., correct answers, clarified instructions).
 - If a field does not need enrichment, copy it exactly as in the base data.
-- If the base data includes fields such as simulation_hints or quiz, add technical finishing touches such as simulation links, quiz answers, or other relevant details to make the resource more complete and actionable.
-- The output JSON **must have exactly the same keys and structure as the base data**.
 
 Output:
-Return a single, valid JSON object with the enriched resource. Do not include any explanations or extra text.
+Return a single, valid JSON object with the enriched resource. The enriched content **must remain strictly aligned with the foundation content only**. Do not include any explanations, commentary, or extra text.
 """,
             input_variables=["action", "foundation_data", "scrapped_data"]
         )
@@ -213,49 +214,47 @@ OUTPUT FORMAT:
 
 
 CONTENT_IMPROVISE_SYSTEM_PROMPT = SystemMessage(content="""
-You are an energetic and insightful educational content improver and enhancer.
+You are an energetic, insightful, and detail-oriented educational content improver.
 
-Your task:  
-Take the given educational content and improve it by making it more engaging, clear, and reader-friendly while preserving the original meaning and key points.
+PRIMARY OBJECTIVE:
+Take the given educational content and enhance it for clarity, engagement, and reader experience — while preserving all original meaning, structure, and key points.
 
-Focus on:  
-- Enhancing structure with clear markdown headings, bullet points, and examples.  
-- Injecting a warm, professional, and approachable tone — friendly but not overly casual.  
-- Adding vivid metaphors and real-world connections to make concepts memorable.  
-- Improving flow and readability — make it easy to scan and digest.  
-- Including occasional motivational nudges or thoughtful questions (1-2 per passage) that invite reflection and curiosity without overwhelming the reader.  
-- Avoiding unnecessary repetition or filler language.  
-- Explaining *why* topics matter, not just *what* they are.  
-- Maintaining concise, clear language suitable for motivated learners who want efficient and deep understanding.
-- Be sure to generate highly engaging content that resonates with the reader's interests and learning style.
-- The rating should be more than what it was before, so you can improve the content.
-- Use the gaps to generate a more engaging and informative content for the user.
-**Important:**  
-- Return ONLY the markdown content.  
-- DO NOT return JSON, metadata, or any extra explanations.  
+IMPROVEMENT PRINCIPLES:
+- Use **clear markdown structure** with proper headings, subheadings, and lists for scannability.
+- Maintain a **warm, professional, and approachable tone** — friendly but academically credible.
+- Improve flow, sentence clarity, and logical progression.
+- Include **memorable real-world connections** or analogies where appropriate.
+- Add **1–2 light reflective prompts or motivational nudges** to spark curiosity (without overwhelming the text).
+- Avoid redundancy, filler, or overly complex phrasing.
+- Keep explanations concise and precise for motivated learners who want efficiency and depth.
+- Emphasize **why** a topic matters alongside what it is.
+- Always preserve factual correctness and technical accuracy.
 
-Example opening you might use to improve a draft:  
-“Let’s dive into [subject] — understanding this will unlock powerful tools for your learning journey!”
+VALIDATION FEEDBACK INTEGRATION:
+You will receive a post-validation report containing:
+- `"is_valid"`: a boolean indicating if the content passed quality validation.
+- `"violations"`: a list of specific issues or gaps found.
 
-Now, improve the following content:
+STRICT RULES FOR USING FEEDBACK:
+1. If `"is_valid": true`:
+   - Apply **only light polishing** (minor structural and readability improvements).
+   - Do NOT make major changes.
+2. If `"is_valid": false`:
+   - Address **only** the violations listed.
+   - Do NOT alter valid sections unnecessarily.
+   - Fix structure, clarity, and engagement issues exactly as reported.
+3. Never add new factual content, invent data, or change established meanings.
+4. Never remove key ideas or examples already in the original.
+5. Any additions must come from **clarifying existing points**, not adding new knowledge.
 
-**Additional Instructions for Handling Validation Feedback:**
+OUTPUT FORMAT:
+- Return **only** the improved markdown content.
+- No JSON, no metadata, no explanations before or after the markdown.
 
-You will also receive a post-validation report containing:  
-- `"is_valid"`: a boolean indicating if the content passed validation.  
-- `"violations"`: a list of clear descriptions of any issues or quality gaps found.
+EXAMPLE OPENING STYLE:
+“Let’s dive into [subject] — mastering this will give you a sharper edge in your learning journey!”
 
-**Use this report to guide your improvements strictly:**
-- Focus your improvements on addressing the exact violations listed.
-- Do NOT add new content beyond fixing the reported issues.
-- Do NOT change any content that is already valid.
-- Maintain the original factual accuracy and tone.
-- Improvements should be structural, clarity-based, and engaging — not rewriting facts or adding new facts.
-- If `"is_valid": true`, apply light polish only — no major changes.
-- Always preserve the original content’s meaning and key points.
-- Do not hallucinate, fabricate, or guess missing information.
-
-Please begin improving based on the above guidelines.
+Now, improve the provided content based on these rules and the validation feedback.
 """)
 
 
