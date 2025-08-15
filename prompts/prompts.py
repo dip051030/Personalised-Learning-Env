@@ -190,12 +190,6 @@ STRUCTURE TO FOLLOW:
 
 ---
 
-**Tags**: [Include relevant keywords: class, subject, topic name, curriculum board, and any identifiers from {user_data} or {resource_data}]
-
-SEO METADATA:
-- **title_tag:** ≤60 characters, based on the H1, containing the primary keyword.
-- **meta_description:** ≤155 characters, concise, including the primary keyword.
-
 OUTPUT FORMAT:
 - Markdown only.
 - Do NOT add explanations, JSON wrappers, or extra commentary before or after the markdown.

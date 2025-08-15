@@ -187,7 +187,7 @@ def seo_optimiser_node(state: LearningState) -> LearningState:
     if state.content is not None:
         try:
             logging.info("Optimising the content for SEO")
-            messages = [
+            messages = [content_seo_optimization,
                 HumanMessage(
                     content=f"""
 Generated Undiagnosed Learning Resource:
