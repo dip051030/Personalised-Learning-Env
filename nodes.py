@@ -18,6 +18,7 @@ import os
 
 from scrapper.crawl4ai_scrapping import crawl_and_extract_json
 from scrapper.save_to_local import serper_api_results_parser, save_to_local
+from utils.utils import read_from_local
 
 logging.basicConfig(
     level=logging.INFO,
@@ -166,12 +167,14 @@ def generate_lesson_content(state: LearningState) -> LearningState:
     if state.user is not None and state.enriched_resource is not None:
         try:
             logical_response = lesson_decision_node(state=state)
+            urls = read_from_local('./data/scrapped_data.json')
             logging.info(f"Logical response for lesson generation: {logical_response}")
             response = content_generation.invoke({
                 "action": "generate_lesson",
                 "user_data": state.user.model_dump(),
                 "resource_data": state.enriched_resource.model_dump(),
-                "style": logical_response
+                "style": logical_response,
+                'urls': urls
             })
             resource_data = response.content if hasattr(response, "content") else response
             # print(f'Generated Content: {resource_data}')

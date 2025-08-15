@@ -38,7 +38,7 @@ def clean_metadata(metadata: dict) -> dict:
     """
     return {k: v for k, v in metadata.items() if v is not None}
 
-def build_chroma_db_collection(filename: str = 'lessons/class_12_physics.json', collection_name: str = 'lessons'):
+def build_chroma_db_collection(filename: str = 'lessons/class_11_physics.json', collection_name: str = 'lessons'):
     """
     Build a ChromaDB collection from lesson data and return the collection and embedding model.
 

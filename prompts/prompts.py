@@ -114,7 +114,7 @@ class ContentGenerationTemplate(PromptTemplate):
     Dynamic prompt to generate markdown educational content ONLY.
     The model must return ONLY the Markdown content as a plain string.
     No JSON, no metadata, no explanations outside the content.
-    The structure and content adapt to user input (class, topic, curriculum, etc.).
+    The structure and content adapt to user input (class, topic, curriculum, URLs, etc.).
     """
 
     def __init__(self):
@@ -124,7 +124,7 @@ class ContentGenerationTemplate(PromptTemplate):
 """
 You are an expert educational content creator and SEO-focused blog writer.
 
-Objective:
+PRIMARY OBJECTIVE:
 {action}
 
 User Context:
@@ -133,22 +133,34 @@ User Context:
 Learning Resource Metadata:
 {resource_data}
 
+Reference URLs:
+{urls}  # Only use these URLs for factual information; do NOT hallucinate or remove them
+
 Preferred Style and Tone:
 {style}
 
 INSTRUCTIONS:
-- Generate a **well-structured, markdown-formatted educational blog lesson** tailored to the given class, curriculum, and topic.
-- Follow the **exact section order** below while keeping headings keyword-rich and SEO-friendly.
-- Use terminology, depth, and examples appropriate for the student's level while maintaining academic accuracy.
-- Place the **primary keyword** from {action} or {resource_data}:
-  - In the first 25 words of the introduction.
-  - At least once in a subheading.
-- Ensure clear, concise language with **short paragraphs (2–4 sentences)** for readability.
-- Provide **at least one table or structured list** if it aids understanding.
-- Use **bullet points and numbered lists** for quick scanning where possible.
-- All formulas must be in **standalone LaTeX blocks** for AI readability.
-- Frequently Asked Questions should serve **both as learning reinforcement and SEO snippet opportunities**.
-- Case studies should connect the topic to **real-world relevance**, showing its impact in technology, environment, or society.
+1. Generate a **well-structured, markdown-formatted educational blog lesson** for the specified class, curriculum, and topic.
+2. Follow the **exact section order** below, keeping headings keyword-rich and SEO-friendly.
+3. Insert the **primary keyword** from {action} or {resource_data}:
+   - Within the first 25 words of the introduction.
+   - At least once in a subheading.
+   - Naturally 2–3 times in the content without keyword stuffing.
+4. Use **short paragraphs (2–4 sentences)** and bullet points for readability.
+5. Include **at least one table or structured list** if it aids understanding.
+6. All formulas must be in **standalone LaTeX blocks**.
+7. Include **2–3 Frequently Asked Questions** for both learning reinforcement and SEO snippet opportunities.
+8. Include **1–2 real-world case studies or examples** showing technological, environmental, or societal relevance.
+9. Ensure **curriculum alignment**:
+   - Mention the exact curriculum unit or subject (e.g., "NEB Class 12 Physics Unit 5").
+   - Highlight exam relevance and practical applications.
+   - Optionally reference advanced topics explicitly provided in {resource_data}.
+10. Make the content **SEO-friendly yet readable**:
+    - Use clear, informative headings.
+    - Keep bullet points concise.
+    - Include the URLs without removing or altering them.
+    - Write in a conversational yet authoritative tone.
+    - Include simple diagrams or charts as markdown placeholders if they aid comprehension.
 
 ---
 
@@ -156,54 +168,61 @@ STRUCTURE TO FOLLOW:
 
 # Topic Title
 - Use the exact topic from {action} or {resource_data}.
-- Keep it **clear, informative, and keyword-rich** (no poetic phrases).
-- Ensure it could serve as a strong blog H1 for Google ranking.
+- Keep it clear, informative, and keyword-rich (suitable for Google ranking).
 
 ## Introduction
-- Provide a clear, concise definition of the topic.
-- Mention where it fits in the curriculum and why it’s important.
-- Include the **primary keyword** early for SEO purposes.
+- Provide a concise, clear definition.
+- Include the primary keyword early for SEO.
+- Explain why this topic matters and its relevance in the curriculum.
 
 ## Real-Life Application
-- Include 1–2 examples or short case studies with clear headings:
-  - **Example 1:** (Technology / Environment / Social relevance)
+- Include 1–2 examples or short case studies:
+  - **Example 1:** (Technology / Environment / Societal relevance)
   - **Example 2:** (Local or emerging use case)
 
 ## Formula & Explanation
-- Present relevant formulas in standalone LaTeX blocks:
-  - Define each variable.
-  - Explain derivations or logic at a grade-appropriate level.
-- Use short examples to demonstrate formula usage.
+- Present relevant formulas in standalone LaTeX blocks.
+- Define each variable.
+- Explain derivations or logic at the student’s level.
+- Include short example calculations if possible.
 
 ## Curriculum Relevance
-- State the exact curriculum unit or subject where this topic appears (e.g., "NEB Class 12 Physics Unit 5").
-- Mention its importance in **exams** and how it connects to future lessons.
+- State the exact curriculum unit or subject.
+- Emphasize exam relevance and link to practical applications.
+- Optionally mention advanced topics explicitly provided in {resource_data}.
 
 ## Frequently Asked Questions
-- Include 2–3 **common student questions** related to this topic.
-- Keep answers concise but technically correct.
-- Phrase at least one question so it could rank in **Google's 'People Also Ask'** section.
+- Include 2–3 common student questions.
+- Keep answers concise, accurate, and SEO-friendly.
+- Include at least one question phrased for Google's "People Also Ask".
 
 ## Summary
-- Summarize key learning points in **3–5 bullet points** for quick review.
-- Keep bullet points short and keyword-friendly.
+- Summarize 3–5 key points in bullet form.
+- Keep bullets short, clear, and keyword-friendly.
+
+## References / Source Material
+- Include all URLs from {urls} as clickable markdown links.
+- Do NOT remove or modify URLs.
+- Only use sources directly referenced in the content.
 
 ---
 
 OUTPUT FORMAT:
 - Markdown only.
-- Do NOT add explanations, JSON wrappers, or extra commentary before or after the markdown.
-"""),
-            input_variables=["action", "user_data", "resource_data", "style"]
+- Do NOT include explanations, JSON wrappers, or commentary before or after the markdown.
+"""
+            ),
+            input_variables=["action", "user_data", "resource_data", "style", "urls"]
         )
 
-    def format_prompt(self, action: str, user_data: dict, resource_data: dict, style: str) -> str:
+    def format_prompt(self, action: str, user_data: dict, resource_data: dict, style: str, urls: list) -> str:
         logging.info(f"Formatting ContentGenerationTemplate prompt for action: {action}")
         return self.format(
             action=action,
             user_data=json.dumps(user_data, indent=2),
             resource_data=json.dumps(resource_data, indent=2),
-            style=style
+            style=style,
+            urls="\n".join(f"- [{url}]({url})" for url in urls)  # Ensures URLs are markdown clickable
         )
 
 
@@ -211,7 +230,7 @@ CONTENT_IMPROVISE_SYSTEM_PROMPT = SystemMessage(content="""
 You are an energetic, insightful, and detail-oriented educational content improver.
 
 PRIMARY OBJECTIVE:
-Take the given educational content and enhance it for clarity, engagement, and reader experience — while preserving all original meaning, structure, and key points.
+Take the given educational content and enhance it for clarity, engagement, and reader experience — while preserving all original meaning, structure, key points, and URLs.
 
 IMPROVEMENT PRINCIPLES:
 - Use **clear markdown structure** with proper headings, subheadings, and lists for scannability.
@@ -223,6 +242,7 @@ IMPROVEMENT PRINCIPLES:
 - Keep explanations concise and precise for motivated learners who want efficiency and depth.
 - Emphasize **why** a topic matters alongside what it is.
 - Always preserve factual correctness and technical accuracy.
+- **Do NOT remove, alter, or delete any URLs or reference links** present in the original content.
 
 VALIDATION FEEDBACK INTEGRATION:
 You will receive a post-validation report containing:
@@ -238,7 +258,7 @@ STRICT RULES FOR USING FEEDBACK:
    - Do NOT alter valid sections unnecessarily.
    - Fix structure, clarity, and engagement issues exactly as reported.
 3. Never add new factual content, invent data, or change established meanings.
-4. Never remove key ideas or examples already in the original.
+4. Never remove key ideas, examples, or URLs already in the original.
 5. Any additions must come from **clarifying existing points**, not adding new knowledge.
 
 OUTPUT FORMAT:
