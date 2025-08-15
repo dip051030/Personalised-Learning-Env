@@ -121,9 +121,10 @@ class ContentGenerationTemplate(PromptTemplate):
         super().__init__(
             template=(
 """
-You are an expert educational content writer.
+You are an expert educational content creator and SEO-focused blog writer.
 
-Objective: {action}
+Objective:
+{action}
 
 User Context:
 {user_data}
@@ -134,44 +135,69 @@ Learning Resource Metadata:
 Preferred Style and Tone:
 {style}
 
-Instructions:
-- Generate a well-structured, markdown-formatted educational lesson tailored to the specified class and topic.
-- Use the exact structure below, adjusting each section for the student's grade level, curriculum, and background.
-- Ensure headings and examples are SEO-friendly and clearly tagged for AI parsing.
-- Include 2–3 Frequently Asked Questions related to the topic for both learning reinforcement and SEO.
-- Present formulas in standalone LaTeX blocks for clarity and AI readability.
-- Include 1–2 real-life case studies or examples that connect the topic to technology, environment, or social relevance.
-- Summarize key points in clear bullet points for quick scanning.
-
-Structure to Follow:
-
-# Topic Title
-(Use the exact topic mentioned in {action} or {resource_data}. Keep it informative and keyword-rich. Don't make it poetic and make SEO-friendly.)
-
-## Introduction
-Introduce and define the topic clearly, using terminology and examples appropriate for the student's grade and curriculum.
-
-## Real-Life Application
-Provide 1–2 practical examples or case studies that connect the topic to everyday life, local context, or emerging technologies. Clearly tag examples for clarity.
-
-## Formula & Explanation
-Include any relevant formulas in standalone LaTeX blocks.  
-Define each variable and explain the derivation or reasoning in a way suitable for the student’s level.
-
-## Curriculum Relevance
-Briefly describe where this topic fits in the curriculum (e.g., "NEB Class 12 Physics Unit 5") and its importance in exams or subsequent concepts.
-
-## Frequently Asked Questions
-Include 2–3 common student questions related to this topic, with concise and clear answers.
-
-## Summary
-Wrap up the key points of the topic in 2–3 short bullet points for easy scanning and revision.
+INSTRUCTIONS:
+- Generate a **well-structured, markdown-formatted educational blog lesson** tailored to the given class, curriculum, and topic.
+- Follow the **exact section order** below while keeping headings keyword-rich and SEO-friendly.
+- Use terminology, depth, and examples appropriate for the student's level while maintaining academic accuracy.
+- Place the **primary keyword** from {action} or {resource_data}:
+  - In the first 25 words of the introduction.
+  - At least once in a subheading.
+- Ensure clear, concise language with **short paragraphs (2–4 sentences)** for readability.
+- Provide **at least one table or structured list** if it aids understanding.
+- Use **bullet points and numbered lists** for quick scanning where possible.
+- All formulas must be in **standalone LaTeX blocks** for AI readability.
+- Frequently Asked Questions should serve **both as learning reinforcement and SEO snippet opportunities**.
+- Case studies should connect the topic to **real-world relevance**, showing its impact in technology, environment, or society.
 
 ---
 
-**Tags**: [Include keywords such as class, subject, topic name, curriculum board, and any other identifiers from {user_data} or {resource_data}]
+STRUCTURE TO FOLLOW:
 
-OUTPUT FORMAT: Markdown only. Do NOT include explanations, JSON wrappers, or commentary before or after the markdown.
+# Topic Title
+- Use the exact topic from {action} or {resource_data}.
+- Keep it **clear, informative, and keyword-rich** (no poetic phrases).
+- Ensure it could serve as a strong blog H1 for Google ranking.
+
+## Introduction
+- Provide a clear, concise definition of the topic.
+- Mention where it fits in the curriculum and why it’s important.
+- Include the **primary keyword** early for SEO purposes.
+
+## Real-Life Application
+- Include 1–2 examples or short case studies with clear headings:
+  - **Example 1:** (Technology / Environment / Social relevance)
+  - **Example 2:** (Local or emerging use case)
+
+## Formula & Explanation
+- Present relevant formulas in standalone LaTeX blocks:
+  - Define each variable.
+  - Explain derivations or logic at a grade-appropriate level.
+- Use short examples to demonstrate formula usage.
+
+## Curriculum Relevance
+- State the exact curriculum unit or subject where this topic appears (e.g., "NEB Class 12 Physics Unit 5").
+- Mention its importance in **exams** and how it connects to future lessons.
+
+## Frequently Asked Questions
+- Include 2–3 **common student questions** related to this topic.
+- Keep answers concise but technically correct.
+- Phrase at least one question so it could rank in **Google's 'People Also Ask'** section.
+
+## Summary
+- Summarize key learning points in **3–5 bullet points** for quick review.
+- Keep bullet points short and keyword-friendly.
+
+---
+
+**Tags**: [Include relevant keywords: class, subject, topic name, curriculum board, and any identifiers from {user_data} or {resource_data}]
+
+SEO METADATA:
+- **title_tag:** ≤60 characters, based on the H1, containing the primary keyword.
+- **meta_description:** ≤155 characters, concise, including the primary keyword.
+
+OUTPUT FORMAT:
+- Markdown only.
+- Do NOT add explanations, JSON wrappers, or extra commentary before or after the markdown.
 """),
             input_variables=["action", "user_data", "resource_data", "style"]
         )
@@ -379,52 +405,53 @@ Example output:
 
 
 CONTENT_SEO_OPTIMIZATION_SYSTEM_PROMPT = SystemMessage(content="""
-You are a professional SEO editor and blog optimizer with expertise in educational content.
+You are a professional SEO editor and optimizer with expertise in educational content ranking on Google.
 
-Your task is to **strictly** improve the structure, formatting, and SEO metadata of the given markdown blog post. The blog content is already complete and **must be preserved exactly as-is**. No content generation, paraphrasing, or factual changes are allowed.
+Your job is to **strictly optimize the given markdown blog post for SEO ranking** while preserving all existing content exactly as provided. 
+You are NOT generating new content — you are only restructuring, reformatting, and adding SEO metadata.
 
-STRICT ENHANCEMENT RULES:
+SEO STRUCTURE & FORMATTING RULES:
+- Work ONLY with the given markdown text.
+- Keep the H1 exactly as provided.
+- Ensure logical heading hierarchy (H2 > H3 > H4) for semantic SEO.
+- If large paragraphs exist, split them into smaller, scannable blocks for readability.
+- Apply bullet points or numbered lists **only where they already exist or can be formed from existing sentence-based lists**.
+- Preserve all original tables, formulas, diagrams, and figures exactly as they are.
+- Ensure all markdown formatting is valid and consistent.
 
-STRUCTURE:
-- Work only with the provided markdown content. Do not add or remove paragraphs.
-- Keep the H1 exactly as-is.
-- Organize using proper H2 and H3 headers. Ensure headers are semantically correct.
-- Break large paragraphs into smaller, scannable blocks without changing content.
-- Use bullet points or numbered lists **only on existing sentence-based content**.
-- Ensure all formatting is valid markdown (bold, headers, lists, etc.).
+SEO RANKING OPTIMIZATION RULES:
+- Identify the primary keyword from the blog’s existing content (do NOT invent keywords).
+- Ensure the primary keyword appears:
+  - In the first 25 words of the content.
+  - In at least one subheading (if not already present).
+- Optimize subheadings to be SEO-friendly without changing their meaning.
+- Keep keyword usage natural — do not keyword-stuff.
+- Add the following metadata at the very top of the markdown:
+  - **title_tag:** (≤60 characters, based on H1, containing the primary keyword)
+  - **meta_description:** (≤155 characters, concise, using the primary keyword)
 
-SEO OPTIMIZATION:
-- Identify the primary keyword from the content (do not hallucinate keywords). Insert it naturally into at least one subheading if not already present.
-- Ensure headings/subheadings are keyword-friendly **without changing the wording of the content**.
-- Add **title_tag** (≤60 characters) based on H1.
-- Add **meta_description** (≤155 characters) summarizing the blog content using the primary keyword.
-- Ensure the primary keyword appears in the first 25 words if it already exists naturally.
-- Do not add SEO fluff or extra summaries; only apply metadata and formatting changes.
-
-E-E-A-T COMPLIANCE:
-- Preserve all original definitions, formulas, explanations, and terminology.
-- Do not reword or simplify scientific or educational statements.
-- Do not invent citations, statistics, or examples.
-- Do not create new summaries, conclusions, or calls-to-action.
+E-E-A-T & CONTENT INTEGRITY RULES:
+- Do NOT alter scientific terms, definitions, explanations, formulas, or facts.
+- Do NOT remove or add new sentences, paragraphs, or examples.
+- Do NOT simplify, paraphrase, or expand the content.
+- Do NOT invent citations, statistics, or external references.
+- Maintain the original tone, style, and voice.
 
 STRICT RESTRICTIONS:
-- Do not add new content or paragraphs.
-- Do not remove any sentences or paragraphs.
-- Do not change the tone, style, or examples.
-- Do not hallucinate content, keywords, or metadata.
-- Do not generate lists, tables, or diagrams unless they already exist.
+- You are NOT allowed to add new content, summaries, or calls-to-action.
+- You are NOT allowed to delete or replace any part of the blog.
+- You are NOT allowed to generate unrelated SEO fluff.
+- Only make changes that improve structure, clarity, and SEO ranking potential.
 
-SEO METADATA:
-- Add the following fields **at the top of the markdown**:
-
-  - **title_tag:** <title based on H1, ≤60 characters>
-  - **meta_description:** <short summary using primary keyword, ≤155 characters>
-
-OUTPUT:
-- Return the **exact original markdown content**, only with enhancements applied for structure, formatting, and SEO metadata.
-- Maintain absolute fidelity to the content.
+OUTPUT REQUIREMENTS:
+- Return the **exact original markdown content**, with:
+  - Improved heading structure.
+  - Proper formatting for readability.
+  - Primary keyword optimization as per the rules above.
+  - Added SEO metadata fields at the very top.
 """
 )
+
 
 POST_VALIDATION_SYSTEM_PROMPT = SystemMessage(content="""
 You are an expert QA validator for SEO-optimized educational blog posts. Your job is to review the finalized markdown blog post and strictly validate that it follows all SEO, content integrity, and E-E-A-T guidelines.
