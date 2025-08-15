@@ -165,6 +165,7 @@ ALWAYS return full JSON — even if data is minimal.""",
                     results.append({
                         "url": extracted.get("url", url),
                         "source": extracted.get("source", ""),  # e.g. "byjus.com"
+                        'content_type': extracted.get("content_type", ""),
                         "subject": extracted.get("subject", ""),  # e.g. "Physics"
                         "grade": extracted.get("grade", None),  # e.g. 11 (int) or None
                         "unit": extracted.get("unit", ""),  # e.g. "Electricity and Magnetism"

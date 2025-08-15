@@ -108,6 +108,7 @@ class RouteSelector(BaseModel):
 class WebCrawlerConfig(BaseModel):
     url: HttpUrl = Field(..., description="Original URL of the scraped educational page.")
     source: str = Field(..., description="Domain source of the page, e.g., 'byjus.com'.")
+    content_type: str = Field(..., description="Type of content on the page, e.g., youtube video.")
 
     subject: str = Field(..., description="Aligned school subject (e.g., Physics, Chemistry).")
     grade: int = Field(..., description="Grade level the content is aligned to (e.g., 11).")
