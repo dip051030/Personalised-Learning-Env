@@ -9,7 +9,7 @@ from models.external_tools_apis import serp_api_tool
 from prompts.prompts import user_summary, enriched_content, \
     content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
     CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback, gap_finder, \
-    content_seo_optimization, prompt_post_validation, post_validation
+    content_seo_optimization, prompt_post_validation, post_validation, prompt_seo_optimization
 from schemas import LearningState, ContentResponse, EnrichedLearningResource, FeedBack, RouteSelector, \
     PostValidationResult
 import json
@@ -191,7 +191,7 @@ def seo_optimiser_node(state: LearningState) -> LearningState:
     if state.content is not None:
         try:
             logging.info("Optimising the content for SEO")
-            messages = [content_seo_optimization,
+            messages = [prompt_seo_optimization,
                 HumanMessage(
                     content=f"""
 Generated Undiagnosed Learning Resource:

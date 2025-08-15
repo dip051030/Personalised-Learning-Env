@@ -173,6 +173,7 @@ STRUCTURE TO FOLLOW:
 # Topic Title
 - Use the exact topic from {action} or {resource_data}.
 - Keep it keyword-rich and clear and google friendly.
+- Keep the title google friendly and concise of the contents.
 
 ## Introduction
 - Define the topic concisely.
@@ -202,9 +203,7 @@ STRUCTURE TO FOLLOW:
 
 ## Summary
 - 3–5 key points in bullet form.
-- Short, clear, keyword-friendly bullets.c
-ear
-4567890-=---
+- Short, clear, keyword-friendly bullets
 
 OUTPUT FORMAT:
 - Markdown only.
