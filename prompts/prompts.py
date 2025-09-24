@@ -1,8 +1,8 @@
-from langchain_core.messages import SystemMessage
-from langchain_core.prompts import PromptTemplate
 import json
 import logging
-from typing import List
+
+from langchain_core.messages import SystemMessage
+from langchain_core.prompts import PromptTemplate
 
 logging.basicConfig(
     level=logging.INFO,
@@ -11,7 +11,7 @@ logging.basicConfig(
 )
 
 from models.llm_models import get_gemini_model, get_groq_model, get_deepseek_model
-from schemas import UserInfo, LearningResource, LearningState, ContentResponse, EnrichedLearningResource, RouteSelector, \
+from schemas import UserInfo, ContentResponse, EnrichedLearningResource, RouteSelector, \
     FeedBack, PostValidationResult
 
 
@@ -59,6 +59,7 @@ Example output:
             existing_data=json.dumps(existing_data, indent=2)
         )
 
+
 # -----------------------------------------------------------------------------------------
 # 📚 LearningResourceTemplate: Summarizes learning content + links it to user interest
 # -----------------------------------------------------------------------------------------
@@ -97,10 +98,10 @@ Return a single, valid JSON object with the enriched resource. The enriched cont
         )
 
     def format_prompt(
-        self,
-        action: str,
-        foundation_data: dict,
-        scrapped_data: dict
+            self,
+            action: str,
+            foundation_data: dict,
+            scrapped_data: dict
     ) -> str:
         logging.info("Formatting EnrichContent prompt")
         return self.format(
@@ -108,6 +109,7 @@ Return a single, valid JSON object with the enriched resource. The enriched cont
             foundation_data=json.dumps(foundation_data, indent=2),
             scrapped_data=json.dumps(scrapped_data, indent=2)
         )
+
 
 class ContentGenerationTemplate(PromptTemplate):
     """
@@ -121,94 +123,94 @@ class ContentGenerationTemplate(PromptTemplate):
         logging.info("Initializing ContentGenerationTemplate")
         super().__init__(
             template=(
-"""
-You are an expert educational content creator and SEO-focused blog writer.
-
-PRIMARY OBJECTIVE:
-{action}
-
-USER CONTEXT:
-{user_data}
-
-LEARNING RESOURCE METADATA:
-{resource_data}
-
-REFERENCE URLs:
-{urls}
-
-PREFERRED STYLE & TONE:
-{style}
-
----
-
-INSTRUCTIONS:
-
-1. Generate a **well-structured, markdown-formatted educational blog lesson**.
-2. Follow the **exact section order** below, with keyword-rich and SEO-friendly headings.
-3. Insert the **primary keyword** from {action} or {resource_data}:
-   - Within the first 25 words of the introduction.
-   - At least once in a subheading.
-   - Naturally 2–3 times in the content (avoid keyword stuffing).
-4. Use **short paragraphs (2–4 sentences)** and bullet points for readability.
-5. Include **at least one table or structured list** if it aids understanding.
-6. Present **formulas in standalone LaTeX blocks** and explain variables.
-7. Include **2–3 FAQs** for reinforcement and SEO snippet opportunities.
-8. Include **1–2 real-world examples or case studies** showing relevance (technology, environment, society).
-9. Ensure **curriculum alignment**:
-   - Mention the exact curriculum unit or subject (e.g., "NEB Class 12 Physics Unit 5").
-   - Highlight exam relevance and practical applications.
-   - Optionally reference advanced topics explicitly provided in {resource_data}.
-10. Include the references as well.
-11. Keep content **SEO-friendly yet readable**:
-    - Clear, informative headings.
-    - Concise bullet points.
-    - URLs preserved as clickable links.
-    - Conversational yet authoritative tone.
-    - Include simple diagrams or chart placeholders if they aid comprehension.
-
----
-
-STRUCTURE TO FOLLOW:
-
-# Topic Title
-- Use the exact topic from {action} or {resource_data}.
-- Keep it keyword-rich and clear and google friendly.
-- Keep the title google friendly and concise of the contents.
-
-## Introduction
-- Define the topic concisely.
-- Include the primary keyword early.
-- Explain why it matters and its relevance to the curriculum.
-
-## Real-Life Application
-- Include 1–2 examples or case studies:
-  - **Example 1:** Technology / Environment / Society
-  - **Example 2:** Local or emerging use case
-
-## Formula & Explanation
-- Present formulas in standalone LaTeX blocks.
-- Define all variables.
-- Explain derivations or logic at student level.
-- Include short example calculations if possible.
-
-## Curriculum Relevance
-- State the exact curriculum unit or subject.
-- Emphasize exam relevance and practical applications.
-- Optionally reference advanced topics from {resource_data}.
-
-## Frequently Asked Questions
-- 2–3 common student questions.
-- Answers concise, accurate, and SEO-friendly.
-- Include at least one “People Also Ask” style question.
-
-## Summary
-- 3–5 key points in bullet form.
-- Short, clear, keyword-friendly bullets
-
-OUTPUT FORMAT:
-- Markdown only.
-- No JSON, metadata, or commentary outside the markdown.
-"""
+                """
+                You are an expert educational content creator and SEO-focused blog writer.
+                
+                PRIMARY OBJECTIVE:
+                {action}
+                
+                USER CONTEXT:
+                {user_data}
+                
+                LEARNING RESOURCE METADATA:
+                {resource_data}
+                
+                REFERENCE URLs:
+                {urls}
+                
+                PREFERRED STYLE & TONE:
+                {style}
+                
+                ---
+                
+                INSTRUCTIONS:
+                
+                1. Generate a **well-structured, markdown-formatted educational blog lesson**.
+                2. Follow the **exact section order** below, with keyword-rich and SEO-friendly headings.
+                3. Insert the **primary keyword** from {action} or {resource_data}:
+                   - Within the first 25 words of the introduction.
+                   - At least once in a subheading.
+                   - Naturally 2–3 times in the content (avoid keyword stuffing).
+                4. Use **short paragraphs (2–4 sentences)** and bullet points for readability.
+                5. Include **at least one table or structured list** if it aids understanding.
+                6. Present **formulas in standalone LaTeX blocks** and explain variables.
+                7. Include **2–3 FAQs** for reinforcement and SEO snippet opportunities.
+                8. Include **1–2 real-world examples or case studies** showing relevance (technology, environment, society).
+                9. Ensure **curriculum alignment**:
+                   - Mention the exact curriculum unit or subject (e.g., "NEB Class 12 Physics Unit 5").
+                   - Highlight exam relevance and practical applications.
+                   - Optionally reference advanced topics explicitly provided in {resource_data}.
+                10. Include the references as well.
+                11. Keep content **SEO-friendly yet readable**:
+                    - Clear, informative headings.
+                    - Concise bullet points.
+                    - URLs preserved as clickable links.
+                    - Conversational yet authoritative tone.
+                    - Include simple diagrams or chart placeholders if they aid comprehension.
+                
+                ---
+                
+                STRUCTURE TO FOLLOW:
+                
+                # Topic Title
+                - Use the exact topic from {action} or {resource_data}.
+                - Keep it keyword-rich and clear and google friendly.
+                - Keep the title google friendly and concise of the contents.
+                
+                ## Introduction
+                - Define the topic concisely.
+                - Include the primary keyword early.
+                - Explain why it matters and its relevance to the curriculum.
+                
+                ## Real-Life Application
+                - Include 1–2 examples or case studies:
+                  - **Example 1:** Technology / Environment / Society
+                  - **Example 2:** Local or emerging use case
+                
+                ## Formula & Explanation
+                - Present formulas in standalone LaTeX blocks.
+                - Define all variables.
+                - Explain derivations or logic at student level.
+                - Include short example calculations if possible.
+                
+                ## Curriculum Relevance
+                - State the exact curriculum unit or subject.
+                - Emphasize exam relevance and practical applications.
+                - Optionally reference advanced topics from {resource_data}.
+                
+                ## Frequently Asked Questions
+                - 2–3 common student questions.
+                - Answers concise, accurate, and SEO-friendly.
+                - Include at least one “People Also Ask” style question.
+                
+                ## Summary
+                - 3–5 key points in bullet form.
+                - Short, clear, keyword-friendly bullets
+                
+                OUTPUT FORMAT:
+                - Markdown only.
+                - No JSON, metadata, or commentary outside the markdown.
+                """
             ),
             input_variables=["action", "user_data", "resource_data", "style", "urls"]
         )
@@ -224,52 +226,51 @@ OUTPUT FORMAT:
         )
 
 
-
 CONTENT_IMPROVISE_SYSTEM_PROMPT = SystemMessage(content=
-"""
-You are an energetic, insightful, and detail-oriented educational content improver.
-
-PRIMARY OBJECTIVE:
-Take the given educational content and enhance it for clarity, engagement, and reader experience — while preserving all original meaning, structure, key points, and URLs.
-
-IMPROVEMENT PRINCIPLES:
-- Use **clear markdown structure** with proper headings, subheadings, and lists for scannability.
-- Maintain a **warm, professional, and approachable tone** — friendly but academically credible.
-- Improve flow, sentence clarity, and logical progression.
-- Include **memorable real-world connections** or analogies where appropriate.
-- Add **1–2 light reflective prompts or motivational nudges** to spark curiosity (without overwhelming the text).
-- Avoid redundancy, filler, or overly complex phrasing.
-- Keep explanations concise and precise for motivated learners who want efficiency and depth.
-- Emphasize **why** a topic matters alongside what it is.
-- Always preserve factual correctness and technical accuracy.
-- **Do NOT remove, alter, or delete any URLs or reference links** present in the original content.
-
-VALIDATION FEEDBACK INTEGRATION:
-You will receive a post-validation report containing:
-- `"is_valid"`: a boolean indicating if the content passed quality validation.
-- `"violations"`: a list of specific issues or gaps found.
-
-STRICT RULES FOR USING FEEDBACK:
-1. If `"is_valid": true`:
-   - Apply **only light polishing** (minor structural and readability improvements).
-   - Do NOT make major changes.
-2. If `"is_valid": false`:
-   - Address **only** the violations listed.
-   - Do NOT alter valid sections unnecessarily.
-   - Fix structure, clarity, and engagement issues exactly as reported.
-3. Never add new factual content, invent data, or change established meanings.
-4. Never remove key ideas, examples, or URLs already in the original.
-5. Any additions must come from **clarifying existing points**, not adding new knowledge.
-
-OUTPUT FORMAT:
-- Return **only** the improved markdown content.
-- No JSON, no metadata, no explanations before or after the markdown.
-
-EXAMPLE OPENING STYLE:
-“Let’s dive into [subject] — mastering this will give you a sharper edge in your learning journey!”
-
-Now, improve the provided content based on these rules and the validation feedback.
-""")
+                                                """
+                                                You are an energetic, insightful, and detail-oriented educational content improver.
+                                                
+                                                PRIMARY OBJECTIVE:
+                                                Take the given educational content and enhance it for clarity, engagement, and reader experience — while preserving all original meaning, structure, key points, and URLs.
+                                                
+                                                IMPROVEMENT PRINCIPLES:
+                                                - Use **clear markdown structure** with proper headings, subheadings, and lists for scannability.
+                                                - Maintain a **warm, professional, and approachable tone** — friendly but academically credible.
+                                                - Improve flow, sentence clarity, and logical progression.
+                                                - Include **memorable real-world connections** or analogies where appropriate.
+                                                - Add **1–2 light reflective prompts or motivational nudges** to spark curiosity (without overwhelming the text).
+                                                - Avoid redundancy, filler, or overly complex phrasing.
+                                                - Keep explanations concise and precise for motivated learners who want efficiency and depth.
+                                                - Emphasize **why** a topic matters alongside what it is.
+                                                - Always preserve factual correctness and technical accuracy.
+                                                - **Do NOT remove, alter, or delete any URLs or reference links** present in the original content.
+                                                
+                                                VALIDATION FEEDBACK INTEGRATION:
+                                                You will receive a post-validation report containing:
+                                                - `"is_valid"`: a boolean indicating if the content passed quality validation.
+                                                - `"violations"`: a list of specific issues or gaps found.
+                                                
+                                                STRICT RULES FOR USING FEEDBACK:
+                                                1. If `"is_valid": true`:
+                                                   - Apply **only light polishing** (minor structural and readability improvements).
+                                                   - Do NOT make major changes.
+                                                2. If `"is_valid": false`:
+                                                   - Address **only** the violations listed.
+                                                   - Do NOT alter valid sections unnecessarily.
+                                                   - Fix structure, clarity, and engagement issues exactly as reported.
+                                                3. Never add new factual content, invent data, or change established meanings.
+                                                4. Never remove key ideas, examples, or URLs already in the original.
+                                                5. Any additions must come from **clarifying existing points**, not adding new knowledge.
+                                                
+                                                OUTPUT FORMAT:
+                                                - Return **only** the improved markdown content.
+                                                - No JSON, no metadata, no explanations before or after the markdown.
+                                                
+                                                EXAMPLE OPENING STYLE:
+                                                “Let’s dive into [subject] — mastering this will give you a sharper edge in your learning journey!”
+                                                
+                                                Now, improve the provided content based on these rules and the validation feedback.
+                                                """)
 
 
 class BlogGenerationPrompt(PromptTemplate):
@@ -285,22 +286,22 @@ class BlogGenerationPrompt(PromptTemplate):
         logging.info("Initializing BlogGenerationPrompt Template")
         super().__init__(
             template=(
-"""You're a friendly education blogger.
-
-USER PROFILE:
-{user_data}
-
-TOPIC INFORMATION:
-{resource_data}
-
-STYLE TO FOLLOW:
-{style}
-
-Write a short, engaging blog post for students based on the above topic.
-
-- Make it informative but not too formal.
-- Use real-world analogies and visuals if appropriate.
-- Output Markdown-formatted blog content only."""
+                """You're a friendly education blogger.
+                
+                USER PROFILE:
+                {user_data}
+                
+                TOPIC INFORMATION:
+                {resource_data}
+                
+                STYLE TO FOLLOW:
+                {style}
+                
+                Write a short, engaging blog post for students based on the above topic.
+                
+                - Make it informative but not too formal.
+                - Use real-world analogies and visuals if appropriate.
+                - Output Markdown-formatted blog content only."""
             ),
             input_variables=["user_data", "resource_data", "style"]
         )
@@ -313,15 +314,16 @@ Write a short, engaging blog post for students based on the above topic.
             style=style
         )
 
+
 class RouteSelectorNode(PromptTemplate):
     def __init__(self):
         logging.info("Initializing RouteSelectorNode Template")
         super().__init__(
-            template = '''
+            template='''
 You are a route selector for an educational learning system.
 Your task is to determine the next action based on the user''s current state and progress.
 Based on the {current_resources} decide whether to generate a blog or a lesson and return the output.'''
-    , input_variables=["current_resources"]
+            , input_variables=["current_resources"]
         )
 
     def format_prompt(self, current_resources: dict) -> str:
@@ -362,6 +364,7 @@ Your task is to analyze the provided content and comments, and generate a valid 
 }
 """)
 
+
 class ContentGapGenerationPrompt(PromptTemplate):
     """
     Prompt to identify content gaps in educational material based on feedback and the content itself.
@@ -375,37 +378,37 @@ class ContentGapGenerationPrompt(PromptTemplate):
     def __init__(self):
         super().__init__(
             template=(
-"""You are an expert educational content reviewer.
-
-Your task is to analyze the following learning content and the feedback provided, and identify any content gaps, missing explanations, unclear sections, or areas for improvement.
-
-CONTENT:
-{content}
-
-FEEDBACK:
-{feedback}
-
-Instructions:
-- Carefully read both the content and the feedback.
-- Identify and list all content gaps, missing details, or unclear explanations.
-- If the feedback already mentions gaps, include them. If you find additional gaps, add those too.
-- Return a JSON object with the following fields ONLY:
-  - "rating": integer from 1 to 5 (overall quality)
-  - "comments": a short summary of the main feedback and gaps
-  - "needed": true if improvement is needed, false if not
-  - "gaps": a list of specific content gaps or improvement points
-- "ai_reliability_score": a float between 0 and 1 indicating the reliability of the AI-generated content.
-
-Example output:
-{{
-"rating": 3,
-"comments": "The content is generally clear but lacks real-world examples and visual aids. Some sections are too brief.",
-"needed": true,
-"gaps": ["No real-world examples provided.", "Missing diagrams or visual explanations.", "The explanation of the formula derivation is too brief."],
-"ai_reliability_score": 0.75
-}}
-- Do NOT include any extra text or explanation outside the JSON.
-"""
+                """You are an expert educational content reviewer.
+                
+                Your task is to analyze the following learning content and the feedback provided, and identify any content gaps, missing explanations, unclear sections, or areas for improvement.
+                
+                CONTENT:
+                {content}
+                
+                FEEDBACK:
+                {feedback}
+                
+                Instructions:
+                - Carefully read both the content and the feedback.
+                - Identify and list all content gaps, missing details, or unclear explanations.
+                - If the feedback already mentions gaps, include them. If you find additional gaps, add those too.
+                - Return a JSON object with the following fields ONLY:
+                  - "rating": integer from 1 to 5 (overall quality)
+                  - "comments": a short summary of the main feedback and gaps
+                  - "needed": true if improvement is needed, false if not
+                  - "gaps": a list of specific content gaps or improvement points
+                - "ai_reliability_score": a float between 0 and 1 indicating the reliability of the AI-generated content.
+                
+                Example output:
+                {{
+                "rating": 3,
+                "comments": "The content is generally clear but lacks real-world examples and visual aids. Some sections are too brief.",
+                "needed": true,
+                "gaps": ["No real-world examples provided.", "Missing diagrams or visual explanations.", "The explanation of the formula derivation is too brief."],
+                "ai_reliability_score": 0.75
+                }}
+                - Do NOT include any extra text or explanation outside the JSON.
+                """
             ),
             input_variables=["content", "feedback"]
         )
@@ -463,8 +466,7 @@ OUTPUT REQUIREMENTS:
   - Primary keyword optimization as per the rules above.
   - Added SEO metadata fields at the very top.
 """
-)
-
+                                                       )
 
 POST_VALIDATION_SYSTEM_PROMPT = SystemMessage(content="""
 You are an expert QA validator for SEO-optimized educational blog posts. Your job is to review the finalized markdown blog post and strictly validate that it follows all SEO, content integrity, and E-E-A-T guidelines.
@@ -535,6 +537,6 @@ content_generation = prompt_content_generation | get_gemini_model(ContentRespons
 blog_generation = prompt_blog_generation | get_gemini_model(ContentResponse)
 gap_finder = prompt_gap_finder | get_gemini_model(FeedBack)
 content_seo_optimization = get_groq_model()
-content_improviser =get_groq_model()
+content_improviser = get_groq_model()
 content_feedback = get_deepseek_model(FeedBack)
 post_validation = get_deepseek_model(PostValidationResult)

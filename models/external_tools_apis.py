@@ -1,5 +1,7 @@
-import requests
 import logging
+
+import requests
+
 from keys.apis import set_env
 
 
@@ -25,7 +27,8 @@ def serp_api_tool(query: str) -> dict:
         }
         response = requests.post('https://google.serper.dev/search', json=params, headers=headers)
         data = response.json()
-        logging.info(f"[external_tools_apis.py:{serp_api_tool.__code__.co_firstlineno}] INFO SerpAPI request successful for query: {query}")
+        logging.info(
+            f"[external_tools_apis.py:{serp_api_tool.__code__.co_firstlineno}] INFO SerpAPI request successful for query: {query}")
     except Exception as e:
         logging.error(f"[external_tools_apis.py:{serp_api_tool.__code__.co_firstlineno}] ERROR in SerpAPI tool: {e}")
         data = {"error": str(e)}

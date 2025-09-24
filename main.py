@@ -1,8 +1,8 @@
-import json
 import logging
 from nodes import graph_run
-from utils.utils import save_learning_state_to_json
+import logging
 
+from nodes import graph_run
 
 logging.basicConfig(
     level=logging.INFO,
@@ -42,6 +42,7 @@ user_data = {
     "feedback": None
 }
 
+
 def main():
     """
     Entry point for running the learning graph with sample user data.
@@ -66,6 +67,7 @@ def main():
         print("Generated content saved to generated_content.md")
     else:
         print("No generated content to save.")
+
 
 if __name__ == "__main__":
     main()

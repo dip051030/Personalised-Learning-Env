@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8d9f642-a0ca-4850-83ea-1fa96df6f1b0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PersonalisedLearningSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PersonalisedLearningSystem.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generated_content.md" beforeDir="false" afterPath="$PROJECT_DIR$/generated_content.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learning_state.json" beforeDir="false" afterPath="$PROJECT_DIR$/learning_state.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +26,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dip051030&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/dip051030/Personalised-Learning-Env.git&quot;,
+    &quot;accountId&quot;: &quot;c7dcbf35-c25f-4370-9d72-2d4cdf2388eb&quot;
+  }
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
   </component>
@@ -43,9 +58,15 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/dyane__4/DataspellProjects/PersonalisedLearningSystem&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/dip__4/PycharmProjects/PersonalisedLearningSystem&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -69,6 +90,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -87,7 +109,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-21f4d9598332-a636b6f4477c-com.jetbrains.pycharm.ds.sharedIndexes.bundled-DS-252.23892.514" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-PY-252.25557.130" />
+        <option value="bundled-python-sdk-1bde30d8e611-7b97d883f26b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.25557.130" />
       </set>
     </attachedChunks>
   </component>
@@ -98,8 +121,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1752153467889</updated>
+      <workItem from="1756434559578" duration="1781000" />
+      <workItem from="1756436352903" duration="2560000" />
+      <workItem from="1756866983923" duration="1039000" />
+      <workItem from="1757171191815" duration="782000" />
+      <workItem from="1757241329625" duration="1000" />
+      <workItem from="1757675112489" duration="23000" />
+      <workItem from="1757684017777" duration="16000" />
+      <workItem from="1757684189786" duration="44000" />
+      <workItem from="1757684375531" duration="16000" />
+      <workItem from="1757690627260" duration="7000" />
+      <workItem from="1757690871160" duration="18000" />
+      <workItem from="1757696387359" duration="10000" />
+      <workItem from="1757701665357" duration="34000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

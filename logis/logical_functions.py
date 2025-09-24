@@ -1,4 +1,5 @@
 import logging
+
 import chromadb
 
 logging.basicConfig(
@@ -7,12 +8,34 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
-from schemas import LearningResource, ResourceSubject, LearningState, ContentResponse, FeedBack, ContentType
+from schemas import LearningResource, ResourceSubject, LearningState, ContentType
 from db.vector_db import build_chroma_db_collection, save_scraped_data_to_vdb
 from sentence_transformers import SentenceTransformer
 
 
-def search_both_collections(state : LearningState,
+def load_or_build_collections(vdb_path, lessons_collection, scraped_collection):
+    client = chromadb.PersistentClient(path=vdb_path)
+
+    try:
+        lessons_col = client.get_collection(lessons_collection)
+        logging.info(f"Collection '{lessons_collection}' loaded successfully.")
+    except Exception as e:
+        logging.warning(f"Collection '{lessons_collection}' not found. Building it now.")
+        build_chroma_db_collection()
+        lessons_col = client.get_collection(lessons_collection)
+
+    try:
+        scraped_col = client.get_collection(scraped_collection)
+        logging.info(f"Collection '{scraped_collection}' loaded successfully.")
+    except Exception as e:
+        logging.warning(f"Collection '{scraped_collection}' not found. Building it now.")
+        save_scraped_data_to_vdb()
+        scraped_col = client.get_collection(scraped_collection)
+
+    return lessons_col, scraped_col
+
+
+def search_both_collections(state: LearningState,
                             vdb_path="./local VDB/chromadb",
                             lessons_collection="lessons",
                             scraped_collection="scraped_data",
@@ -23,21 +46,16 @@ def search_both_collections(state : LearningState,
     """
     try:
         if state.current_resource is None:
-            logging.warning(f"[logical_functions.py:{search_both_collections.__code__.co_firstlineno}] WARNING No current_resource in state.")
+            logging.warning(
+                f"[logical_functions.py:{search_both_collections.__code__.co_firstlineno}] WARNING No current_resource in state.")
             return None
 
+        lessons_col, scraped_col = load_or_build_collections(vdb_path, lessons_collection, scraped_collection)
 
-        build_chroma_db_collection()
-        save_scraped_data_to_vdb()
         # Load the embedding model
         model = SentenceTransformer("Shashwat13333/bge-base-en-v1.5_v4")
         query_text = state.current_resource.topic
         query_embedding = model.encode(query_text).tolist()
-
-        # Connect to ChromaDB
-        client = chromadb.PersistentClient(path=vdb_path)
-        lessons_col = client.get_or_create_collection(lessons_collection)
-        scraped_col = client.get_or_create_collection(scraped_collection)
 
         # Query both collections
         lessons_results = lessons_col.query(
@@ -49,13 +67,15 @@ def search_both_collections(state : LearningState,
             n_results=n_results
         )
 
-        logging.info(f"[logical_functions.py:{search_both_collections.__code__.co_firstlineno}] INFO Queried both collections for topic '{query_text}'.")
+        logging.info(
+            f"[logical_functions.py:{search_both_collections.__code__.co_firstlineno}] INFO Queried both collections for topic '{query_text}'.")
         return {
             "lessons_results": lessons_results,
             "scraped_results": scraped_results
         }
     except Exception as e:
-        logging.error(f"[logical_functions.py:{search_both_collections.__code__.co_firstlineno}] ERROR Error searching collections: {e}")
+        logging.error(
+            f"[logical_functions.py:{search_both_collections.__code__.co_firstlineno}] ERROR Error searching collections: {e}")
         return None
 
 
@@ -86,7 +106,6 @@ def lesson_decision_node(state: LearningState) -> str:
         style = "conceptual_focus"
 
     return style
-
 
 
 def parse_chromadb_metadata(metadata: dict) -> LearningResource:
@@ -121,6 +140,7 @@ def blog_decision_node(state: LearningState) -> str:
         style = "storytelling"
     return style
 
+
 def update_content_count(state: LearningState) -> str:
     """
     Check the content count in the learning state.
@@ -128,11 +148,14 @@ def update_content_count(state: LearningState) -> str:
     """
     try:
         if state.count < 4:
-            logging.info(f"[logical_functions.py:{update_content_count.__code__.co_firstlineno}] INFO Current state count: {state.count}")
+            logging.info(
+                f"[logical_functions.py:{update_content_count.__code__.co_firstlineno}] INFO Current state count: {state.count}")
             return 'Update required'
         else:
-            logging.info(f"[logical_functions.py:{update_content_count.__code__.co_firstlineno}] INFO No update required, current count: {state.count}")
+            logging.info(
+                f"[logical_functions.py:{update_content_count.__code__.co_firstlineno}] INFO No update required, current count: {state.count}")
             return 'No update required'
     except Exception as e:
-        logging.error(f"[logical_functions.py:{update_content_count.__code__.co_firstlineno}] ERROR Error updating state count: {e}")
+        logging.error(
+            f"[logical_functions.py:{update_content_count.__code__.co_firstlineno}] ERROR Error updating state count: {e}")
         return 'No update required'

@@ -55,6 +55,6 @@ def read_from_local(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     logging.info(f"[utils.py:{read_from_local.__code__.co_firstlineno}] INFO Data read from {file_path}")
-    urls = [data.get('link', []) for k in data if 'link' in k]
+    urls = [item.get('link') for item in data if isinstance(item, dict) and 'link' in item]
     return urls
 

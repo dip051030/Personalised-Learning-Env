@@ -1,9 +1,8 @@
+from datetime import datetime
 from enum import Enum
 from typing import List, Optional, Union
+
 from pydantic import BaseModel, Field, HttpUrl
-from datetime import datetime
-
-
 
 
 class ResourceSubject(str, Enum):
@@ -96,7 +95,8 @@ class FeedBack(BaseModel):
     comments: Optional[str] = None
     needed: bool = Field(default=True, description="True if feedback is needed else False")
     gaps: Optional[List[str]] = Field(default=[], description="List of gaps in the content that need to be addressed")
-    ai_reliability_score : Optional[float] = Field(default=0.0, description="AI reliability score for the content, between 0 and 1")
+    ai_reliability_score: Optional[float] = Field(default=0.0,
+                                                  description="AI reliability score for the content, between 0 and 1")
 
     class Config:
         from_attributes = True
@@ -104,6 +104,7 @@ class FeedBack(BaseModel):
 
 class RouteSelector(BaseModel):
     next_node: str
+
 
 class WebCrawlerConfig(BaseModel):
     url: HttpUrl = Field(..., description="Original URL of the scraped educational page.")
@@ -127,8 +128,11 @@ class WebCrawlerConfig(BaseModel):
 
 
 class PostValidationResult(BaseModel):
-    is_valid: bool = Field(default=False, description="Indicates whether the SEO blog post passed all validation checks.")
-    violations: List[str] = Field(default_factory=list, description="List of descriptive violation messages if validation failed. Empty if valid.")
+    is_valid: bool = Field(default=False,
+                           description="Indicates whether the SEO blog post passed all validation checks.")
+    violations: List[str] = Field(default_factory=list,
+                                  description="List of descriptive violation messages if validation failed. Empty if valid.")
+
 
 class LearningState(BaseModel):
     user: UserInfo
@@ -139,7 +143,8 @@ class LearningState(BaseModel):
     related_examples: Optional[List[str]] = None
     content_type: ContentType = ContentType.LESSON
     content: Optional[ContentResponse] = None
-    next_action: Optional[RouteSelector] = Field(default="lesson_selection", description="Should return lesson_selection or blog_selection")
+    next_action: Optional[RouteSelector] = Field(default="lesson_selection",
+                                                 description="Should return lesson_selection or blog_selection")
     history: List[HistoryEntry] = []
     feedback: Optional[FeedBack] = None
     validation_result: Optional[PostValidationResult] = None

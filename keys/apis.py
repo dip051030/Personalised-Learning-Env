@@ -1,7 +1,8 @@
-import os
 import getpass
-from typing import Optional
 import logging
+import os
+from typing import Optional
+
 from dotenv import load_dotenv
 
 logging.basicConfig(

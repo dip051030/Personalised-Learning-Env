@@ -1,21 +1,21 @@
 import asyncio
-from langsmith import expect
-from more_itertools import flatten
-from langgraph.graph import StateGraph, END
-from langchain_core.messages import HumanMessage
-from logis.logical_functions import lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
-    update_content_count, search_both_collections
-from models.external_tools_apis import serp_api_tool
-from prompts.prompts import user_summary, enriched_content, \
-    content_improviser, CONTENT_IMPROVISE_SYSTEM_PROMPT, route_selector, blog_generation, content_generation, \
-    CONTENT_FEEDBACK_SYSTEM_PROMPT, prompt_content_improviser, prompt_feedback, content_feedback, gap_finder, \
-    content_seo_optimization, prompt_post_validation, post_validation, prompt_seo_optimization
-from schemas import LearningState, ContentResponse, EnrichedLearningResource, FeedBack, RouteSelector, \
-    PostValidationResult
 import json
 import logging
 import os
 
+from langchain_core.messages import HumanMessage
+from langgraph.graph import StateGraph, END
+from langsmith import expect
+from more_itertools import flatten
+
+from logis.logical_functions import lesson_decision_node, blog_decision_node, parse_chromadb_metadata, \
+    update_content_count, search_both_collections
+from prompts.prompts import user_summary, enriched_content, \
+    content_improviser, route_selector, blog_generation, content_generation, \
+    prompt_content_improviser, prompt_feedback, content_feedback, gap_finder, \
+    content_seo_optimization, prompt_post_validation, post_validation, prompt_seo_optimization
+from schemas import LearningState, ContentResponse, EnrichedLearningResource, FeedBack, RouteSelector, \
+    PostValidationResult
 from scrapper.crawl4ai_scrapping import crawl_and_extract_json
 from scrapper.save_to_local import serper_api_results_parser, save_to_local
 from utils.utils import read_from_local
@@ -80,8 +80,16 @@ def user_info_node(state: LearningState) -> LearningState:
 
 def crawler_node(state: LearningState) -> LearningState:
     if os.path.exists('./data/raw_data.json'):
-        logging.info("Raw data already exists, skipping crawling.")
-        return state
+        logging.info("Raw data already exists, loading from file.")
+        try:
+            with open('./data/raw_data.json', 'r', encoding='utf-8') as f:
+                state.topic_data = json.load(f)
+            logging.info("Raw data loaded from file and state updated successfully.")
+            return state
+        except Exception as e:
+            logging.error(f"Error loading raw data from file: {e}")
+            # If loading fails, proceed with crawling
+            pass
     links = serper_api_results_parser(state=state)
     logging.info(f"Scrapped Links: {links}")
     raw_data = None
@@ -122,7 +130,7 @@ def enrich_content(state: LearningState) -> LearningState:
             local_medadata = retrieved_data.get('lessons_results').get('metadatas')
             scrapped_metadata = retrieved_data.get('scraped_results').get('metadatas')
             local_medadata = list(flatten(local_medadata))[0]
-            scrapped_metadata  = list(flatten(scrapped_metadata))[0]
+            scrapped_metadata = list(flatten(scrapped_metadata))[0]
             response = enriched_content.invoke({
                 "action": "content_enrichment",
                 "foundation_data": parse_chromadb_metadata(local_medadata).model_dump(),
@@ -130,8 +138,12 @@ def enrich_content(state: LearningState) -> LearningState:
             })
             resource_data = response.content if hasattr(response, "content") else response
             print('ENRICHED DATA=======> ', resource_data)
-            state.enriched_resource = EnrichedLearningResource.model_validate(resource_data)
-            logging.info(f"Learning resource processed!")
+            try:
+                state.enriched_resource = EnrichedLearningResource.model_validate(resource_data)
+                logging.info(f"Learning resource processed!")
+            except Exception as validation_error:
+                logging.error(f"Pydantic validation error for EnrichedLearningResource: {validation_error}")
+                logging.error(f"Malformed LLM output: {resource_data}")
         except Exception as e:
             print()
             logging.error(f"Error processing learning resource data: {e}")
@@ -152,8 +164,12 @@ def route_selector_node(state: LearningState) -> LearningState:
             })
             # Set next_action as a RouteSelector model
             next_action_str = response.content if hasattr(response, "content") else response
-            state.next_action = RouteSelector(next_node=next_action_str)
-            logging.info(f"Route selection response: {state.next_action}")
+            try:
+                state.next_action = RouteSelector(next_node=next_action_str)
+                logging.info(f"Route selection response: {state.next_action}")
+            except Exception as validation_error:
+                logging.error(f"Pydantic validation error for RouteSelector: {validation_error}")
+                logging.error(f"Malformed LLM output: {next_action_str}")
         except Exception as e:
             logging.error(f"Error selecting route: {e}")
     return state
@@ -178,10 +194,13 @@ def generate_lesson_content(state: LearningState) -> LearningState:
                 'urls': urls
             })
             resource_data = response.content if hasattr(response, "content") else response
-            # print(f'Generated Content: {resource_data}')
-            state.content = ContentResponse(content = resource_data)
-            logging.info(f"Lesson content has been generated!")
-            print(f'Generated Content: {state.content}')
+            try:
+                state.content = ContentResponse(content=resource_data)
+                logging.info(f"Lesson content has been generated!")
+                print(f'Generated Content: {state.content}')
+            except Exception as validation_error:
+                logging.error(f"Pydantic validation error for ContentResponse: {validation_error}")
+                logging.error(f"Malformed LLM output: {resource_data}")
         except Exception as e:
             logging.error(f"Error generating lesson content: {e}")
     return state
@@ -192,22 +211,26 @@ def seo_optimiser_node(state: LearningState) -> LearningState:
         try:
             logging.info("Optimising the content for SEO")
             messages = [prompt_seo_optimization,
-                HumanMessage(
-                    content=f"""
+                        HumanMessage(
+                            content=f"""
 Generated Undiagnosed Learning Resource:
 {state.content.content}
 """,
-                )
-            ]
+                        )
+                        ]
             response = content_seo_optimization.invoke(messages)
             resource_data = response.content if hasattr(response, "content") else response
-            state.content = ContentResponse(content=resource_data)
-            logging.info(f"Content has been optimised for SEO!")
+            try:
+                state.content = ContentResponse(content=resource_data)
+                logging.info(f"Content has been optimised for SEO!")
+            except Exception as validation_error:
+                logging.error(f"Pydantic validation error for ContentResponse: {validation_error}")
+                logging.error(f"Malformed LLM output: {resource_data}")
         except Exception as e:
             logging.error(f"Error optimising content: {e}")
 
-
     return state
+
 
 def generate_blog_content(state: LearningState) -> LearningState:
     """
@@ -225,8 +248,12 @@ def generate_blog_content(state: LearningState) -> LearningState:
                 "style": logical_response
             })
             resource_data = response.content if hasattr(response, "content") else response
-            state.content = ContentResponse(content=resource_data)
-            logging.info(f"Blog content has been generated!")
+            try:
+                state.content = ContentResponse(content=resource_data)
+                logging.info(f"Blog content has been generated!")
+            except Exception as validation_error:
+                logging.error(f"Pydantic validation error for ContentResponse: {validation_error}")
+                logging.error(f"Malformed LLM output: {resource_data}")
         except Exception as e:
             logging.error(f"Error generating blog content: {e}")
     return state
@@ -258,15 +285,19 @@ Post_Validation Result:
             ]
             response = content_improviser.invoke(messages)
             improved_content = response.content if hasattr(response, "content") else str(response)
-            # Update state.content with the newly generated improvised content
-            state.content = ContentResponse(content=improved_content)
-            logging.info(f"Improvised content has been generated and updated in state.content!")
+            try:
+                # Update state.content with the newly generated improvised content
+                state.content = ContentResponse(content=improved_content)
+                logging.info(f"Improvised content has been generated and updated in state.content!")
+            except Exception as validation_error:
+                logging.error(f"Pydantic validation error for ContentResponse: {validation_error}")
+                logging.error(f"Malformed LLM output: {improved_content}")
         except Exception as e:
             logging.error(f"Error improvising content: {e}")
     return state
 
 
-def collect_feedback_node(state:LearningState) -> LearningState:
+def collect_feedback_node(state: LearningState) -> LearningState:
     """
     Node to collect feedback on generated content.
     Always uses the latest content and updates state.feedback with new feedback.
@@ -287,10 +318,14 @@ Unpolished Learning Resource:
             logging.info("Feedback has been collected!")
             feedback_data = response.content if hasattr(response, "content") else response
             feedback_data = json.loads(feedback_data) if isinstance(feedback_data, str) else feedback_data
-            state.feedback = FeedBack.model_validate(feedback_data)
-            logging.info(f"Feedback processed and updated: {state.feedback}")
-            # Log rating and gaps for debugging
-            logging.info(f"Feedback rating: {state.feedback.rating}, gaps: {state.feedback.gaps}")
+            try:
+                state.feedback = FeedBack.model_validate(feedback_data)
+                logging.info(f"Feedback processed and updated: {state.feedback}")
+                # Log rating and gaps for debugging
+                logging.info(f"Feedback rating: {state.feedback.rating}, gaps: {state.feedback.gaps}")
+            except Exception as validation_error:
+                logging.error(f"Pydantic validation error for FeedBack: {validation_error}")
+                logging.error(f"Malformed LLM output: {feedback_data}")
         except Exception as e:
             logging.error(f"Error collecting feedback: {e}")
     return state
@@ -310,15 +345,21 @@ def find_content_gap_node(state: LearningState) -> LearningState:
         })
         response = data.content if hasattr(data, "content") else data
         print(f'Gaps : {response}')
-        # Update feedback with new gaps for the next improvise node
-        updated_feedback = FeedBack.model_validate(json.loads(response) if isinstance(response, str) else response)
-        state.feedback = updated_feedback
-        logging.info(f"Feedback received and updated: {state.feedback}")
-        # Log rating and gaps for debugging
-        logging.info(f"GapFinder rating: {state.feedback.rating}, gaps: {state.feedback.gaps}, ai_reliability_score: {state.feedback.ai_reliability_score}")
+        try:
+            # Update feedback with new gaps for the next improvise node
+            updated_feedback = FeedBack.model_validate(json.loads(response) if isinstance(response, str) else response)
+            state.feedback = updated_feedback
+            logging.info(f"Feedback received and updated: {state.feedback}")
+            # Log rating and gaps for debugging
+            logging.info(
+                f"GapFinder rating: {state.feedback.rating}, gaps: {state.feedback.gaps}, ai_reliability_score: {state.feedback.ai_reliability_score}")
+        except Exception as validation_error:
+            logging.error(f"Pydantic validation error for FeedBack: {validation_error}")
+            logging.error(f"Malformed LLM output: {response}")
     return state
 
-def post_validator_node(state:LearningState) -> LearningState:
+
+def post_validator_node(state: LearningState) -> LearningState:
     """
     Node to collect feedback on generated content.
     Always uses the latest content and updates state.feedback with new feedback.
@@ -338,12 +379,18 @@ Learning Resource:
             response = post_validation.invoke(messages)
             logging.info("Validation has been given!")
             validation_result = response.content if hasattr(response, "content") else response
-            validation_result = json.loads(validation_result) if isinstance(validation_result, str) else validation_result
-            state.validation_result = PostValidationResult.model_validate(validation_result)
-            logging.info(f"Validated and Updated: {state.feedback}")
+            validation_result = json.loads(validation_result) if isinstance(validation_result,
+                                                                            str) else validation_result
+            try:
+                state.validation_result = PostValidationResult.model_validate(validation_result)
+                logging.info(f"Validated and Updated: {state.feedback}")
+            except Exception as validation_error:
+                logging.error(f"Pydantic validation error for PostValidationResult: {validation_error}")
+                logging.error(f"Malformed LLM output: {validation_result}")
         except Exception as e:
             logging.error(f"Error collecting validation: {e}")
     return state
+
 
 def update_state(state: LearningState) -> LearningState:
     try:
@@ -360,31 +407,6 @@ def update_state(state: LearningState) -> LearningState:
     return state
 
 
-def save_learning_state_to_json(state, file_path):
-    """
-    Save the details of the LearningState object to a JSON file.
-    If the file does not exist, it will be created.
-    Args:
-        state: LearningState object (should have .model_dump() or .dict() method)
-        file_path: Path to the JSON file
-    """
-    try:
-        # Use model_dump if available (Pydantic v2), else fallback to dict
-        if hasattr(state, 'model_dump'):
-            state_data = state.model_dump()
-        elif hasattr(state, 'dict'):
-            state_data = state.dict()
-        else:
-            raise ValueError("State object does not support serialization.")
-        # Ensure the directory exists
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        with open(file_path, 'w', encoding='utf-8') as f:
-            json.dump(state_data, f, indent=4, ensure_ascii=False)
-        logging.info(f"LearningState saved to {file_path}")
-    except Exception as e:
-        logging.error(f"Failed to save LearningState to {file_path}: {e}")
-
-
 builder = StateGraph(LearningState)
 builder.add_node("user_info", user_info_node)
 builder.add_node("learning_resource", enrich_content)
@@ -397,7 +419,6 @@ builder.add_node("find_content_gap", find_content_gap_node)
 builder.add_node("update_state", update_state)
 builder.add_node("crawler", crawler_node)
 builder.add_node("content_seo_optimization", seo_optimiser_node)
-builder.add_node("save_learning_state", save_learning_state_to_json)
 builder.add_node("post_validator", post_validator_node)
 
 builder.set_entry_point("user_info")
@@ -408,7 +429,8 @@ builder.add_conditional_edges(
     "route_selector",
     lambda state: (
         state.next_action.next_node
-        if hasattr(state.next_action, "next_node") and state.next_action.next_node in ["blog_generation", "content_generation"]
+        if hasattr(state.next_action, "next_node") and state.next_action.next_node in ["blog_generation",
+                                                                                       "content_generation"]
         else "content_generation"  # Default branch if next_action is missing or invalid
     ),
     {
@@ -434,5 +456,6 @@ builder.add_conditional_edges(
 
 graph = builder.compile()
 
+
 def graph_run(user_data: dict):
-    return graph.invoke(LearningState.model_validate(user_data), config = {'recursion_limit': 30})
+    return graph.invoke(LearningState.model_validate(user_data), config={'recursion_limit': 30})

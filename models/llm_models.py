@@ -1,4 +1,5 @@
 import logging
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
@@ -8,6 +9,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
 from langchain_groq import ChatGroq
 from keys.apis import set_env
+
 
 def get_gemini_model(output_schema):
     """
@@ -24,6 +26,7 @@ def get_gemini_model(output_schema):
         temperature=1,
     ).with_structured_output(output_schema)
 
+
 def get_groq_model():
     """
     Initialize and return a Groq model for text generation.
@@ -36,6 +39,7 @@ def get_groq_model():
         api_key=set_env('GROQ_API_KEY'),
         temperature=0.5
     )
+
 
 def get_deepseek_model(output_schema):
     """

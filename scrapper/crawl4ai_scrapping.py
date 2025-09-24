@@ -1,7 +1,10 @@
 """
 Educational content crawling and extraction utilities using crawl4ai and LLM strategies.
 """
+import json
 import logging
+from datetime import datetime
+
 from crawl4ai import (
     AsyncWebCrawler,
     BrowserConfig,
@@ -9,8 +12,7 @@ from crawl4ai import (
     LLMExtractionStrategy,
     LLMConfig, CacheMode
 )
-from datetime import datetime
-import json
+
 from keys.apis import set_env
 from schemas import WebCrawlerConfig
 

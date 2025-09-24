@@ -1,7 +1,7 @@
 import json
+import logging
 from pathlib import Path
 from typing import List, Dict, Any
-import logging
 
 logging.basicConfig(
     level=logging.INFO,
@@ -29,11 +29,13 @@ def load_json_data(filename: str) -> List[Dict[str, Any]]:
     try:
         logging.info(f"[loader.py:{load_json_data.__code__.co_firstlineno}] INFO Loading lesson data from {path}")
         if not path.exists():
-            logging.error(f"[loader.py:{load_json_data.__code__.co_firstlineno}] ERROR {filename} not found in {DATA_DIR}")
+            logging.error(
+                f"[loader.py:{load_json_data.__code__.co_firstlineno}] ERROR {filename} not found in {DATA_DIR}")
             raise FileNotFoundError(f"{filename} not found in {DATA_DIR}")
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        logging.info(f"[loader.py:{load_json_data.__code__.co_firstlineno}] INFO Loaded {len(data)} lessons from {filename}")
+        logging.info(
+            f"[loader.py:{load_json_data.__code__.co_firstlineno}] INFO Loaded {len(data)} lessons from {filename}")
         return data
     except Exception as e:
         logging.error(f"[loader.py:{load_json_data.__code__.co_firstlineno}] ERROR Failed to load lesson data: {e}")

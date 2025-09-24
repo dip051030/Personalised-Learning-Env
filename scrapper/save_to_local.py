@@ -12,6 +12,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
+
 def serper_api_results_parser(state: LearningState) -> dict:
     """
     Parses the results from the SerpAPI tool based on the current learning state.
@@ -25,11 +26,14 @@ def serper_api_results_parser(state: LearningState) -> dict:
     try:
         serpapi_search_results = serp_api_tool(
             query=state.current_resource.topic + ' for grade ' + str(state.current_resource.grade))
-        logging.info(f"[save_to_local.py:{serper_api_results_parser.__code__.co_firstlineno}] INFO SerpAPI results parsed for topic '{state.current_resource.topic}' and grade '{state.current_resource.grade}'")
+        logging.info(
+            f"[save_to_local.py:{serper_api_results_parser.__code__.co_firstlineno}] INFO SerpAPI results parsed for topic '{state.current_resource.topic}' and grade '{state.current_resource.grade}'")
         return serpapi_search_results
     except Exception as e:
-        logging.error(f"[save_to_local.py:{serper_api_results_parser.__code__.co_firstlineno}] ERROR Failed to parse SerpAPI results: {e}")
+        logging.error(
+            f"[save_to_local.py:{serper_api_results_parser.__code__.co_firstlineno}] ERROR Failed to parse SerpAPI results: {e}")
         return {}
+
 
 def save_to_local(data: Union[dict, list], file_path: str):
     """
@@ -52,4 +56,5 @@ def save_to_local(data: Union[dict, list], file_path: str):
             json.dump(data, f, indent=4, ensure_ascii=False)
         logging.info(f"[save_to_local.py:{save_to_local.__code__.co_firstlineno}] INFO Data saved to {file_path}")
     except Exception as e:
-        logging.error(f"[save_to_local.py:{save_to_local.__code__.co_firstlineno}] ERROR Failed to save data to {file_path}: {e}")
+        logging.error(
+            f"[save_to_local.py:{save_to_local.__code__.co_firstlineno}] ERROR Failed to save data to {file_path}: {e}")
