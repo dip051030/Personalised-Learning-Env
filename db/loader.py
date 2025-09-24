@@ -3,7 +3,6 @@ import logging
 from pathlib import Path
 from typing import List, Dict, Any
 
-
 DATA_DIR = Path(__file__).parent.parent / "data"
 
 

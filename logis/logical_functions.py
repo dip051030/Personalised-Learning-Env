@@ -1,8 +1,10 @@
 import logging
+
 import chromadb
-from schemas import LearningResource, ResourceSubject, LearningState, ContentType
+
 from db.vector_db import build_chroma_db_collection, save_scraped_data_to_vdb
 from models.embedding_model import embedding_model
+from schemas import LearningResource, ResourceSubject, LearningState, ContentType
 
 
 def load_or_build_collections(vdb_path, lessons_collection, scraped_collection):

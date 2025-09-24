@@ -1,9 +1,10 @@
 """
 Utility functions for saving learning state and generated content to files.
 """
-import os
 import json
 import logging
+import os
+
 
 def save_learning_state_to_json(state, file_path):
     """
@@ -28,9 +29,12 @@ def save_learning_state_to_json(state, file_path):
             os.makedirs(dir_name, exist_ok=True)
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(state_data, f, indent=4, ensure_ascii=False)
-        logging.info(f"[utils.py:{save_learning_state_to_json.__code__.co_firstlineno}] INFO LearningState saved to {file_path}")
+        logging.info(
+            f"[utils.py:{save_learning_state_to_json.__code__.co_firstlineno}] INFO LearningState saved to {file_path}")
     except Exception as e:
-        logging.error(f"[utils.py:{save_learning_state_to_json.__code__.co_firstlineno}] ERROR Failed to save LearningState to {file_path}: {e}")
+        logging.error(
+            f"[utils.py:{save_learning_state_to_json.__code__.co_firstlineno}] ERROR Failed to save LearningState to {file_path}: {e}")
+
 
 def save_generated_content(content, file_path):
     """
@@ -47,9 +51,12 @@ def save_generated_content(content, file_path):
                 os.makedirs(dir_name, exist_ok=True)
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
-        logging.info(f"[utils.py:{save_generated_content.__code__.co_firstlineno}] INFO Generated content saved to {file_path}")
+        logging.info(
+            f"[utils.py:{save_generated_content.__code__.co_firstlineno}] INFO Generated content saved to {file_path}")
     except Exception as e:
-        logging.error(f"[utils.py:{save_generated_content.__code__.co_firstlineno}] ERROR Failed to save generated content to {file_path}: {e}")
+        logging.error(
+            f"[utils.py:{save_generated_content.__code__.co_firstlineno}] ERROR Failed to save generated content to {file_path}: {e}")
+
 
 def read_from_local(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -57,4 +64,3 @@ def read_from_local(file_path):
     logging.info(f"[utils.py:{read_from_local.__code__.co_firstlineno}] INFO Data read from {file_path}")
     urls = [item.get('link') for item in data if isinstance(item, dict) and 'link' in item]
     return urls
-

@@ -1,17 +1,21 @@
 """
 Vector database utilities for building and saving ChromaDB collections from lesson and scraped data.
 """
-import chromadb
-from db.loader import load_json_data
 import logging
+
+import chromadb
+
+from db.loader import load_json_data
 from models.embedding_model import embedding_model
 
 
 def sanitize_metadata(metadata: dict) -> dict:
     return {k: (",".join(v) if isinstance(v, list) else v) for k, v in metadata.items()}
 
+
 def clean_metadata(metadata: dict) -> dict:
     return {k: v for k, v in metadata.items() if v is not None}
+
 
 def build_chroma_db_collection(filename: str = 'lessons/class_11_physics.json', collection_name: str = 'lessons'):
     logging.info(f"Building ChromaDB collection for {filename} with name '{collection_name}'")
@@ -59,6 +63,7 @@ def build_chroma_db_collection(filename: str = 'lessons/class_11_physics.json', 
         logging.info(f"ChromaDB collection '{collection_name}' built successfully")
     except Exception as e:
         logging.error(f"Error adding documents to ChromaDB collection '{collection_name}': {e}")
+
 
 def save_scraped_data_to_vdb(
         scraped_file: str = "raw_data.json",

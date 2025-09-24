@@ -10,12 +10,11 @@ from crawl4ai import (
     BrowserConfig,
     CrawlerRunConfig,
     LLMExtractionStrategy,
-    LLMConfig, CacheMode
+    LLMConfig
 )
 
 from keys.apis import set_env
 from schemas import WebCrawlerConfig
-
 
 
 async def crawl_and_extract_json(urls: list) -> list:

@@ -1,8 +1,8 @@
+import logging
 import os
 from typing import Optional
-import logging
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 
 load_dotenv()
 

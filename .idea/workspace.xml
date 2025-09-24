@@ -5,20 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8d9f642-a0ca-4850-83ea-1fa96df6f1b0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/PersonalisedLearningSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PersonalisedLearningSystem.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/loader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/vector_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/vector_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/keys/apis.py" beforeDir="false" afterPath="$PROJECT_DIR$/keys/apis.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logis/logical_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/logis/logical_functions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/external_tools_apis.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/external_tools_apis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/embedding_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/embedding_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/llm_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/llm_models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nodes.py" beforeDir="false" afterPath="$PROJECT_DIR$/nodes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/prompts/prompts.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts/prompts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scrapper/crawl4ai_scrapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapper/crawl4ai_scrapping.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scrapper/save_to_local.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapper/save_to_local.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +143,7 @@
       <workItem from="1757690871160" duration="18000" />
       <workItem from="1757696387359" duration="10000" />
       <workItem from="1757701665357" duration="34000" />
-      <workItem from="1758724741936" duration="2299000" />
+      <workItem from="1758724741936" duration="4548000" />
     </task>
     <servers />
   </component>

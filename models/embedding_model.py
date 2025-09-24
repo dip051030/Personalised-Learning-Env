@@ -1,11 +1,13 @@
-from sentence_transformers import SentenceTransformer
 import logging
+
+from sentence_transformers import SentenceTransformer
 
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
+
 
 class EmbeddingModel:
     _instance = None
@@ -25,6 +27,7 @@ class EmbeddingModel:
 
     def get_model(self):
         return self._model
+
 
 # Create a singleton instance
 embedding_model = EmbeddingModel().get_model()

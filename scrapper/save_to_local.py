@@ -7,7 +7,6 @@ from models.external_tools_apis import serp_api_tool
 from schemas import LearningState
 
 
-
 def serper_api_results_parser(state: LearningState) -> dict:
     """
     Parses the results from the SerpAPI tool based on the current learning state.
