@@ -3,6 +3,7 @@ import json
 import logging
 import os
 
+import pydantic
 from langchain_core.messages import HumanMessage
 from langgraph.graph import StateGraph, END
 from more_itertools import flatten
@@ -340,8 +341,6 @@ Unpolished Learning Resource:
             logging.error(f"JSON decoding error in collect_feedback_node: {e}")
         except pydantic.ValidationError as e:
             logging.error(f"Pydantic validation error in collect_feedback_node: {e}")
-        except Exception as e:
-            logging.error(f"An unexpected error occurred in collect_feedback_node: {e}")
     return state
 
 
@@ -367,16 +366,16 @@ def find_content_gap_node(state: LearningState) -> LearningState:
             # Log rating and gaps for debugging
             logging.info(
                 f"GapFinder rating: {state.feedback.rating}, gaps: {state.feedback.gaps}, ai_reliability_score: {state.feedback.ai_reliability_score}")
-            except Exception as validation_error:
+        except Exception as validation_error:
             logging.error(f"Pydantic validation error for FeedBack: {validation_error}")
             logging.error(f"Malformed LLM output: {response}")
-    except json.JSONDecodeError as e:
-    logging.error(f"JSON decoding error in find_content_gap_node: {e}")
-
-except pydantic.ValidationError as e:
-logging.error(f"Pydantic validation error in find_content_gap_node: {e}")
-except Exception as e:
-logging.error(f"An unexpected error occurred in find_content_gap_node: {e}")
+        except json.JSONDecodeError as e:
+            logging.error(f"JSON decoding error in find_content_gap_node: {e}")
+        except pydantic.ValidationError as e:
+            logging.error(f"Pydantic validation error in find_content_gap_node: {e}")
+        except Exception as e:
+            logging.error(f"An unexpected error occurred in find_content_gap_node: {e}")
+    return state
 
 
 def post_validator_node(state: LearningState) -> LearningState:
