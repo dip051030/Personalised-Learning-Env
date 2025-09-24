@@ -3,11 +3,6 @@ import logging
 from pathlib import Path
 from typing import List, Dict, Any
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 
@@ -27,16 +22,18 @@ def load_json_data(filename: str) -> List[Dict[str, Any]]:
     """
     path = DATA_DIR / filename
     try:
-        logging.info(f"[loader.py:{load_json_data.__code__.co_firstlineno}] INFO Loading lesson data from {path}")
+        logging.info(f"INFO Loading lesson data from {path}")
         if not path.exists():
-            logging.error(
-                f"[loader.py:{load_json_data.__code__.co_firstlineno}] ERROR {filename} not found in {DATA_DIR}")
+            logging.error(f"ERROR {filename} not found in {DATA_DIR}")
             raise FileNotFoundError(f"{filename} not found in {DATA_DIR}")
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        logging.info(
-            f"[loader.py:{load_json_data.__code__.co_firstlineno}] INFO Loaded {len(data)} lessons from {filename}")
-        return data
-    except Exception as e:
-        logging.error(f"[loader.py:{load_json_data.__code__.co_firstlineno}] ERROR Failed to load lesson data: {e}")
+        logging.info(f"INFO Loaded {len(data)} lessons from {filename}")
+    except FileNotFoundError as e:
+        logging.error(f"ERROR File not found: {e}")
         return []
+    except json.JSONDecodeError as e:
+        logging.error(f"ERROR Failed to decode JSON from {filename}: {e}")
+        return []
+    except Exception as e:
+        logging.error(f"ERROR An unexpected error occurred while loading lesson data: {e}")

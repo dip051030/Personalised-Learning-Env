@@ -27,10 +27,18 @@ def serp_api_tool(query: str) -> dict:
         }
         response = requests.post('https://google.serper.dev/search', json=params, headers=headers)
         data = response.json()
-        logging.info(
-            f"[external_tools_apis.py:{serp_api_tool.__code__.co_firstlineno}] INFO SerpAPI request successful for query: {query}")
+        logging.info(f"INFO SerpAPI request successful for query: {query}")
+    except requests.exceptions.RequestException as e:
+        logging.error(f"ERROR Network or request error in SerpAPI tool: {e}")
+        data = {"error": f"Network or request error: {e}"}
+    except ValueError as e:
+        logging.error(f"ERROR Configuration error in SerpAPI tool: {e}")
+        data = {"error": f"Configuration error: {e}"}
+    except json.JSONDecodeError as e:
+        logging.error(f"ERROR JSON decoding error in SerpAPI tool: {e}")
+        data = {"error": f"JSON decoding error: {e}"}
     except Exception as e:
-        logging.error(f"[external_tools_apis.py:{serp_api_tool.__code__.co_firstlineno}] ERROR in SerpAPI tool: {e}")
-        data = {"error": str(e)}
+        logging.error(f"ERROR An unexpected error occurred in SerpAPI tool: {e}")
+        data = {"error": f"An unexpected error occurred: {e}"}
 
     return data

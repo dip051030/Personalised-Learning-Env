@@ -4,11 +4,6 @@ import logging
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import PromptTemplate
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
 
 from models.llm_models import get_gemini_model, get_groq_model, get_deepseek_model
 from schemas import UserInfo, ContentResponse, EnrichedLearningResource, RouteSelector, \

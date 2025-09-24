@@ -6,11 +6,6 @@ from typing import Union
 from models.external_tools_apis import serp_api_tool
 from schemas import LearningState
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
 
 
 def serper_api_results_parser(state: LearningState) -> dict:

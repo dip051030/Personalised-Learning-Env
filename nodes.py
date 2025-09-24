@@ -20,11 +20,6 @@ from scrapper.crawl4ai_scrapping import crawl_and_extract_json
 from scrapper.save_to_local import serper_api_results_parser, save_to_local
 from utils.utils import read_from_local
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
 
 
 def user_info_node(state: LearningState) -> LearningState:
@@ -44,8 +39,10 @@ def user_info_node(state: LearningState) -> LearningState:
             print('hello')
             state.user = state.user.model_validate(user_data if isinstance(user_data, dict) else user_data.model_dump())
             logging.info(f"User info processed: {state.user}")
+        except pydantic.ValidationError as e:
+            logging.error(f"Pydantic validation error in user_info_node: {e}")
         except Exception as e:
-            logging.error(f"Error processing user data: {e}")
+            logging.error(f"An unexpected error occurred in user_info_node: {e}")
     return state
 
 
@@ -78,7 +75,7 @@ def user_info_node(state: LearningState) -> LearningState:
 #             logging.error(f"Error processing learning resource data: {e}")
 #     return state
 
-def crawler_node(state: LearningState) -> LearningState:
+async def crawler_node(state: LearningState) -> LearningState:
     if os.path.exists('./data/raw_data.json'):
         logging.info("Raw data already exists, loading from file.")
         try:
@@ -86,8 +83,12 @@ def crawler_node(state: LearningState) -> LearningState:
                 state.topic_data = json.load(f)
             logging.info("Raw data loaded from file and state updated successfully.")
             return state
+        except FileNotFoundError:
+            logging.error("raw_data.json not found, despite os.path.exists returning True. This is unexpected.")
+        except json.JSONDecodeError as e:
+            logging.error(f"Error decoding JSON from raw_data.json: {e}")
         except Exception as e:
-            logging.error(f"Error loading raw data from file: {e}")
+            logging.error(f"An unexpected error occurred while loading raw_data.json: {e}")
             # If loading fails, proceed with crawling
             pass
     links = serper_api_results_parser(state=state)
@@ -99,8 +100,7 @@ def crawler_node(state: LearningState) -> LearningState:
         if not link_list:
             logging.warning("No valid links found for crawling.")
             return state
-        loop = asyncio.get_event_loop()
-        raw_data = loop.run_until_complete(crawl_and_extract_json(link_list))
+        raw_data = await crawl_and_extract_json(link_list)
         logging.info("Raw Data has been extracted!")
     except Exception as e:
         logging.error(f"Error extracting raw data: {e}")
@@ -144,9 +144,11 @@ def enrich_content(state: LearningState) -> LearningState:
             except Exception as validation_error:
                 logging.error(f"Pydantic validation error for EnrichedLearningResource: {validation_error}")
                 logging.error(f"Malformed LLM output: {resource_data}")
+        except pydantic.ValidationError as e:
+            logging.error(f"Pydantic validation error in enrich_content (parse_chromadb_metadata): {e}")
         except Exception as e:
             print()
-            logging.error(f"Error processing learning resource data: {e}")
+            logging.error(f"An unexpected error occurred in enrich_content: {e}")
     return state
 
 
@@ -170,8 +172,10 @@ def route_selector_node(state: LearningState) -> LearningState:
             except Exception as validation_error:
                 logging.error(f"Pydantic validation error for RouteSelector: {validation_error}")
                 logging.error(f"Malformed LLM output: {next_action_str}")
+        except pydantic.ValidationError as e:
+            logging.error(f"Pydantic validation error in route_selector_node: {e}")
         except Exception as e:
-            logging.error(f"Error selecting route: {e}")
+            logging.error(f"An unexpected error occurred in route_selector_node: {e}")
     return state
 
 
@@ -201,8 +205,10 @@ def generate_lesson_content(state: LearningState) -> LearningState:
             except Exception as validation_error:
                 logging.error(f"Pydantic validation error for ContentResponse: {validation_error}")
                 logging.error(f"Malformed LLM output: {resource_data}")
+        except pydantic.ValidationError as e:
+            logging.error(f"Pydantic validation error in generate_lesson_content: {e}")
         except Exception as e:
-            logging.error(f"Error generating lesson content: {e}")
+            logging.error(f"An unexpected error occurred in generate_lesson_content: {e}")
     return state
 
 
@@ -226,8 +232,10 @@ Generated Undiagnosed Learning Resource:
             except Exception as validation_error:
                 logging.error(f"Pydantic validation error for ContentResponse: {validation_error}")
                 logging.error(f"Malformed LLM output: {resource_data}")
+        except pydantic.ValidationError as e:
+            logging.error(f"Pydantic validation error in seo_optimiser_node: {e}")
         except Exception as e:
-            logging.error(f"Error optimising content: {e}")
+            logging.error(f"An unexpected error occurred in seo_optimiser_node: {e}")
 
     return state
 
@@ -254,8 +262,10 @@ def generate_blog_content(state: LearningState) -> LearningState:
             except Exception as validation_error:
                 logging.error(f"Pydantic validation error for ContentResponse: {validation_error}")
                 logging.error(f"Malformed LLM output: {resource_data}")
+        except pydantic.ValidationError as e:
+            logging.error(f"Pydantic validation error in generate_blog_content: {e}")
         except Exception as e:
-            logging.error(f"Error generating blog content: {e}")
+            logging.error(f"An unexpected error occurred in generate_blog_content: {e}")
     return state
 
 
@@ -292,8 +302,10 @@ Post_Validation Result:
             except Exception as validation_error:
                 logging.error(f"Pydantic validation error for ContentResponse: {validation_error}")
                 logging.error(f"Malformed LLM output: {improved_content}")
+        except pydantic.ValidationError as e:
+            logging.error(f"Pydantic validation error in content_improviser_node: {e}")
         except Exception as e:
-            logging.error(f"Error improvising content: {e}")
+            logging.error(f"An unexpected error occurred in content_improviser_node: {e}")
     return state
 
 
@@ -326,8 +338,12 @@ Unpolished Learning Resource:
             except Exception as validation_error:
                 logging.error(f"Pydantic validation error for FeedBack: {validation_error}")
                 logging.error(f"Malformed LLM output: {feedback_data}")
+        except json.JSONDecodeError as e:
+            logging.error(f"JSON decoding error in collect_feedback_node: {e}")
+        except pydantic.ValidationError as e:
+            logging.error(f"Pydantic validation error in collect_feedback_node: {e}")
         except Exception as e:
-            logging.error(f"Error collecting feedback: {e}")
+            logging.error(f"An unexpected error occurred in collect_feedback_node: {e}")
     return state
 
 
@@ -353,11 +369,15 @@ def find_content_gap_node(state: LearningState) -> LearningState:
             # Log rating and gaps for debugging
             logging.info(
                 f"GapFinder rating: {state.feedback.rating}, gaps: {state.feedback.gaps}, ai_reliability_score: {state.feedback.ai_reliability_score}")
-        except Exception as validation_error:
-            logging.error(f"Pydantic validation error for FeedBack: {validation_error}")
-            logging.error(f"Malformed LLM output: {response}")
-    return state
-
+                    except Exception as validation_error:
+                        logging.error(f"Pydantic validation error for FeedBack: {validation_error}")
+                        logging.error(f"Malformed LLM output: {response}")
+                except json.JSONDecodeError as e:
+                    logging.error(f"JSON decoding error in find_content_gap_node: {e}")
+                except pydantic.ValidationError as e:
+                    logging.error(f"Pydantic validation error in find_content_gap_node: {e}")
+                except Exception as e:
+                    logging.error(f"An unexpected error occurred in find_content_gap_node: {e}")
 
 def post_validator_node(state: LearningState) -> LearningState:
     """
@@ -387,8 +407,12 @@ Learning Resource:
             except Exception as validation_error:
                 logging.error(f"Pydantic validation error for PostValidationResult: {validation_error}")
                 logging.error(f"Malformed LLM output: {validation_result}")
+        except json.JSONDecodeError as e:
+            logging.error(f"JSON decoding error in post_validator_node: {e}")
+        except pydantic.ValidationError as e:
+            logging.error(f"Pydantic validation error in post_validator_node: {e}")
         except Exception as e:
-            logging.error(f"Error collecting validation: {e}")
+            logging.error(f"An unexpected error occurred in post_validator_node: {e}")
     return state
 
 
@@ -457,5 +481,5 @@ builder.add_conditional_edges(
 graph = builder.compile()
 
 
-def graph_run(user_data: dict):
-    return graph.invoke(LearningState.model_validate(user_data), config={'recursion_limit': 30})
+async def graph_run(user_data: dict):
+    return await graph.ainvoke(LearningState.model_validate(user_data), config={'recursion_limit': 30})

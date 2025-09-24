@@ -1,14 +1,15 @@
+import asyncio
+import json
 import logging
-from nodes import graph_run
-import logging
-
-from nodes import graph_run
 
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(levelname)s %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
+
+from nodes import graph_run
+from utils.utils import save_learning_state_to_json, save_generated_content
 
 user_data = {
     "user": {
@@ -43,11 +44,11 @@ user_data = {
 }
 
 
-def main():
+async def main():
     """
     Entry point for running the learning graph with sample user data.
     """
-    output = graph_run(user_data)
+    output = await graph_run(user_data)
     logging.info(f"Graph has given an output! {output}")
     # If output is not a LearningState, convert it
     from schemas import LearningState
@@ -70,4 +71,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

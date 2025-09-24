@@ -6,9 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="e8d9f642-a0ca-4850-83ea-1fa96df6f1b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/PersonalisedLearningSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PersonalisedLearningSystem.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generated_content.md" beforeDir="false" afterPath="$PROJECT_DIR$/generated_content.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learning_state.json" beforeDir="false" afterPath="$PROJECT_DIR$/learning_state.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/vector_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/vector_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keys/apis.py" beforeDir="false" afterPath="$PROJECT_DIR$/keys/apis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logis/logical_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/logis/logical_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/external_tools_apis.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/external_tools_apis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/llm_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/llm_models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nodes.py" beforeDir="false" afterPath="$PROJECT_DIR$/nodes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prompts/prompts.py" beforeDir="false" afterPath="$PROJECT_DIR$/prompts/prompts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapper/crawl4ai_scrapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapper/crawl4ai_scrapping.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapper/save_to_local.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapper/save_to_local.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,8 +119,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-PY-252.25557.130" />
-        <option value="bundled-python-sdk-1bde30d8e611-7b97d883f26b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.25557.130" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-PY-252.25557.178" />
+        <option value="bundled-python-sdk-ce6832f46686-7b97d883f26b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.25557.178" />
       </set>
     </attachedChunks>
   </component>
@@ -134,6 +144,7 @@
       <workItem from="1757690871160" duration="18000" />
       <workItem from="1757696387359" duration="10000" />
       <workItem from="1757701665357" duration="34000" />
+      <workItem from="1758724741936" duration="2299000" />
     </task>
     <servers />
   </component>

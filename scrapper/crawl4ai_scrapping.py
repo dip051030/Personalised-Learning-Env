@@ -16,7 +16,6 @@ from crawl4ai import (
 from keys.apis import set_env
 from schemas import WebCrawlerConfig
 
-logging.basicConfig(level=logging.INFO)
 
 
 async def crawl_and_extract_json(urls: list) -> list:
