@@ -316,7 +316,8 @@ class RouteSelectorNode(PromptTemplate):
             template='''
 You are a route selector for an educational learning system.
 Your task is to determine the next action based on the user''s current state and progress.
-Based on the {current_resources} decide whether to generate a blog or a lesson and return the output.'''
+Based on the {current_resources} decide whether to generate a blog or a lesson and return the output as a JSON object with a single key "next_node" and its string value.
+Example: {"next_node": "lesson"}'''
             , input_variables=["current_resources"]
         )
 

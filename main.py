@@ -48,6 +48,7 @@ async def main():
     """
     output = await graph_run(user_data)
     logging.info(f"Graph has given an output! {output}")
+    logging.info(f"Output content: {output.get('content').content if output.get('content') else 'No content found'}")
     # If output is not a LearningState, convert it
     from schemas import LearningState
     if not isinstance(output, LearningState):

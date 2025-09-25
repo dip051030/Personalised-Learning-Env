@@ -222,14 +222,13 @@ Generated Undiagnosed Learning Resource:
 """,
                         )
                         ]
-            response = content_seo_optimization.invoke(messages)
-            resource_data = response.content if hasattr(response, "content") else response
             try:
+                response = content_seo_optimization.invoke(messages)
+                resource_data = response.content if hasattr(response, "content") else response
                 state.content = ContentResponse(content=resource_data)
                 logging.info(f"Content has been optimised for SEO!")
-            except Exception as validation_error:
-                logging.error(f"Pydantic validation error for ContentResponse: {validation_error}")
-                logging.error(f"Malformed LLM output: {resource_data}")
+            except Exception as e:
+                logging.error(f"An error occurred during SEO optimization: {e}")
         except pydantic.ValidationError as e:
             logging.error(f"Pydantic validation error in seo_optimiser_node: {e}")
         except Exception as e:
@@ -291,15 +290,13 @@ Post_Validation Result:
 {state.validation_result.model_dump()}
 """)
             ]
-            response = content_improviser.invoke(messages)
-            improved_content = response.content if hasattr(response, "content") else str(response)
             try:
-                # Update state.content with the newly generated improvised content
+                response = content_improviser.invoke(messages)
+                improved_content = response.content if hasattr(response, "content") else str(response)
                 state.content = ContentResponse(content=improved_content)
                 logging.info(f"Improvised content has been generated and updated in state.content!")
-            except Exception as validation_error:
-                logging.error(f"Pydantic validation error for ContentResponse: {validation_error}")
-                logging.error(f"Malformed LLM output: {improved_content}")
+            except Exception as e:
+                logging.error(f"An error occurred during content improvisation: {e}")
         except pydantic.ValidationError as e:
             logging.error(f"Pydantic validation error in content_improviser_node: {e}")
         except Exception as e:
@@ -313,7 +310,6 @@ def collect_feedback_node(state: LearningState) -> LearningState:
     Always uses the latest content and updates state.feedback with new feedback.
     """
     logging.info("Entering collect_feedback_node")
-    feedback_data = None
     if state.content is not None:
         try:
             logging.info("Collecting feedback for content")
@@ -340,6 +336,8 @@ Unpolished Learning Resource:
             logging.error(f"JSON decoding error in collect_feedback_node: {e}")
         except pydantic.ValidationError as e:
             logging.error(f"Pydantic validation error in collect_feedback_node: {e}")
+        except Exception as e:
+            logging.error(f"An unexpected error occurred in collect_feedback_node: {e}")
     return state
 
 
