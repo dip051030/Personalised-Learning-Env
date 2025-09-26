@@ -1,3 +1,9 @@
+"""nodes.py
+
+This module defines the individual nodes and the overall graph structure for the
+personalized learning system. Each node represents a step in the content generation
+and refinement pipeline, processing a `LearningState` object and updating it.
+"""
 import json
 import logging
 import os
@@ -22,8 +28,17 @@ from utils.utils import read_from_local
 
 def user_info_node(state: LearningState) -> LearningState:
     """
-    Node to process and summarize user information using the user_summary prompt.
-    Updates the state with validated user info.
+    Processes and summarizes user information.
+
+    This node takes the current `LearningState`, extracts user data, and uses an
+    LLM (via `user_summary` prompt) to generate a summarized version of the user's profile.
+    The summarized user information is then validated and updated back into the `state.user` attribute.
+
+    Args:
+        state (LearningState): The current state of the learning process, containing user information.
+
+    Returns:
+        LearningState: The updated state with processed and summarized user information.
     """
     logging.info("Entering user_info_node")
     if state.user is not None:
@@ -74,6 +89,20 @@ def user_info_node(state: LearningState) -> LearningState:
 #     return state
 
 async def crawler_node(state: LearningState) -> LearningState:
+    """
+    Crawls web data related to the current topic and updates the learning state.
+
+    This node first checks if raw data already exists locally. If so, it loads the data.
+    Otherwise, it uses `serper_api_results_parser` to get links, then `crawl_and_extract_json`
+    to scrape content from those links. The extracted raw data is saved locally and
+    then updated into the `state.topic_data` attribute.
+
+    Args:
+        state (LearningState): The current state of the learning process.
+
+    Returns:
+        LearningState: The updated state with crawled topic data.
+    """
     if os.path.exists('./data/raw_data.json'):
         logging.info("Raw data already exists, loading from file.")
         try:
@@ -118,8 +147,18 @@ async def crawler_node(state: LearningState) -> LearningState:
 
 def enrich_content(state: LearningState) -> LearningState:
     """
-    Node to enrich the current learning resource using LLM enrichment.
-    Updates the state with an enriched resource.
+    Enriches the current learning resource using retrieved data and LLM capabilities.
+
+    This node retrieves relevant data from both local and scraped data collections,
+    then invokes an LLM (via `enriched_content` prompt) to enrich the `current_resource`.
+    The enriched data is validated against `EnrichedLearningResource` schema and
+    updated into the `state.enriched_resource` attribute.
+
+    Args:
+        state (LearningState): The current state of the learning process.
+
+    Returns:
+        LearningState: The updated state with an enriched learning resource.
     """
     logging.info("Entering enrich_content node")
     if state.current_resource is not None:
@@ -152,8 +191,17 @@ def enrich_content(state: LearningState) -> LearningState:
 
 def route_selector_node(state: LearningState) -> LearningState:
     """
-    Node to select the next route (lesson or blog) based on the enriched resource.
-    Updates the state with the next action.
+    Selects the next route (lesson or blog generation) based on the enriched resource.
+
+    This node uses an LLM (via `route_selector` prompt) to decide whether the next step
+    should be generating a lesson or a blog. The decision is then stored in
+    `state.next_action` as a `RouteSelector` object.
+
+    Args:
+        state (LearningState): The current state of the learning process.
+
+    Returns:
+        LearningState: The updated state with the selected next action.
     """
     logging.info("Entering route_selector_node")
     if state.user is not None and state.current_resource is not None:
@@ -179,7 +227,18 @@ def route_selector_node(state: LearningState) -> LearningState:
 
 def generate_lesson_content(state: LearningState) -> LearningState:
     """
-    Node to generate lesson content using the content_generation prompt.
+    Generates educational lesson content.
+
+    This node orchestrates the generation of lesson content by invoking an LLM
+    (via `content_generation` prompt) with user data, enriched resource data,
+    a determined logical style, and relevant URLs. The generated content is then
+    validated and stored in `state.content` as a `ContentResponse` object.
+
+    Args:
+        state (LearningState): The current state of the learning process.
+
+    Returns:
+        LearningState: The updated state with the generated lesson content.
     """
     logging.info("Entering generate_lesson_content node")
     if state.user is not None and state.enriched_resource is not None:
@@ -211,6 +270,20 @@ def generate_lesson_content(state: LearningState) -> LearningState:
 
 
 def seo_optimiser_node(state: LearningState) -> LearningState:
+    """
+    Optimizes the generated content for Search Engine Optimization (SEO).
+
+    This node takes the existing content from `state.content` and uses an LLM
+    (via `content_seo_optimization` prompt) to apply SEO best practices.
+    The optimized content replaces the original content in `state.content`.
+    Error handling is included to prevent crashes if the LLM call fails.
+
+    Args:
+        state (LearningState): The current state of the learning process.
+
+    Returns:
+        LearningState: The updated state with SEO-optimized content.
+    """
     if state.content is not None:
         try:
             logging.info("Optimising the content for SEO")
@@ -239,7 +312,18 @@ Generated Undiagnosed Learning Resource:
 
 def generate_blog_content(state: LearningState) -> LearningState:
     """
-    Node to generate blog content using the blog_generation prompt.
+    Generates educational blog content.
+
+    This node is responsible for creating blog posts by invoking an LLM
+    (via `blog_generation` prompt) with user data, enriched resource data,
+    and a determined logical style. The generated content is then validated
+    and stored in `state.content` as a `ContentResponse` object.
+
+    Args:
+        state (LearningState): The current state of the learning process.
+
+    Returns:
+        LearningState: The updated state with the generated blog content.
     """
     logging.info("Entering generate_blog_content node")
     if state.user is not None and state.enriched_resource is not None:
@@ -268,9 +352,18 @@ def generate_blog_content(state: LearningState) -> LearningState:
 
 def content_improviser_node(state: LearningState) -> LearningState:
     """
-    Node to improve generated content using the content improver LLM.
-    Uses the latest feedback (including gaps) to improve the content.
-    Updates the state with improved content.
+    Improves generated content based on feedback and validation results.
+
+    This node takes the existing content, feedback, and validation results from the `state`
+    and uses an LLM (via `content_improviser` prompt) to refine the content.
+    The improved content replaces the original content in `state.content`.
+    Error handling is included to prevent crashes if the LLM call fails.
+
+    Args:
+        state (LearningState): The current state of the learning process.
+
+    Returns:
+        LearningState: The updated state with improved content.
     """
     logging.info("Entering content_improviser_node")
     if state.content is not None and state.feedback is not None:
@@ -306,8 +399,18 @@ Post_Validation Result:
 
 def collect_feedback_node(state: LearningState) -> LearningState:
     """
-    Node to collect feedback on generated content.
-    Always uses the latest content and updates state.feedback with new feedback.
+    Collects feedback on the generated content.
+
+    This node uses an LLM (via `content_feedback` prompt) to generate feedback
+    on the current content in `state.content`. The feedback, including rating,
+    comments, and identified gaps, is then validated and stored in `state.feedback`.
+    Error handling is included to prevent crashes if the LLM call or JSON parsing fails.
+
+    Args:
+        state (LearningState): The current state of the learning process.
+
+    Returns:
+        LearningState: The updated state with collected feedback.
     """
     logging.info("Entering collect_feedback_node")
     if state.content is not None:
@@ -343,8 +446,18 @@ Unpolished Learning Resource:
 
 def find_content_gap_node(state: LearningState) -> LearningState:
     """
-    Node to find content gaps based on user feedback.
-    Updates the feedback in state with new gaps for the next improvise node.
+    Identifies content gaps based on existing feedback.
+
+    This node takes the current content and feedback from the `state` and uses an LLM
+    (via `gap_finder` prompt) to identify specific content gaps or areas for improvement.
+    The updated feedback, including new gaps, is then stored in `state.feedback`.
+    Error handling is included for LLM call and JSON parsing failures.
+
+    Args:
+        state (LearningState): The current state of the learning process.
+
+    Returns:
+        LearningState: The updated state with identified content gaps in the feedback.
     """
     logging.info("Entering find_content_gap_node")
     if state.feedback is not None and state.content is not None:
@@ -377,8 +490,19 @@ def find_content_gap_node(state: LearningState) -> LearningState:
 
 def post_validator_node(state: LearningState) -> LearningState:
     """
-    Node to collect feedback on generated content.
-    Always uses the latest content and updates state.feedback with new feedback.
+    Validates the generated content against predefined criteria.
+
+    This node takes the current content from `state.content` and uses an LLM
+    (via `post_validation` prompt) to assess its quality, adherence to guidelines,
+    and other validation criteria. The validation result is then stored in
+    `state.validation_result` as a `PostValidationResult` object.
+    Error handling is included for LLM call and JSON parsing failures.
+
+    Args:
+        state (LearningState): The current state of the learning process.
+
+    Returns:
+        LearningState: The updated state with the content validation result.
     """
     logging.info("Entering post_validator_node")
     validation_result = None
@@ -413,6 +537,19 @@ Learning Resource:
 
 
 def update_state(state: LearningState) -> LearningState:
+    """
+    Updates an internal counter within the learning state.
+
+    This node increments a `count` attribute in the `LearningState` if an update
+    is required (as determined by `update_content_count`). This counter can be
+    used to track iterations or progress within the graph.
+
+    Args:
+        state (LearningState): The current state of the learning process.
+
+    Returns:
+        LearningState: The updated state with an incremented count if an update was required.
+    """
     try:
         if not hasattr(state, "count"):
             state.count = 0
@@ -478,4 +615,18 @@ graph = builder.compile()
 
 
 async def graph_run(user_data: dict):
+    """
+    Invokes the LangGraph with initial user data to start the learning process.
+
+    This asynchronous function takes initial user data, validates it against the
+    `LearningState` schema, and then invokes the compiled LangGraph (`graph`).
+    The graph processes the data through its defined nodes and returns the final
+    `LearningState` after execution.
+
+    Args:
+        user_data (dict): A dictionary containing the initial user information.
+
+    Returns:
+        LearningState: The final state of the learning process after the graph has run.
+    """
     return await graph.ainvoke(LearningState.model_validate(user_data), config={'recursion_limit': 30})

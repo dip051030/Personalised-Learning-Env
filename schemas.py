@@ -1,3 +1,10 @@
+"""schemas.py
+
+This module defines the Pydantic models used for data validation and structuring
+throughout the personalized learning system. These schemas ensure data consistency
+and provide clear definitions for various entities like user information,
+learning resources, content responses, and the overall learning state.
+"""
 from datetime import datetime
 from enum import Enum
 from typing import List, Optional, Union

@@ -1,3 +1,11 @@
+"""prompts.py
+
+This module defines various prompt templates and system messages used to guide
+Large Language Models (LLMs) in generating and processing educational content.
+These prompts are crucial for tasks such as summarizing user information,
+enriching learning resources, generating lessons/blogs, improving content,
+collecting feedback, and performing SEO optimization and post-validation.
+"""
 import json
 import logging
 

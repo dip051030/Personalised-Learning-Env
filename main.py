@@ -1,3 +1,9 @@
+"""main.py
+
+This script serves as the entry point for the Personalised Learning System. It initializes the learning graph,
+processes user data, generates educational content, and saves the learning state and generated content.
+It orchestrates the flow of various nodes defined in `nodes.py` to create a dynamic learning experience.
+"""
 import asyncio
 import logging
 
@@ -44,7 +50,15 @@ user_data = {
 
 async def main():
     """
-    Entry point for running the learning graph with sample user data.
+    Asynchronous entry point for running the learning graph.
+
+    This function orchestrates the entire learning content generation process:
+    1. Invokes the `graph_run` function with predefined `user_data` to generate learning content.
+    2. Validates and converts the output to a `LearningState` object.
+    3. Saves the final `LearningState` to `learning_state.json`.
+    4. Extracts and saves the generated educational content to `generated_content.md` if available.
+
+    Logs the progress and any errors encountered during the process.
     """
     output = await graph_run(user_data)
     logging.info(f"Graph has given an output! {output}")
