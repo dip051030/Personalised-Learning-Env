@@ -1,0 +1,641 @@
+[
+    {
+        "url": "https://byjus.com/physics/magnet/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "What is a Magnet?",
+            "Properties of Magnet",
+            "Types of Magnets",
+            "Permanent Magnet",
+            "Temporary Magnet",
+            "Electromagnets",
+            "Characteristics of Magnet",
+            "Uses of Magnets",
+            "Frequently Asked Questions – FAQs"
+        ],
+        "main_findings": [
+            "A magnet is defined as an object which is capable of producing magnetic field and attracting unlike poles and repelling like poles.",
+            "When a magnet is dipped in iron filings, we can observe that the iron filings cling to the end of the magnet as the attraction is maximum at the ends of the magnet. These ends are known as [poles of the magnets].",
+            "Magnetic poles always exist in pairs.",
+            "Whenever a magnet is suspended freely in mid-air, it always points towards the north-south direction. Pole pointing towards geographic north is known as the North Pole, and the pole pointing towards geographic south is known as the South Pole.",
+            "Like poles repel while unlike poles attract.",
+            "The magnetic force between the two magnets is greater when the distance between these magnets is lesser."
+        ],
+        "content": null,
+        "keywords": [
+            "magnet",
+            "magnetic field",
+            "poles of the magnets",
+            "permanent magnet",
+            "temporary magnet",
+            "electromagnets"
+        ],
+        "word_count": 133,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:11:49.748075Z"
+    },
+    {
+        "url": "https://byjus.com/physics/electricity-and-magnetism/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "What Is Electricity?",
+            "Electron Movement",
+            "Conductors",
+            "Insulators",
+            "Semiconductors",
+            "What Is Magnetism?",
+            "What Is a Magnetic Field",
+            "Difference Between Electricity and Magnetism",
+            "Frequently Asked Questions – FAQs"
+        ],
+        "main_findings": [
+            "Electricity is the presence and motion of charged particles.",
+            "The valence of an atom determines its ability to gain or lose an electron, which ultimately determines the chemical and electrical properties of the atom.",
+            "Magnetism is a concept introduced in physics to help you understand one of the fundamental interactions in nature, the interaction between moving charges.",
+            "The major difference between electricity and magnetism is their presence."
+        ],
+        "content": null,
+        "keywords": [
+            "electricity",
+            "magnetism",
+            "electron movement",
+            "conductors",
+            "insulators",
+            "semiconductors"
+        ],
+        "word_count": 67,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:12:01.759809Z"
+    },
+    {
+        "url": "https://byjus.com/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "Magnetic Field",
+            "SI unit of magnetic field intensity"
+        ],
+        "main_findings": [
+            "The SI unit of magnetic field intensity is Tesla (T)",
+            "A magnetic field is a vector field that surrounds a magnet or electric current"
+        ],
+        "content": "The SI unit of magnetic field intensity is Tesla (T). A magnetic field is a vector field that surrounds a magnet or electric current.",
+        "keywords": [
+            "Magnetic Field",
+            "Tesla"
+        ],
+        "word_count": 24,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:12:10.008296Z"
+    },
+    {
+        "url": "https://byjus.com/physics/magnetic-effect-of-electric-current-direct-current-dc/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "Magnetic Field Lines",
+            "Direction of Field Lines",
+            "Strength of Magnetic Field Lines",
+            "Experiment",
+            "Right-Hand Thumb Rule",
+            "Magnetic Field Due to Flow of Current through a Circular Loop",
+            "Magnetic Field due to flow of current through a solenoid"
+        ],
+        "main_findings": [
+            "A magnetic field is a force field that is created by magnetic dipoles and moving electric charges, and it exerts a force on other nearby moving charges and magnetic dipoles.",
+            "Magnetic field lines are directed from the south pole to the north pole inside the magnet and from the north pole to the south outside the magnet.",
+            "A straight current-carrying conductor has a magnetic field in the shape of concentric circles around it.",
+            "The direction of the magnetic field is determined by the direction of the current flow.",
+            "The strength of the magnetic field depends on the magnitude of the current and the distance from the source.",
+            "The experiment demonstrates that the magnetic field lines are continuous and form closed loops.",
+            "The right-hand thumb rule states that if you point your thumb in the direction of the current, your fingers will curl around the wire in the direction of the magnetic field."
+        ],
+        "content": null,
+        "keywords": [
+            "magnetic field",
+            "electric current",
+            "magnetism",
+            "force field"
+        ],
+        "word_count": 152,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:12:24.683107Z"
+    },
+    {
+        "url": "https://byjus.com/magnetism-formula/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "Magnetic Effect of Electric Field",
+            "Ampere's Law Formula"
+        ],
+        "main_findings": [
+            "The property where an electric field is produced around a current-carrying conductor.",
+            "Using Ampere’s Law, the strength of the magnetic field surrounding a long straight current-carrying wire is given by B=μ0I2πd",
+            "This is the equation for magnetic force on a length l of wire carrying a current I in a uniform magnetic field B"
+        ],
+        "content": null,
+        "keywords": [
+            "Magnetic Effect",
+            "Electric Field",
+            "Ampere's Law",
+            "Magnetic Force"
+        ],
+        "word_count": 54,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:12:32.070519Z"
+    },
+    {
+        "url": "https://byjus.com/physics/uses-of-magnets/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": "How are Magnets Useful?",
+        "headings": [
+            "Various Applications and Uses of Magnets"
+        ],
+        "main_findings": [
+            "We might be using computers in our day-to-day lives but never wondered about the presence of a magnet inside it. Magnetic elements on a hard disk help to represent computer data, which is later ‘read’ by the computer to extract information.",
+            "Magnets are used inside TVs, sound speakers and radios. The small coil of wire and a magnet inside a speaker transforms the electronic signal to sound vibrations.",
+            "Magnets are used inside a generator to transform mechanical energy into electrical energy.",
+            "Electrically charged magnets can help cranes to move large metal pieces.",
+            "Magnets are used in filtering machines that separate metallic ores from crushed rocks.",
+            "It is also used in food processing industries for separating small metallic pieces from grains etc.",
+            "Magnets are used in MRI machines which are used to create an image of the bone structure, organs, and tissues. Even magnets are used to cure cancer.",
+            "At home, you use magnets when you stick a paper on the refrigerator in order to remember something. Attaching a magnetic bottle opener to the fridge can come in handy.",
+            "We often use pocket a compass to find out directions when we are on a trek. The pocket compass uses a magnetic needle to point north.",
+            "The dark strip on the back of debit and credit cards is magnetic and is used to store data like computers’ hard drives.",
+            "Magnets can help collect all the nails which are scattered on the ground after a repair job."
+        ],
+        "content": null,
+        "keywords": [
+            "magnets",
+            "computer",
+            "TV",
+            "speaker",
+            "generator",
+            "crane",
+            "filtering machine",
+            "food processing",
+            "MRI machine",
+            "compass"
+        ],
+        "word_count": 244,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:12:48.341465Z"
+    },
+    {
+        "url": "https://byjus.com/physics/electromagnetism/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [],
+        "main_findings": [],
+        "content": [
+            "{\n    \"url\": \"https://byjus.com/physics/electromagnetism/\",\n    \"title\": null,\n    \"headings\": [\"What is Electromagnetic Force?\", \"What is Electromagnetism?\", \"Explanation of Electromagnetism with an Example\", \"Electromagnetic Induction\", \"Faraday's Law\", \"Properties of the Electromagnetic Wave\", \"Applications of Electromagnetism\", \"Frequently Asked Questions – FAQs\"],\n    \"main_findings\": [\"The electromagnetic force is a type of physical interaction that occurs between electrically charged particles.\", \"It acts between charged particles and is the combination of all magnetic and electrical forces.\", \"Electromagnetism serves as a fundamental working principle for many of the home appliances in household applications.\", ...],\n    \"content\": null,\n    \"keywords\": [\"electromagnetic force\", \"electromagnetism\", \"magnetic fields\", \"electric fields\", \"light\"]\n  }"
+        ],
+        "keywords": [],
+        "word_count": 0,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:13:00.570843Z"
+    },
+    {
+        "url": "https://byjus.com/chemistry/magnetic-properties-of-solids/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "What are Magnetic Properties of Solids?",
+            "Magnetic Properties",
+            "Graph showing the variation of magnetic properties on changing with temperature",
+            "Frequently Asked Questions – FAQs"
+        ],
+        "main_findings": [
+            "These magnetic moments come from two types of motion of electrons: 1. The orbital movement around the nucleus of an atom. 2. When the electron spins around its own axis.",
+            "On the basis of the magnetic properties solids can be classified as follows:",
+            "Diamagnetic | They are weakly repelled by the magnetic fields",
+            "Paramagnetic | They are weakly attracted by the magnetic fields.",
+            "Ferromagnetic | Strongly attracted by the magnetic field.It can be magnetized permanently"
+        ],
+        "content": null,
+        "keywords": [
+            "Magnetic Properties of Solids",
+            "Diamagnetism",
+            "Paramagnetism",
+            "Ferromagnetic"
+        ],
+        "word_count": 75,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:13:11.579492Z"
+    },
+    {
+        "url": "https://byjus.com/physics/magnet-questions/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "A magnet is any material that has the capability to attract iron and produce magnetic fields around itself.",
+            "Diamagnetism was the most common property among the materials.",
+            "Ferromagnetic materials are those that are firmly attracted to magnets that also can be magnetised.",
+            "Temporary magnets consist of soft metals."
+        ],
+        "main_findings": [
+            "Most of the elements and compounds were found to possess some magnetic properties.",
+            "A permanent magnet is a material made from a magnetised substance, and generates its own magnetic fields.",
+            "An electromagnet is composed of a coil of wire that behaves like a magnet when an electrical current flows through it."
+        ],
+        "content": null,
+        "keywords": [
+            "magnet",
+            "magnetic field",
+            "diamagnetism",
+            "ferromagnetic",
+            "temporary magnets"
+        ],
+        "word_count": 51,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:13:21.068792Z"
+    },
+    {
+        "url": "https://byjus.com/physics/discovery-magnets/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "History of Magnets",
+            "Magnets"
+        ],
+        "main_findings": [
+            "According to Greek legend, magnetism was first discovered by a shepherd named Magnes, who lived in Magnesia, Greece.",
+            "Magnetite is one of the three natural occurring oxides of iron.",
+            "It gets attracted to magnets and can be easily magnetized to form a permanent magnet.",
+            "Naturally magnetized pieces of magnetite are called loadstone.",
+            "People from Ancient Egypt started using magnets to play tricks, by making objects of worship float in mid-air by proper positioning of magnets.",
+            "The emperor from China used magnets to save his palace by constructing gates made of loadstone.",
+            "The amours made of metal got attracted to the magnetic gates and prevented them from going any further.",
+            "In his book, De Magnete (1600), scientist William Gilbert mentioned techniques of artificially making magnets from steel."
+        ],
+        "content": null,
+        "keywords": [
+            "magnets",
+            "magnetism",
+            "loadstone"
+        ],
+        "word_count": 126,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:13:32.125794Z"
+    },
+    {
+        "url": "https://byjus.com",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "What causes earth's magnetism?",
+            "The cause of earth's magnetism is due to the circulating ions that are highly conducting in the core of the earth which results in the formation of the current loops. These current loops are the reason behind the formation of the magnetic field."
+        ],
+        "main_findings": [
+            "Earth's magnetism is caused by the circulating ions in its core.",
+            "The circulating ions form current loops, which result in the formation of a magnetic field."
+        ],
+        "content": null,
+        "keywords": [
+            "earth's magnetism",
+            "magnetic field",
+            "current loops"
+        ],
+        "word_count": 26,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:13:41.264949Z"
+    },
+    {
+        "url": "https://byjus.com/physics/poles-of-magnets/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "What Is a Magnetic Pole?",
+            "Magnetic Field Lines",
+            "Properties of Magnetic Field Lines"
+        ],
+        "main_findings": [
+            "The areas of magnets that have magnetic strength are called “poles.”",
+            "Opposite poles always attract each other while like poles repel each other.",
+            "For all magnets, the point at which all magnetic field lines converge is the south pole and the point from which all magnetic field lines diverge will be the magnetic north pole."
+        ],
+        "content": null,
+        "keywords": [
+            "magnetic pole",
+            "magnetic field",
+            "north pole",
+            "south pole"
+        ],
+        "word_count": 55,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:13:52.112705Z"
+    },
+    {
+        "url": "https://byjus.com/physics/magnetic-flux/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "What is Magnetic Flux?",
+            "Understanding Magnetic Flux",
+            "What is Magnetic Flux Density?",
+            "Frequently Asked Questions – FAQs"
+        ],
+        "main_findings": [
+            "Magnetic flux is commonly denoted using the Greek letter Phi or Phi suffix B.",
+            "The magnetic flux through a plane of the area given by A that is placed in a uniform magnetic field of magnitude given by B is given as the scalar product of the magnetic field and the area A.",
+            "If the magnetic field is non-uniform and at different parts of the surface, the magnetic flux through the given surface can be given as the summation of the product of all such area elements and their corresponding magnetic field.",
+            "Magnetic flux density(B) is defined as the force acting per unit current per unit length on a wire placed at right angles to the magnetic field."
+        ],
+        "content": null,
+        "keywords": [
+            "magnetic flux",
+            "phi",
+            "magnetic field",
+            "area",
+            "force",
+            "current"
+        ],
+        "word_count": 118,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:14:03.890619Z"
+    },
+    {
+        "url": "https://byjus.com/physics/magnetic-force/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "What Is Magnetic Force?",
+            "How To Find Magnetic Force?",
+            "Magnetic force on a Current-Carrying Conductor",
+            "Solved Examples",
+            "Frequently Asked Questions – FAQs"
+        ],
+        "main_findings": [
+            "The magnetic force between two moving charges may be described as the effect exerted upon either charge by a magnetic field created by the other.",
+            "Mathematically, we can write magnetic force as: F=q[E(r)+v×B(r)]",
+            "F=[(nqevd)AI]×B=[jAI]×B=Il×B"
+        ],
+        "content": null,
+        "keywords": [
+            "Magnetic Force",
+            "Lorentz Force",
+            "Electric Field",
+            "Magnetic Field"
+        ],
+        "word_count": 34,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:14:12.949971Z"
+    },
+    {
+        "url": "https://byjus.com/physics/bar-magnet/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "Classification of Magnets",
+            "Bar Magnet Definition",
+            "Types of Bar Magnet",
+            "Properties of Bar Magnet",
+            "Uses of Bar Magnet",
+            "What Is Pole Strength?",
+            "Frequently Asked Questions – FAQs"
+        ],
+        "main_findings": [
+            "A magnet is an object that produces a magnetic field around itself",
+            "Magnets are classified into two groups natural and artificial magnets based on how they achieved their magnetism and for how long they retain their magnetic abilities and on their magnetic field.",
+            "A bar magnet is a rectangular piece of an object, made up of iron, steel or any other ferromagnetic substance or ferromagnetic composite, that shows permanent magnetic properties.",
+            "It has two poles, a north and a south pole such that when suspended freely, the magnet aligns itself so that the northern pole points towards the magnetic north pole of the earth.",
+            "Bar magnets are used as stirrers in laboratories for magnetic experiments.",
+            "Pole strength is defined as the strength of a magnetic pole to attract magnetic materials towards itself."
+        ],
+        "content": null,
+        "keywords": [
+            "bar magnet",
+            "magnetic field",
+            "natural magnets",
+            "artificial magnets",
+            "pole strength"
+        ],
+        "word_count": 132,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:14:25.202423Z"
+    },
+    {
+        "url": "https://byjus.com/physics/magnetization-magnetic-intensity/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "What is Magnetization?",
+            "Frequently Asked Questions – FAQs"
+        ],
+        "main_findings": [
+            "Magnetization, also termed magnetic polarization, is a vector quantity that measures the density of permanent or induced dipole moment in a given magnetic material.",
+            "The magnetization of a given sample material M can be defined as the net magnetic moment for that material per unit volume.",
+            "Mathematically, M = (net magnetic moment) / (unit volume).",
+            "Let us now consider the case of a solenoid. Let us take a solenoid with n turns per unit length and the current passing through it be given by I, then the magnetic field in the interior of the solenoid can be given as B = μ0nI.",
+            "The net magnetic field B inside the solenoid can be given as B = H + M.",
+            "Where Bmm = μ0H + M.",
+            "Here, µ0 is the permeability of free space.",
+            "From this equation, we see that the total magnetic field can also be defined as B = H + M.",
+            "The latter quantity, that is, M, is dependent on external influences and is given by M = χH.",
+            "Where χ is the magnetic susceptibility of the material."
+        ],
+        "content": null,
+        "keywords": [
+            "Magnetization",
+            "Magnetic Intensity",
+            "Solenoid"
+        ],
+        "word_count": 180,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:14:39.737130Z"
+    },
+    {
+        "url": "https://byjus.com/physics/magnetic-poles/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "Magnetic Poles",
+            "Bar Magnet: Opposite poles attract while the same poles repel each other.",
+            "What Are Magnets?",
+            "Frequently Asked Questions – FAQs"
+        ],
+        "main_findings": [
+            "The magnetic pole is the region where the external magnetic field is the strongest at each end of a magnet.",
+            "A bar magnet, in general, is a long, rectangular object with a uniform cross-section that attracts pieces of ferrous objects.",
+            "The unlike poles of different magnets tend to attract each other, while the like poles are known to repel each other.",
+            "Splitting a magnet into two does not mean its north pole and the south pole become isolated. Each half is found to have its own individual north and south poles."
+        ],
+        "content": null,
+        "keywords": [
+            "magnetic pole",
+            "bar magnet",
+            "magnets",
+            "north magnetic pole",
+            "south magnetic pole"
+        ],
+        "word_count": 91,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:14:51.474065Z"
+    },
+    {
+        "url": "https://byjus.com/physics/magnetic-moment/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "What Is Magnetic Moment?",
+            "How Is The Magnetic Moment Produced?",
+            "How Is Magnetic Moment Measured?",
+            "Magnetic Moment Formula",
+            "What Is Magnetic Dipole Moment?",
+            "Expression for Magnetic Dipole Force",
+            "Magnetic Moment Questions"
+        ],
+        "main_findings": [
+            "Magnetic moment, also known as magnetic dipole moment, is the measure of the object’s tendency to align with a magnetic field.",
+            "The magnetic moment is produced by two methods: a) Motion of Electric Charge b) Spin Angular Momentum",
+            "The magnetic moment is given by the formula: τ = m × B"
+        ],
+        "content": null,
+        "keywords": [
+            "Magnetic Moment",
+            "Magnetic Dipole Moment",
+            "Torque",
+            "Magnetic Field"
+        ],
+        "word_count": 51,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:15:02.783808Z"
+    },
+    {
+        "url": "https://byjus.com/physics/motion-charged-particle-magnetic-field/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "What happens when a charged particle moves in the presence of a magnetic field?",
+            "A force acting on a particle is said to perform work when there is a component of the force in the direction of motion of the particle.",
+            "In the case under consideration, where we have a charged particle carrying a charge q moving in a uniform magnetic field of magnitude B, the magnetic force acts perpendicular to the velocity of the particle."
+        ],
+        "main_findings": [
+            "The magnetic force is directed towards the center of circular motion undergone by the object and acts as a centripetal force.",
+            "If v and B are perpendicular to each other, the particle describes a circle.",
+            "The resulting motion due to the two components is a helical motion.",
+            "As the radius of the circular path of the particle is r, the centripetal force acting perpendicular to it towards the center can be given as, F=mv2r.",
+            "Equating the two, we get, F=mV2r=qvB Or r=mvqB Here, r gives the radius of the circle described by the particle."
+        ],
+        "content": null,
+        "keywords": [
+            "magnetic field",
+            "charged particle",
+            "centripetal force",
+            "helical motion"
+        ],
+        "word_count": 94,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:15:13.745355Z"
+    },
+    {
+        "url": "https://byjus.com/",
+        "source": "",
+        "subject": "",
+        "grade": null,
+        "unit": "",
+        "topic_title": null,
+        "title": null,
+        "headings": [
+            "Force on a Current Carrying Conductor",
+            "Biot-Savart's Law",
+            "Ampere's Circuital Law"
+        ],
+        "main_findings": [
+            "The magnetic effect of an electric current is the phenomenon where a current flowing through a conductor sets up a magnetic field in the region surrounding the conductor.",
+            "Laplace's law or Biot-Savart's law is used to find the flux density of the magnetic field at a point due to a current element.",
+            "A solenoid is a cylindrical coil made of several turns of wire."
+        ],
+        "content": null,
+        "keywords": [
+            "magnetic effect",
+            "electric current",
+            "conductor",
+            "Biot-Savart's Law",
+            "Laplace's law",
+            "solenoid"
+        ],
+        "word_count": 64,
+        "status": "success",
+        "scraped_at": "2025-08-05T17:15:24.932408Z"
+    }
+]

@@ -1,0 +1,152 @@
+{
+    "searchParameters": {
+        "q": "Magnetism for grade 11 site:byjus.com OR site:toppr.com OR site:learnfatafat.com",
+        "gl": "in",
+        "type": "search",
+        "num": 20,
+        "engine": "google"
+    },
+    "organic": [
+        {
+            "title": "Magnet - BYJU'S",
+            "link": "https://byjus.com/physics/magnet/",
+            "snippet": "What is a Magnet? A magnet is defined as. An object which is capable of producing magnetic field and attracting unlike poles and repelling like poles.",
+            "position": 1
+        },
+        {
+            "title": "Electricity and Magnetism - BYJU'S",
+            "link": "https://byjus.com/physics/electricity-and-magnetism/",
+            "snippet": "The basic law of magnetism is that the unlike poles attract and like poles repel. Q5. What is electromagnetism? Electromagnetism is associated with electric ...",
+            "position": 2
+        },
+        {
+            "title": "Magnetic Field History - BYJU'S",
+            "link": "https://byjus.com/physics/magnetic-field/",
+            "snippet": "The magnetic field is the area around a magnet in which the effect of magnetism is felt. We use the magnetic field as a tool to describe how the magnetic ...",
+            "position": 3
+        },
+        {
+            "title": "Magnetic Effect of Electric Current - BYJU'S",
+            "link": "https://byjus.com/physics/magnetic-effect-of-electric-current-direct-current-dc/",
+            "snippet": "Magnetic Effect of Electric Current – A magnetic field is a force field that is created by magnetic dipoles and moving electric charges, and it exerts a force ...",
+            "position": 4
+        },
+        {
+            "title": "Magnetism Formula - BYJU'S",
+            "link": "https://byjus.com/magnetism-formula/",
+            "snippet": "Magnetic Effect of Electric Field is the property where an electric field is produced around a current-carrying conductor.",
+            "position": 5
+        },
+        {
+            "title": "Various Applications and Uses of Magnets - BYJU'S",
+            "link": "https://byjus.com/physics/uses-of-magnets/",
+            "snippet": "What is a magnet? ... A magnet is an object which has its atoms ordered so that the object exhibits characteristics of magnetism. It attracts other iron pieces or ...",
+            "position": 6
+        },
+        {
+            "title": "Electromagnetic force - BYJU'S",
+            "link": "https://byjus.com/physics/electromagnetism/",
+            "snippet": "Electromagnetism is a branch of Physics, that deals with the electromagnetic force that occurs between electrically charged particles. The electromagnetic force ...",
+            "position": 7
+        },
+        {
+            "title": "Magnetic Properties Of Solids - BYJU'S",
+            "link": "https://byjus.com/chemistry/magnetic-properties-of-solids/",
+            "snippet": "The magnetic properties of a substance originate from the electrons present in the atoms or molecules. Every electron in an atom behaves like a small magnet.",
+            "position": 8
+        },
+        {
+            "title": "Magnet Questions - BYJU'S",
+            "link": "https://byjus.com/physics/magnet-questions/",
+            "snippet": "1) What is a magnet? A magnet is any material that has the capability to attract iron and produce magnetic fields around itself. Most of the elements and ...",
+            "position": 9
+        },
+        {
+            "title": "Discovery of Magnets - BYJU'S",
+            "link": "https://byjus.com/physics/discovery-magnets/",
+            "snippet": "A magnet is an object which has its atoms ordered so that the object exhibits characteristics of magnetism. It attracts other iron pieces or ...",
+            "date": "Mar 7, 2020",
+            "position": 10
+        },
+        {
+            "title": "Earth's Magnetic Field - BYJU'S",
+            "link": "https://byjus.com/physics/magnetic-field-earth-magnetism/",
+            "snippet": "The Earth's magnetic field extends far and wide but is very weak in terms of field strength. A mere 40,000 nT compared to a refrigerator magnet ...",
+            "date": "Sep 29, 2020",
+            "position": 11
+        },
+        {
+            "title": "Poles Of Magnets - BYJU'S",
+            "link": "https://byjus.com/physics/poles-of-magnets/",
+            "snippet": "Opposite poles always attract each other while like poles repel each other. These acts of attraction and repulsion are known as magnetism. And, the magnetic ...",
+            "position": 12
+        },
+        {
+            "title": "Magnetic Flux Density - BYJU'S",
+            "link": "https://byjus.com/physics/magnetic-flux/",
+            "snippet": "The movement of charged particles is the basic source of magnetism. Q4. What is the unit of magnetic permeability? Tesla is the unit of magnetic permeability.",
+            "position": 13
+        },
+        {
+            "title": "How To Find Magnetic Force? - BYJU'S",
+            "link": "https://byjus.com/physics/magnetic-force/",
+            "snippet": "The magnetic force depends upon the charge of the particle, the velocity of the particle and the magnetic field in which it is placed. The direction of the ...",
+            "position": 14
+        },
+        {
+            "title": "Bar Magnet - BYJU'S",
+            "link": "https://byjus.com/physics/bar-magnet/",
+            "snippet": "Magnets are classified into two groups natural and artificial magnets based on how they achieved their magnetism and for how long they retain ...",
+            "date": "Jan 14, 2020",
+            "position": 15
+        },
+        {
+            "title": "Magnetisation and Magnetic Intensity - BYJU'S",
+            "link": "https://byjus.com/physics/magnetization-magnetic-intensity/",
+            "snippet": "The concept of magnetization helps us in classifying the materials based on their magnetic property. In this section, we will learn more about magnetization and ...",
+            "position": 16
+        },
+        {
+            "title": "Magnetic Poles - BYJU'S",
+            "link": "https://byjus.com/physics/magnetic-poles/",
+            "snippet": "The magnetic pole is the region where the external magnetic field is the strongest at each end of a magnet. A pole of a magnet may refer to a magnetic monopole, ...",
+            "position": 17
+        },
+        {
+            "title": "How Is The Magnetic Moment Produced? - BYJU'S",
+            "link": "https://byjus.com/physics/magnetic-moment/",
+            "snippet": "The magnetic strength and orientation of an object or a magnet that creates a magnetic field are defined by the magnetic moment. We know that loops of electric ...",
+            "position": 18
+        },
+        {
+            "title": "Motion Charged Particle Magnetic Field - BYJU'S",
+            "link": "https://byjus.com/physics/motion-charged-particle-magnetic-field/",
+            "snippet": "The magnetic force between two moving charges may be described as the effect exerted upon either charge by a magnetic field created by the other. Q2. Define ...",
+            "position": 19
+        },
+        {
+            "title": "Moving Charges and Magnetism - BYJU'S",
+            "link": "https://byjus.com/jee/moving-charges-and-magnetism/",
+            "snippet": "The production of a magnetic field is thought to be caused by the passage of charges. The direction of deflection of the needle is given by Ampere's swimming ...",
+            "position": 20
+        }
+    ],
+    "relatedSearches": [
+        {
+            "query": "Magnetism for grade 11 pdf"
+        },
+        {
+            "query": "Magnetism for grade 11 questions and answers pdf"
+        },
+        {
+            "query": "Magnetism for grade 11 questions and answers"
+        },
+        {
+            "query": "Magnetism for grade 11 notes"
+        },
+        {
+            "query": "Magnetism for grade 11 notes pdf"
+        }
+    ],
+    "credits": 2
+}

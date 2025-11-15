@@ -1,0 +1,17 @@
+langchain
+langchain-core
+langchain-google-genai
+langchain-openai
+langchain-groq
+langgraph
+chromadb
+sentence-transformers
+crawl4ai
+requests
+python-dotenv
+more-itertools
+pydantic
+Flask
+Flask-CORS
+IPython
+jupyter
