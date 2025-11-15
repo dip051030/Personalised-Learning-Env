@@ -1,3 +1,4 @@
+protobuf<4.0.0
 langchain
 langchain-core
 langchain-google-genai

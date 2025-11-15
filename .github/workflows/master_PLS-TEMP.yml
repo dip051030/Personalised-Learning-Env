@@ -63,4 +63,4 @@ jobs:
         with:
           app-name: 'PLS-TEMP'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.__publishingprofilesecretname__ }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
