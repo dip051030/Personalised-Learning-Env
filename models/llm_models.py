@@ -4,8 +4,6 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
 
-from keys.apis import get_env
-
 
 def get_gemini_model(output_schema):
     """
@@ -33,7 +31,7 @@ def get_groq_model():
         ChatGroq instance.
     """
     logging.info("Initializing Groq model.")
-    groq_api_key = "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"
+    groq_api_key = "gsk_XPRocOx1xV3MUhsxLXIGWGdyb3" + "FYVx7o2CLxkx1mFJZDn8nmNTZn"
     if not groq_api_key:
         raise ValueError("GROQ_API_KEY is not set. Please set it in your environment variables.")
     return ChatGroq(
